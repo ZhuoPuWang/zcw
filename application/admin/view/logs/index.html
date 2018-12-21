@@ -1,0 +1,52 @@
+{extend name="template/base" /}
+{block name="content"}
+
+
+
+<div class="container_content">
+    <div class="container_content_tit">日志</div>
+    <div class="container_content_screen clear">
+
+        <select class="select_1">
+            <option value="选择目录">选择目录</option>
+            <option value="1">选择目录1</option>
+            <option value="2">选择目录2</option>
+            <option value="3">选择目录3</option>
+        </select>
+        <div class="search clear">
+            <input type="text" placeholder="用户名／姓名／角色"/>
+            <button>搜索</button>
+        </div>
+
+    </div>
+    <div class="table">
+        <table class="table_2">
+            <tr class="hd">
+                <td>用户名</td>
+                <td>邮箱</td>
+                <td>类型</td>
+                <td>日期</td>
+                <td>声明</td>
+            </tr>
+            {foreach $list as $k=>$v}
+            <tr>
+                <td>{$v.realname}</td>
+                <td>{$v.email}</td>
+                <td>{$v.type}</td>
+                <td><?php echo (date('Y-m-d H:i:s', $v['time'])) ?></td>
+                <td>{$v.cont}</td>
+            </tr>
+       {/foreach}
+
+        </table>
+
+    </div>
+    <div class="pager">{$page ?? ''}</div>
+</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+{/block}

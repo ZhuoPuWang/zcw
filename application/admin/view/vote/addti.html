@@ -1,0 +1,196 @@
+{extend name="template/base1" /}
+{block name="css"}
+<style type="text/css">
+    .add_ul_r_box{width: 100%;margin-bottom: 10px;}
+    .tx_input{width: 54%;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 20px;
+        font-size: 16px;
+        color: #333;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #f5f5f5;
+        margin-left: 10px;
+    }
+</style>
+{/block}
+{block name="content"}
+{include file="template/vote"}
+<div class="container_content">
+    <div class="container_content_tit">添加题目</div>
+    <div class="add">
+        <form id="form" action="{:url('survey/addti','',false,true)}" method="post">
+            <input type="hidden" name="questionid" value="{$id}">
+        <ul class="add_ul">
+            <li class="clear">
+                <h1>题目ID</h1>
+                <div class="add_ul_r clear">
+                    <input type="text" class="inp_text"  name="name" value="{$name}"/>
+                    <span class="Validform_checktip"></span>
+                </div>
+            </li>
+            <li class="clear">
+                <h1>题目</h1>
+                <div class="add_ul_r clear">
+                    <textarea  name="content" id="editor" type="text/plain" style="width: 676px;height:300px" datatype="*" nullmsg="请填写题目内容" ></textarea>
+                    <span class="Validform_checktip"></span>
+                </div>
+            </li>
+            <li class="clear">
+                <h1>题型</h1>
+                <div class="add_ul_r clear">
+                    <input type="radio"  name="type" onclick="changeRadio()" id="" value="1" checked="checked" class="inp_check"/>单选题
+                    <input type="radio"  name="type" onclick="changeMultiple()" id="" value="2" class="inp_check"/>多选题
+                    <input type="radio"  name="type" onclick="changeFalse()" id="" value="3" class="inp_check"/>是非题
+                    <input type="radio"  name="type" onclick="changeEssay()" id="" value="4" class="inp_check"/>简答题
+                    <input type="radio"  name="type" onclick="changeFill()" id="" value="5" class="inp_check"/>填空题
+                </div>
+            </li>
+            <li class="clear" id="danxuan">
+                <h1>单选</h1>
+                <div class="add_ul_r clear">
+                    <div class="add_ul_r_box">
+                        <input type="radio" name="dx" id="" value="a" />正确
+                        <input type="text" name="dxanswer1" class="tx_input" placeholder="选项1"/>
+                    </div>
+                    <div class="add_ul_r_box">
+                        <input type="radio" name="dx" id="" value="b" />正确
+                        <input type="text" name="dxanswer2" class="tx_input" placeholder="选项2"/>
+                    </div>
+                    <div class="add_ul_r_box">
+                        <input type="radio" name="dx" id="" value="c" />正确
+                        <input type="text" name="dxanswer3" class="tx_input" placeholder="选项3"/>
+                    </div>
+                    <div class="add_ul_r_box">
+                        <input type="radio" name="dx" id="" value="d" />正确
+                        <input type="text" name="dxanswer4" class="tx_input" placeholder="选项4"/>
+                    </div>
+                </div>
+            </li>
+            <li class="clear hide" id="duoxuan">
+                <h1>多选题</h1>
+                <div class="add_ul_r clear">
+                    <div class="add_ul_r_box">
+                        <input type="checkbox" name="duox1" id="" value="a" />正确
+                        <input type="text" name="duoxanswer1" class="tx_input" placeholder="选项1"/>
+                    </div>
+                    <div class="add_ul_r_box">
+                        <input type="checkbox" name="duox2" id="" value="b" />正确
+                        <input type="text" name="duoxanswer2" class="tx_input" placeholder="选项2"/>
+                    </div>
+                    <div class="add_ul_r_box">
+                        <input type="checkbox" name="duox3" id="" value="c" />正确
+                        <input type="text" name="duoxanswer3" class="tx_input" placeholder="选项3"/>
+                    </div>
+                    <div class="add_ul_r_box">
+                        <input type="checkbox" name="duox4" id="" value="d" />正确
+                        <input type="text" name="duoxanswer4" class="tx_input" placeholder="选项4"/>
+                    </div>
+                </div>
+            </li>
+            <li class="clear hide" id="shifei">
+                <h1>是非题</h1>
+                <div class="add_ul_r clear">
+                    <div class="add_ul_r_box">
+                        <input type="radio" name="sft" id="" value="1" />正确：对
+                    </div>
+                    <div class="add_ul_r_box">
+                        <input type="radio" name="sft" id="" value="2" />正确：错
+                    </div>
+                </div>
+            </li>
+            <li class="clear hide" id="tiankong">
+                <h1>填空题</h1>
+                <div class="add_ul_r clear">
+                    <div class="add_ul_r_box">
+                        正确答案:<input type="text" style="width: 30%;" name="tk" class="tx_input" placeholder="正确答案"/>
+                    </div>
+                </div>
+            </li>
+            <li class="clear">
+                <h1></h1>
+                <div class="add_ul_r clear">
+                    <input id="btn" style="display: none" type="submit">
+                    <label for="btn"><div class="add_btn kuang_lan">确定</div></label>
+                    <a class="add_btn kuang_hong" href="{:url('','',false,true)}">取消</a>
+                </div>
+            </li>
+        </ul>
+        </form>
+    </div>
+</div>
+
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script>
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                console.log(data)
+                if(data.state == 2){
+                    layer.alert('添加失败1');
+                }else{
+                    location.href = "{:url('survey/ti',array('id'=>$id),false,true)}";
+                }
+            },function (err) {
+                console.log(err);
+                layer.alert('添加失败');
+            });
+            return false;
+        }
+    });
+
+
+    var ue = UE.getEditor('editor',{
+        toolbars: [
+            ['fullscreen', 'undo', 'redo', 'bold','italic','fontfamily', 'fontsize','|',
+                'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify','|',
+                'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+                'simpleupload','insertvideo', 'music'
+            ]
+        ]
+    });
+</script>
+<script type="text/javascript">
+    function changeRadio(){
+        $("#danxuan").show();
+        $("#duoxuan").hide();
+        $("#shifei").hide();
+        $("#tiankong").hide();
+    }
+    function changeMultiple(){
+        $("#danxuan").hide();
+        $("#duoxuan").show();
+        $("#shifei").hide();
+        $("#tiankong").hide();
+    }
+    function changeFalse(){
+        $("#danxuan").hide();
+        $("#duoxuan").hide();
+        $("#shifei").show();
+        $("#tiankong").hide();
+    }
+    function changeFill(){
+        $("#danxuan").hide();
+        $("#duoxuan").hide();
+        $("#shifei").hide();
+        $("#tiankong").show();
+    }
+    function changeEssay(){
+        $("#danxuan").hide();
+        $("#duoxuan").hide();
+        $("#shifei").hide();
+        $("#tiankong").hide();
+    }
+</script>
+{/block}

@@ -1,0 +1,61 @@
+{extend name="template/base" /}
+
+{block name="content"}
+	<!--container-->
+	<div class="container clear">
+		<div class="container_content">
+			<div class="container_content_tit">投票管理</div>
+			<div class="container_content_screen clear">
+
+				<div class="search clear">
+					<form action="{:url('index')}" method="post">
+					<input type="text" name="realname" placeholder="姓名"/>
+					<button>搜索</button>
+				</form>
+				</div>
+				<div class="addcurr"><a href="{:url('add')}">添加新投票</a></div>
+			</div>
+			<div class="table">
+				<table class="table_2">
+					<tr class="hd">
+						<td>标题</td>
+						<td>创建时间</td>
+						<td>操作</td>
+					</tr>
+					{volist name="list" id="vo"}
+					<tr>
+						<td>{$vo.name}</td>
+						<td>{:date('Y-m-d H:i:s',$vo.createtime)}</td>
+						<td>
+							{:sedit($vo.id,1,array('edit','delete'))}
+						</td>
+					</tr>
+					{/volist}
+				</table>
+				<!--分页-->
+			</div>
+			<div class="pager">{$page ?? ''}</div>
+		</div>
+	</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+</script>
+<script>
+	$(".tcdPageCode").createPage({
+		pageCount:6,
+		current:1,
+		backFn:function(p){
+			console.log(p);
+		}
+	});
+
+</script>
+{/block}

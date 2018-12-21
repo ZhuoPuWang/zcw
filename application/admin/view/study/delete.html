@@ -1,0 +1,132 @@
+{extend name="template/base1" /}
+{block name="content"}
+{include file="template/study"}
+
+<div class="container_content">
+
+    <div class="container_content_tit">是否删除当前职位</div>
+
+    <div class="add">
+
+        <form id="form" action="{:url('study/delete','',false,true)}" method="post">
+            <input type="hidden" name="id" value="{$data.id}">
+            <ul class="add_ul">
+                <li class="clear">
+
+                    <h1>职位ID: </h1>
+
+                    <div class="add_ul_r clear">
+                        <span style="line-height: 45px">{$data.study_number}</span>
+
+                    </div>
+
+                </li>
+                <li class="clear">
+
+                    <h1>职位标题: </h1>
+
+                    <div class="add_ul_r clear">
+
+                        <span style="line-height: 45px">{$data.study_title}</span>
+
+                    </div>
+
+                </li>
+                <li class="clear">
+
+                    <h1>职位描述: </h1>
+
+                    <div class="add_ul_r clear">
+                        <span style="line-height: 45px">{$data.study_content}</span>
+
+                    </div>
+
+                </li>
+                <li class="clear display">
+
+                    <h1>是否自动分配: </h1>
+
+                    <div class="add_ul_r">
+
+                        {if $data.auto_distribution==1}
+
+                        <span value="1" style="line-height: 45px">是</span>
+                        {else}
+                        <span value="0" style="line-height: 45px">否</span>
+                        {/if}
+
+                    </div>
+
+                </li>
+                <li class="clear display">
+
+                    <h1>分配条件: </h1>
+
+                    <div class="add_ul_r">
+                       <span  style="line-height: 45px">{$data.distribution_condition}</span>
+
+                    </div>
+
+                </li>
+                <li class="clear">
+
+                    <h1></h1>
+
+                    <div class="add_ul_r clear">
+
+                        <input type="submit" id="btn" style="opacity:0;">
+
+                        <label for="btn">
+                            <div class="add_btn kuang_lan">确定</div>
+                        </label>
+
+                        <a href="{:url('study/index','',false,true)}" class="add_btn kuang_hong">取消</a>
+
+                    </div>
+
+                </li>
+
+            </ul>
+
+        </form>
+
+    </div>
+
+</div>
+{/block}
+{block name='script'}
+
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+
+<script>
+
+    $("#form").Validform({
+
+        tiptype: 3,
+
+        showAllError: true,
+
+        callback: function (ret) {
+            submit_form($("#form"), function (data) {
+                console.log(data);
+                if (data.status == 1) {
+                    layer.msg(data.data, {icon: 6, time: 5000});
+                    location.href = "{:url('study/index','',false,true)}"
+                } else {
+                    layer.msg(data.data, {icon: 5, time: 5000});
+                }
+            }, function (err) {
+                console.log(err)
+            });
+            return false;
+        }
+    });
+
+</script>
+{/block}

@@ -1,0 +1,101 @@
+{extend name="template/base" /}
+
+
+{block name="content"}
+
+
+<div class="container_content">
+
+    <div class="container_content_tit">组合课程管理</div>
+
+    <div class="container_content_screen clear">
+
+        <div class="search clear" style="width: 650px">
+
+            <form method="get" action="{:\\think\\Url::build($Request.action)}">
+                <div>
+                 </div>
+
+                <input type="text" placeholder="课程标题" name="course_title" value="{$Request.param.realname}">
+                <button>搜索</button>
+            </form>
+        </div>
+
+        <div class="addcurr"><a style="display: block;width: 100%;" href="{:url('Coursegroup/add','',false,true)}">新建组合课程</a>
+        </div>
+
+
+
+    </div>
+
+    <div class="table">
+
+        <table class="table_2">
+
+            <tr class="hd">
+
+                <td>组合课程编号</td>
+
+                <td>组合课程标题</td>
+
+
+
+                <td>创建者</td>
+                <td>操作</td>
+
+            </tr>
+
+            {volist name="list" id="vo"}
+
+            <tr>
+
+                <td>{$vo.course_number}</td>
+                <td> {$vo.course_title}</td>
+
+                <td> {$vo.realname}</td>
+                <td>
+             <span style="    padding: 7px 13px;cursor: pointer;position: relative;border-radius: 5px;border: 2px solid #149dd2;color: #149dd2;text-align: center;">
+              <a href="{:url('Coursegroup/edit',array('id'=>$vo.id),false,true)}" style="color: #149dd2;">编辑</a>
+              </span>
+                </td>
+            </tr>
+            {/volist}
+
+        </table>
+
+    </div>
+    <div class="pager">{$page ?? ''}</div>
+
+</div>
+
+
+{/block}
+{block name="script"}
+
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+
+<script>
+
+    $("#form").Validform({
+
+        tiptype: 3,
+
+        showAllError: true,
+
+        callback: function (ret) {
+            del(this);
+//            forbid(this)
+            return false;
+        }
+    });
+
+
+</script>
+
+{/block}

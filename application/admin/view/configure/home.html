@@ -1,0 +1,234 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<!--container-->
+<div class="container clear">
+
+    {include file="template/configure"}
+    <div class="container_content">
+        <div class="container_content_tit">主页管理</div>
+        <form id="form" action="{:url('Configure/home','',false,true)}" method="post">
+        <div class="table">
+            <p>推荐上传360×224像素的jpg文件，谢谢!</p>
+            <table class="table_2">
+                <tr class="hd">
+                    <td>是否显示</td>
+                    <td>模块</td>
+                    <td>修改模块图标</td>
+                </tr>
+                {foreach $home as $k => $v}
+                <tr>
+                    {if condition="$v.id eq 1 "}
+                    <input type="hidden" name="bannerid" value="{$v.id}">
+                        {if condition="$v.status eq 0 "}
+                    <td><input class="ckeck" type="checkbox" name="banners" checked id="" value="0" /></td>
+                         {else}
+                    <td><input class="ckeck" type="checkbox" name="banners" id="" value="1" /></td>
+                          {/if}
+                    {elseif condition="$v.id eq 2 "}
+                    <input type="hidden" name="courseid" value="{$v.id}">
+                    {if condition="$v.status eq 0 "}
+                    <td><input class="ckeck" type="checkbox" name="courses" checked id="" value="0" /></td>
+                    {else}
+                    <td><input class="ckeck" type="checkbox" name="courses" id="" value="1" /></td>
+                    {/if}
+                    {elseif condition="$v.id eq 3 "}
+                    <input type="hidden" name="lecturerid" value="{$v.id}">
+                    {if condition="$v.status eq 0 "}
+                    <td><input class="ckeck" type="checkbox" name="lecturers" checked id="" value="0" /></td>
+                    {else}
+                    <td><input class="ckeck" type="checkbox" name="lecturers" id="" value="1" /></td>
+                    {/if}
+                    {elseif condition="$v.id eq 4 "}
+                    <input type="hidden" name="datumid" value="{$v.id}">
+                    {if condition="$v.status eq 0 "}
+                    <td><input class="ckeck" type="checkbox" name="datums" checked id="" value="0" /></td>
+                    {else}
+                    <td><input class="ckeck" type="checkbox" name="datums" id="" value="1" /></td>
+                    {/if}
+                    {/if}
+
+                    {if condition="$v.id eq 1 "}
+                    <td><input type="text" name="bannert" id="" value="{$v.title}" /></td>
+                    {elseif condition="$v.id eq 2 "}
+                    <td><input type="text" name="courset" id="" value="{$v.title}" /></td>
+                    {elseif condition="$v.id eq 3 "}
+                    <td><input type="text" name="lecturert" id="" value="{$v.title}" /></td>
+                    {elseif condition="$v.id eq 4 "}
+                    <td><input type="text" name="datumt" id="" value="{$v.title}" /></td>
+                    {/if}
+                    {if $v['id'] == 1}
+                    <td class="formControls">
+                        <input type="hidden" class="input-text"  name="banner" value="{$v.icn}" id="">
+                        <input type="file" id="banner" name="upload_path" style="display: none">
+                        <label for="banner">
+                            <img style="max-width: 300px;max-height: 100px;"  src="__STATIC__/uploads/{$v.icn}"/>
+                        </label>
+                    </td>
+                    {elseif $v['id'] == 2}
+
+                    <td class="formControls">
+                        <input type="hidden" class="input-text"  name="course" value="{$v.icn}" id="">
+                        <input type="file" id="course" name="upload_paths" style="display: none">
+                        <label for="course">
+                            <img style="max-width: 300px;max-height: 100px;"  src="__STATIC__/uploads/{$v.icn}"/>
+                        </label>
+                    </td>
+                    {elseif $v['id'] == 3}
+
+                    <td class="formControls">
+                        <input type="hidden" class="input-text"  name="lecturer" value="{$v.icn}" id="">
+                        <input type="file" id="lecturer" name="upload_pathss" style="display: none">
+                        <label for="lecturer">
+                            <img style="max-width: 300px;max-height: 100px;"  src="__STATIC__/uploads/{$v.icn}"/>
+                        </label>
+                    </td>
+                    {elseif $v['id'] == 4}
+
+                    <td class="formControls">
+                        <input type="hidden" class="input-text"  name="datum" value="{$v.icn}" id="">
+                        <input type="file" id="datum" name="upload_pathsss" style="display: none">
+                        <label for="datum">
+                            <img style="max-width: 300px;max-height: 100px;"  src="__STATIC__/uploads/{$v.icn}"/>
+                        </label>
+                    </td>
+                    {/if}
+                </tr>
+                {/foreach}
+
+            </table>
+            <input class="queding" type="submit">
+
+        </div>
+        </form>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                console.log(data);
+              // layer.alert('操作成功');
+            },function (err) {
+                console.log(err);
+
+            });
+            return false;
+        }
+    });
+
+    $('#banner').change(function(){
+        this_ele = $(this);
+        this_ele.wrap("<form id='ajax_form' action='{:url(\'Configure/uploadPic\',array(\'pic_name\' => \'upload_path\'),false,true)}' method='post'enctype='multipart/form-data'></form>");
+        //防网速慢，弹出加载层
+        var loading = layer.load(3, {shade: [0.8, '#393D49']})
+        $('#ajax_form').ajaxSubmit({
+            dataType:'json',
+            success:function(data){
+                this_ele.unwrap();
+                layer.close(loading);
+                if(data.state == 1){
+                    this_ele.next().html("<img src='__STATIC__/uploads/"+data.path+"' style='width: 150px;height:150px'>");
+                    $('input[name=banner]').val(data.path);
+                }else{
+                    layer.msg(data.reason,{icon:5,time:1000});
+                }
+            },
+            error:function(err){
+                this_ele.unwrap();
+                layer.close(loading);
+                layer.msg('网络错误，请重试',{icon:5,time:1000});
+            }
+        });
+    });
+
+    $('#course').change(function(){
+        this_ele = $(this);
+        this_ele.wrap("<form id='ajax_form' action='{:url(\'Configure/uploadPic\',array(\'pic_name\' => \'upload_paths\'),false,true)}' method='post'enctype='multipart/form-data'></form>");
+        //防网速慢，弹出加载层
+        var loading = layer.load(3, {shade: [0.8, '#393D49']})
+        $('#ajax_form').ajaxSubmit({
+            dataType:'json',
+            success:function(data){
+                this_ele.unwrap();
+                layer.close(loading);
+                if(data.state == 1){
+                    this_ele.next().html("<img src='__STATIC__/uploads/"+data.path+"' style='width: 150px;height:150px'>");
+                    $('input[name=course]').val(data.path);
+                }else{
+                    layer.msg(data.reason,{icon:5,time:1000});
+                }
+            },
+            error:function(err){
+                this_ele.unwrap();
+                layer.close(loading);
+                layer.msg('网络错误，请重试',{icon:5,time:1000});
+            }
+        });
+    });
+
+
+    $('#lecturer').change(function(){
+        this_ele = $(this);
+        this_ele.wrap("<form id='ajax_form' action='{:url(\'Configure/uploadPic\',array(\'pic_name\' => \'upload_pathss\'),false,true)}' method='post'enctype='multipart/form-data'></form>");
+        //防网速慢，弹出加载层
+        var loading = layer.load(3, {shade: [0.8, '#393D49']})
+        $('#ajax_form').ajaxSubmit({
+            dataType:'json',
+            success:function(data){
+                this_ele.unwrap();
+                layer.close(loading);
+                if(data.state == 1){
+                    this_ele.next().html("<img src='__STATIC__/uploads/"+data.path+"' style='width: 150px;height:150px'>");
+                    $('input[name=lecturer]').val(data.path);
+                }else{
+                    layer.msg(data.reason,{icon:5,time:1000});
+                }
+            },
+            error:function(err){
+                this_ele.unwrap();
+                layer.close(loading);
+                layer.msg('网络错误，请重试',{icon:5,time:1000});
+            }
+        });
+    });
+
+
+
+    $('#datum').change(function(){
+        this_ele = $(this);
+        this_ele.wrap("<form id='ajax_form' action='{:url(\'Configure/uploadPic\',array(\'pic_name\' => \'upload_pathsss\'),false,true)}' method='post'enctype='multipart/form-data'></form>");
+        //防网速慢，弹出加载层
+        var loading = layer.load(3, {shade: [0.8, '#393D49']})
+        $('#ajax_form').ajaxSubmit({
+            dataType:'json',
+            success:function(data){
+                this_ele.unwrap();
+                layer.close(loading);
+                if(data.state == 1){
+                    this_ele.next().html("<img src='__STATIC__/uploads/"+data.path+"' style='width: 150px;height:150px'>");
+                    $('input[name=datum]').val(data.path);
+                }else{
+                    layer.msg(data.reason,{icon:5,time:1000});
+                }
+            },
+            error:function(err){
+                this_ele.unwrap();
+                layer.close(loading);
+                layer.msg('网络错误，请重试',{icon:5,time:1000});
+            }
+        });
+    });
+
+
+</script>
+
+{/block}

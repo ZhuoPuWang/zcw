@@ -1,0 +1,39 @@
+
+<div class="header">
+    <div class="header_top">
+        <div class="header_cont clear">
+            <div class="header_cont_l">服务热线：{$_SESSION['sh']['phone'];} </div>
+            <div class="header_cont_r clear">
+                <div class="user">
+                    <div class="user_name" style="width: 160px"><img src="__STATIC__/images/tx.png"/>
+                        <span>{$Request.session.username}{if condition="$_SESSION['think']['role'] eq 0"}(学员){elseif condition="$_SESSION['think']['role'] eq 1"}(教师){elseif condition="$_SESSION['think']['role'] eq 2"}(管理员){/if}</span>
+                    </div>
+                    <dl class="hide">
+                        <dd><a href="{:url('index/User/info','',false,true)}">我的信息</a></dd>
+                        <dd><a href="{:url('index/User/team','',false,true)}">我的团队</a></dd>
+                        <dd><a href="{:url('index/User/help','',false,true)}">使用帮助</a></dd>
+                        <dd><a href="{:url('User/logout','',false,true)}">注销</a></dd>
+                    </dl>
+                </div>
+                <span class="xinxi"><img src="__STATIC__/images/ld.png"/></span>
+            </div>
+        </div>
+    </div>
+    <!--导航栏-->
+    <div class="header_box clear">
+        <div class="header_logo">
+            <a href="{:url('index/index/index','',false,true)}">
+                <img src="__STATIC__/images/logo.png"/>{$_SESSION['sh']['name'];}
+            </a>
+        </div>
+        <ul class="header_nav clear">
+            <li {if condition ="$base eq 1"} class="header_nav_a" {/if}><a href="{:url('index/index/index','',false,true)}">首页</a></li>
+            <li {if condition ="$base eq 2"} class="header_nav_a" {/if}><a href="{:url('index/train/index','',false,true)}">我的培训</a></li>
+            <li {if condition ="$base eq 3"} class="header_nav_a" {/if}><a href="{:url('index/database/index','',false,true)}">资料库</a></li>
+            <li {if condition ="$base eq 4"} class="header_nav_a" {/if}><a href="{:url('index/teacher/index','',false,true)}">讲师</a></li>
+            <li {if condition ="$base eq 5"} class="header_nav_a" {/if}><a href="{:url('index/discuz/index','',false,true)}">讨论区</a></li>
+            <li {if condition ="$base eq 6"} class="header_nav_a" {if condition="$_SESSION['think']['role'] lt 1"}style="display:none;"{/if} {/if}><a href="{:url('report/index','',false,true)}">报表</a></li>
+            <li {if condition ="$base eq 7"} class="header_nav_a" {if condition="$_SESSION['think']['role'] lt 2"}style="display:none;"{/if} {/if}><a href="{:url('course/index','',false,true)}">管理</a></li>
+        </ul>
+    </div>
+</div>

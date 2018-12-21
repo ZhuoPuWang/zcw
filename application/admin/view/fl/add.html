@@ -1,0 +1,90 @@
+{extend name="template/base" /}
+	<!--顶部-->
+{block name="content"}
+		<div class="container_content">
+			<form action="{:url('edit')}" method="post" id ="form">
+			<div class="container_content_tit">添加用户</div>
+			<div class="add">
+				<ul class="add_ul">
+					<li class="clear">
+						<h1 class="li_img">分类名称</h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="name" class="inp_text" placeholder="请填写分类名称"/>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>分类级别</h1>
+						<div class="add_ul_r clear">
+							<select name="type">
+								<option value="1">一级</option>
+								<option value="2">二级</option>
+							</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>上级分类</h1>
+						<div class="add_ul_r clear">
+							<select name="fid">
+								<option value="0">请选择上级分类</option>
+								{volist name="fa" id="vo"}
+								<option value="{$vo.id}">{$vo.name}</option>
+								{/volist}
+							</select>
+						</div>
+					</li>
+
+					<li class="clear">
+						<h1></h1>
+						<div class="add_ul_r clear">
+							<input type="submit" class="add_btn kuang_lan">
+						</div>
+					</li>
+				</ul>
+			</div>
+			</form>
+		</div>
+
+	</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script src="__STATIC__/laydate/laydate.js"></script> <!-- 改成你的路径 -->
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+
+	$("#form").Validform({
+		tiptype: 3,
+		showAllError: true,
+		callback: function (ret) {
+			submit_form($("#form"),function(data){
+				console.log(data)
+				console.log(data)
+					if(data.state == 2){
+						layer.alert('修改失败1');
+					}else{
+						location.href = "{:url('fl/index','',false,true)}";
+					}
+			},function (err) {
+				console.log(err);
+				layer.alert('修改失败');
+			});
+			return false;
+		}
+	});
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+</script>
+{/block}

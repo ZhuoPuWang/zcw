@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$title}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/global-pc.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/index.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/page.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/validform.css"/>
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/swiper.css"/>
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/Hui-iconfont/iconfont.css"/>
+    <script src="__STATIC__/js/jquery-1.8.2.min.js"></script>
+    <script src="__STATIC__/js/index.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/page.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/jquery.media.js" type="text/javascript" charset="utf-8"></script>
+    {block name='style'}
+    {/block}
+</head>
+<body>
+<!--顶部-->
+
+
+{include file="template/header"}
+
+<!--container-->
+<div class="container clear">
+    <ul class="bj_list">
+        <li class="li_bj">
+            <div class="li_tit">
+                <img src="__STATIC__/images/g4.png"  alt="" />
+                <a href="{:url('Course/edit',array('id'=>$ids),false,true)}">课程属性</a>
+            </div>
+        </li>
+        <!--<li>-->
+            <!--<div class="li_tit">-->
+                <!--<img src="__STATIC__/images/g2.png" alt="" />-->
+                <!--<a href="{:url('course/coursereport',array('id'=>$ids),false,true)}">课程报表</a>-->
+            <!--</div>-->
+        <!--</li>-->
+        <li>
+            <div class="li_tit">
+                <img src="__STATIC__/images/g2.png" alt="" />
+                <a href="{:url('course/courseteacher',array('id'=>$ids),false,true)}">关联教师</a>
+            </div>
+        </li>
+        <li>
+            <div class="li_tit">
+                <img src="__STATIC__/images/g2.png" alt="" />
+                <a href="{:url('course/coursestudent',array('id'=>$ids),false,true)}">关联学生</a>
+            </div>
+        </li>
+
+        <li>
+            <div class="li_tit">
+                <img src="__STATIC__/images/g2.png" alt="" />
+                <a href="{:url('course/courseplay',array('id'=>$ids),false,true)}">课程预览</a>
+            </div>
+        </li>
+        <li>
+            <div class="li_tit">
+                <img src="__STATIC__/images/g2.png" alt="" />
+                <a href="{:url('course/coursekj',array('id'=>$ids),false,true)}">课程更新</a>
+            </div>
+        </li>
+        <li>
+            <div class="li_tit">
+                <img src="__STATIC__/images/g2.png" alt="" />
+                <a href="{:url('course/ks',array('id'=>$ids),false,true)}">关联考试</a>
+            </div>
+        </li>
+        <li>
+            <div class="li_tit">
+                <img src="__STATIC__/images/g2.png" alt="" />
+                <a href="{:url('course/pg',array('id'=>$ids),false,true)}">关联评估</a>
+            </div>
+        </li>
+        <li>
+            <div class="li_tit">
+                <img src="__STATIC__/images/g2.png" alt="" />
+                <a href="{:url('course/dy',array('id'=>$ids),false,true)}">关联调研</a>
+            </div>
+        </li>
+        <li>
+            <div class="li_tit">
+                <img src="__STATIC__/images/g2.png" alt="" />
+                <a href="{:url('course/dz',array('id'=>$ids),false,true)}">关联讨论区</a>
+            </div>
+        </li>
+
+        <li>
+            <div class="li_tit">
+                <img src="__STATIC__/images/g2.png" alt="" />
+                <a href="{:url('course/zs',array('id'=>$ids),false,true)}">关联证书</a>
+            </div>
+        </li>
+
+        <li>
+            <div class="li_tit">
+                <img src="__STATIC__/images/g2.png" alt="" />
+                <a href="{:url('course/delete',array('id'=>$ids),false,true)}">删除课程</a>
+            </div>
+        </li>
+        <li>
+            <div class="li_tit">
+                <img src="__STATIC__/images/g3.png" alt="" />
+                <a href="{:url('course/index','',false,true)}">返回</a>
+            </div>
+        </li>
+    </ul>
+    {block name="content"}{/block}
+</div>
+<div class="footer">
+    <p>© 2017-2018 Aliyun.com 版权所有 ICP证：陕B2-20080101</p>
+    <p>陕西蔚来信息科技有限公司</p>
+</div>
+</body>
+</html>
+{block name="script"}{/block}

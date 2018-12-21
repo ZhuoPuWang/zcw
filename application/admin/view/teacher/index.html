@@ -1,0 +1,86 @@
+{extend name="template/base" /}
+
+{block name="content"}
+<div class="container_content">
+    <div class="container_content_tit">讲师管理</div>
+    <div class="container_content_screen clear">
+        <div class="search clear">
+            <form method="get" action="{:\\think\\Url::build($Request.action)}" enctype="multipart/form-data">
+                <input type="text" style="width: 160px" placeholder="用户名／姓名／角色" name="realname" value="{$Request.param.realname}">
+                <input type="submit" class="screen_btn" id="btn" value="搜索" style="width: 110px;border-radius: 5px">
+            </form>
+        </div>
+        <div class="addcurr"><a style="display: block;width: 100%;" href="{:url('Teacher/add','',false,true)}">新建讲师</a>
+        </div>
+
+    </div>
+
+    <div class="table">
+
+        <table class="table_2">
+
+            <tr class="hd">
+
+                <td>姓名</td>
+
+                <td>邮箱</td>
+
+                <td>创建时间</td>
+
+                <td>操作</td>
+
+            </tr>
+
+            {volist name="list" id="vo"}
+
+            <tr>
+
+                <td>{$vo.realname}</td>
+                <td> {$vo['email']}</td>
+                <td> {:date('Y-m-d H:i:s',$vo['addtime'])}</td>
+                <td>
+
+                    {:sedit($vo.id,$vo.status,array('edit','delete'))}
+
+                </td>
+            </tr>
+            {/volist}
+
+        </table>
+
+    </div>
+    <div class="pager">{$page ?? ''}</div>
+
+</div>
+
+
+{/block}
+{block name="script"}
+
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+
+<script>
+
+    $("#form").Validform({
+
+        tiptype: 3,
+
+        showAllError: true,
+
+        callback: function (ret) {
+            del(this);
+            forbid(this)
+            return false;
+        }
+    });
+
+
+</script>
+
+{/block}

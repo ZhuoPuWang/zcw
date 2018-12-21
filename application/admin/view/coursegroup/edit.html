@@ -1,0 +1,315 @@
+{extend name="template/base1" /}
+
+
+{block name="content"}
+{include file="template/course_group"}
+
+		<div class="container_content">
+			<div class="container_content_tit">{$data.course_title}</div>
+			<div class="add">
+				<form id="form" action="{:url('Coursegroup/edit','',false,true)}" method="post">
+					<input type="hidden" name="id" value="{$data.id}">
+					<ul class="add_ul">
+
+
+						<li class="clear">
+
+							<h1>课程编号（必填项）:	</h1>
+
+							<div class="add_ul_r clear">
+
+								<input type="text" class="inp_text" value="{$data.course_number}" placeholder="请填写课程编号" datatype="/^[0-9a-zA-Z_]{1,}$/i" name="course_number"  errormsg="仅允许英文字母、数字、下划线和中横杠" nullmsg="讲师ID不能为空"/>
+
+								<span class="Validform_checktip"></span>
+
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1>课程标题（必填项）:	</h1>
+
+							<div class="add_ul_r clear">
+
+								<input type="text" class="inp_text" placeholder="请填写课程标题"  value="{$data.course_title}" name="course_title"/>
+
+								<span class="Validform_checktip"></span>
+
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1>课程描述:  </h1>
+
+							<div class="add_ul_r clear">
+
+								<textarea placeholder="课程描述" datatype="*" value="" name="course_content"  errormsg="" nullmsg="课程描述">{$data.course_content}</textarea>
+
+								<span class="Validform_checktip"></span>
+
+							</div>
+
+						</li>
+
+
+						<li class="clear">
+
+							<h1>目录:  </h1>
+
+							<div class="add_ul_r clear">
+								<input type="text" class="inp_text" placeholder="目录"  value="{$data.catalogname}" name="catalog1"  readonly  onclick="chooseParent()"/>
+								<input type="hidden"  id="pid1" value="{$data.catalog}" name="catalog"/>
+								<span class="Validform_checktip"></span>
+							</div>
+						</li>
+
+						<li class="clear">
+
+							<h1>目标用户:  </h1>
+
+							<div class="add_ul_r clear">
+
+								<textarea placeholder="课程描述" datatype="*" value="" name="target_user"  errormsg="" nullmsg="课程描述">{$data.target_user}</textarea>
+
+								<span class="Validform_checktip"></span>
+
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1>是否发送邮件提醒:	</h1>
+
+							<div class="add_ul_r">
+								<!--<input type="checkbox" name="email" style="margin: 15px 0 0 0;" >-->
+								<select name="email" value="{$data.email}" id="">
+									{if $data.email == 0}
+									<option value="0">否</option>
+									<option value="1">是</option>
+									{else}
+									<option value="1">是</option>
+									<option value="0">否</option>
+									{/if}
+								</select>
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1>是否发送微信提醒:	</h1>
+
+							<div class="add_ul_r">
+								<!--<input type="checkbox" name="weixin" style="margin: 15px 0 0 0;" >-->
+								<select name="weixin" value="{$data.weixin}" id="">
+									{if $data.weixin == 0}
+									<option value="0">否</option>
+									<option value="1">是</option>
+									{else}
+									<option value="1">是</option>
+									<option value="0">否</option>
+									{/if}
+								</select>
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1>是否允许学员自助报名:	</h1>
+
+							<div class="add_ul_r">
+
+								<!--<input type="checkbox" name="self_help" style="margin: 15px 0 0 0;" >-->
+								<select name="self_help" value="{$data.self_help}" id="">
+									{if $data.self_help == 0}
+									<option value="0">否</option>
+									<option value="1">是</option>
+									{else}
+									<option value="1">是</option>
+									<option value="0">否</option>
+									{/if}
+								</select>
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1>是否需要审核:	</h1>
+
+							<div class="add_ul_r">
+
+								<!--<input type="checkbox" name="to_examine" style="margin: 15px 0 0 0;" >-->
+								<select name="to_examine" value="{$data.to_examine}" id="">
+									{if $data.to_examine == 0}
+									<option value="0">否</option>
+									<option value="1">是</option>
+									{else}
+									<option value="1">是</option>
+									<option value="0">否</option>
+									{/if}
+								</select>
+							</div>
+
+						</li>
+
+						<li class="clear display">
+
+							<h1>是否自动分配:	</h1>
+
+							<div class="add_ul_r">
+								<!--<input type="checkbox" name="auto_distribution" style="margin: 15px 0 0 0;" >-->
+								<select name="auto_distribution" value="{$data.auto_distribution}" id="">
+									{if $data.auto_distribution == 0}
+									<option value="0">否</option>
+									<option value="1">是</option>
+									{else}
+									<option value="1">是</option>
+									<option value="0">否</option>
+									{/if}
+								</select>
+							</div>
+
+						</li>
+						<li class="clear display">
+
+							<h1>分配条件:	</h1>
+
+							<div class="add_ul_r">
+								<textarea placeholder="分配条件" value=""  name="distribution_condition" >{$data.distribution_condition}
+								</textarea>
+
+								<span class="Validform_checktip"></span>
+
+							</div>
+
+						</li>
+
+
+
+						<li class="clear">
+
+							<h1>创建时间:	</h1>
+
+							<div class="add_ul_r">
+								<span style="line-height: 40px">{:date('Y-m-d H:i:s',$data.addtime)}</span>
+
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1>更新时间:	</h1>
+
+							<div class="add_ul_r">
+								<span style="line-height: 40px">{:date('Y-m-d H:i:s',$data.updatetime)}</span>
+
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1></h1>
+
+							<div class="add_ul_r clear">
+
+								<input type="submit" id="btn" style="opacity:0;">
+
+								<label for="btn"> <div class="add_btn kuang_lan">确定</div></label>
+
+								<a  href="{:url('Course/index','',false,true)}" class="add_btn kuang_hong">取消</a>
+
+							</div>
+
+						</li>
+
+					</ul>
+
+				</form>
+			</div>
+		</div>
+		
+	</div>
+	
+	{/block}
+
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+
+	$("#form").Validform({
+
+		tiptype: 3,
+
+		showAllError: true,
+
+		callback: function (ret) {
+			submit_form($("#form"),function(data){
+				console.log(data);
+				if(data.state == 1){
+					layer.msg(data.succ,{icon:6,time:5000});
+					window.location.reload();
+				}else{
+					layer.msg(data.err,{icon:5,time:5000});
+				}
+			},function(err){
+				console.log(err)
+			});
+			return false;
+		}
+	});
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+	$('select[name=course_type]').change(function(){
+		var v = $(this).val();
+		if(v==1){
+			$('.display').css('display','none')
+		}else{
+			$('.display').css('display','block')
+		}
+
+
+	})
+
+</script>
+<script type="text/javascript">
+	$(".fabu").click(function(){
+		$(this).addClass("hide");
+		$(".chexiao").removeClass("hide");
+	})
+	$(".chexiao").click(function(){
+		$(this).addClass("hide");
+		$(".fabu").removeClass("hide");
+	})
+	function chooseParentDepart(){
+		layer_open('选择上级部门',"{:url('course/chooseParentDepart','',false,true)}");
+	}
+	function setChoose(pid,user_object){
+		$('input[name=user_object]').val(user_object);
+		$('#pid').val(pid);
+	}
+
+	function chooseParent(){
+		layer_open('选择上级部门',"{:url('course/chooseParent','',false,true)}");
+	}
+	function setChooseqw(pid,user_object){
+		$('input[name=catalog1]').val(user_object);
+		$('#pid1').val(pid);
+	}
+</script>
+{/block}

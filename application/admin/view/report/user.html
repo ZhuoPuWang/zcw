@@ -1,0 +1,117 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<div class="container container_w1300 clear">
+    {include file='template/report_nav' /}
+    <div class="container_content container_content_w80" style="width:89%;">
+        <div class="container_content_tit">用户信息</div>
+        <div class="container_content_screen clear">
+            <div class="container_content_screen_l">
+                <form action="{:url('report/user')}">
+                    <div class="search clear">
+                        <input type="text" name="uname" placeholder="用户名／姓名／角色"/>
+                        <button>搜索</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="table">
+
+            <table class="table_2">
+                <tr class="hd">
+                    <td>用户名</td>
+                    <td>邮箱</td>
+                    <td>姓名</td>
+                    <td>角色</td>
+                    <td>组织</td>
+                    <td>审批人</td>
+                    <td>职务</td>
+                    <td>营运部</td>
+                    <td>梯队人员</td>
+                    <td>部门</td>
+                    <td>是否党员</td>
+                    <td>性别</td>
+                    <td>联系电话</td>
+                    <td>联系地址</td>
+
+                    <td>备注</td>
+
+                </tr>
+                {foreach $list as $k=>$v}
+                <tr>
+                    <td>{$v.usernumber}</td>
+                    <td>{$v.email}</td>
+                    <td>{$v.realname}</td>
+                    <td>{$v.role}</td>
+
+                    <td>{$v.name}</td>
+                    <td>{$v.approval}</td>
+                    <td>{$v.zw}</td>
+                    <td>{$v.operate}</td>
+                    <td>{$v.echelon}</td>
+                    <td>{$v.depart}</td>
+                    {if $v['dangy'] == 0}
+                    <td>否</td>
+                    {else}
+                    <td>是</td>
+                    {/if}
+                    {if $v['sex'] == 55}
+                    <td>男</td>
+                    {elseif $v['sex'] == 56}
+                    <td>女</td>
+                    {/if}
+
+                    <td>{$v.phone}</td>
+                    <td>{$v.address}</td>
+
+                    <td>{$v.remarks}</td>
+                </tr>
+                {/foreach}
+            </table>
+            <!--分页-->
+            <div class="tcdPageCode"></div>
+
+        </div>
+</div>
+</div>
+{/block}
+{block name="script"}
+
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.config.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.all.min.js"> </script>
+
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+
+<script>
+
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                location.href = "{:url('News/index','',false,true)}";
+            },function (err) {
+                layer.alert('报表设置失败');
+            });
+            return false;
+        }
+
+    });
+
+
+
+
+</script>
+
+{/block}

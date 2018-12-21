@@ -1,0 +1,72 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="container container_w1200 clear">
+    {include file='template/report_nav' /}
+    <div class="container_content container_content_w80">
+    <div class="container_content_tit">报表设置</div>
+    <div class="table">
+        <table class="table_1">
+            <tr class="hd">
+                <td>需发送报表</td>
+                <td>发送频率</td>
+            </tr>
+            <tr>
+                <td>培训记录</td>
+                <td>
+                    <select name="">
+                        <option value="1">不发送</option>
+                        <option value="2">发送</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>考试记录</td>
+                <td>
+                    <select>
+                        <option value="1">不发送</option>
+                        <option value="2">发送</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>课程组合报表</td>
+                <td>
+                    <select name="">
+                        <option value="1">不发送</option>
+                        <option value="2">发送</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>培训信息</td>
+                <td>
+                    <select name="">
+                        <option value="1">不发送</option>
+                        <option value="2">发送</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>用户信息</td>
+                <td>
+                    <select name="">
+                        <option value="1">不发送</option>
+                        <option value="2">发送</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>审批报表</td>
+                <td>
+                    <select name="">
+                        <option value="1">不发送</option>
+                        <option value="2">发送</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <div class="queding">确&nbsp;定</div>
+    </div>
+</div>
+</div>
+{/block}

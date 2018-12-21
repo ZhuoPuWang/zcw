@@ -1,0 +1,72 @@
+{extend name="template/base" /}
+{block name="content"}
+<form id="form" type="get" action="{:url('discuz/feedBack')}" enctype="multipart/form-data">
+
+        <input type="hidden" value="{$id}" name="id">
+        <textarea name="content" id="editor" type="text/plain" style="width: 100%;height:250px"></textarea>
+        <input  type="submit" value="确定">
+</form>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script>
+
+    var ue = UE.getEditor('editor', {
+        toolbars: [
+            ['fullscreen', 'undo', 'redo', 'bold', 'italic', 'fontfamily', 'fontsize', '|',
+                'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
+                'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+                'simpleupload', 'insertvideo', 'music'
+            ]
+        ]
+    });
+    $("#form").Validform({
+
+        tiptype: 3,
+
+        showAllError: true,
+
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                console.log(data);
+                if(data.state == 1){
+                    layer.msg(data.succ,{icon:6,time:5000});
+                    window.parent.location.reload(); //刷新父页面
+
+                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    parent.layer.close(index);
+                }else if($data.state == 0){
+                    layer.msg(data.err,{icon:5,time:5000});
+                    window.parent.location.reload(); //刷新父页面
+
+                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    parent.layer.close(index);
+
+                }else if($data.state == 2){
+                    layer.msg(data.err,{icon:5,time:5000});
+                    window.parent.location.reload(); //刷新父页面
+
+                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    parent.layer.close(index);
+
+                }
+            },function(err){
+                console.log(err)
+            });
+            return false;
+        }
+    });
+    function layer_close() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+
+</script>
+
+{/block}

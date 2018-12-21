@@ -1,0 +1,231 @@
+{extend name="template/basecourse" /}
+{block name="content"}
+<div class="container_content">
+    <div class="container_content_tit">课件上传</div>
+    <div class="add">
+
+        <form id="form" action="{:url('Course/coursekj','',false,true)}" method="post">
+            <input type="hidden" name="course_id" value="{$ids}">
+            <ul class="add_ul">
+
+                <li class="clear">
+
+                    <h1>附件类型： </h1>
+
+                    <div class="add_ul_r clear">
+
+                        <select name="attachment_type" class="select-box">
+
+                                <option value="0">照片</option>
+                                <option value="1">视频</option>
+                                <option value="2">ppt</option>
+
+                        </select>
+
+                    </div>
+
+                </li>
+                <li class="clear">
+
+                    <h1>附件： </h1>
+
+                    <div class="add_ul_r clear">
+
+                        <div id="add" style="float: left">
+                            <input name="attach" type="file" id="attach" style="display:none"/>
+                            <label for="attach">
+                                <i class="Hui-iconfont" style="font-size:100px">&#xe610;</i>
+                            </label>
+                        </div>
+
+                    </div>
+                </li>
+
+
+                <li class="clear">
+
+                    <h1></h1>
+
+                    <div class="add_ul_r clear">
+
+                        <input type="submit" id="btn" style="opacity:0;">
+
+                        <label for="btn">
+                            <div class="add_btn kuang_lan">确定</div>
+                        </label>
+
+                        <a href="{:url('Course/index','',false,true)}" class="add_btn kuang_hong">取消</a>
+
+                    </div>
+
+                </li>
+
+            </ul>
+
+        </form>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+    $(".header_nav li").click(function () {
+        $(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+    })
+
+    $("#form").Validform({
+
+        tiptype: 3,
+
+        showAllError: true,
+
+        callback: function (ret) {
+            submit_form($("#form"), function (data) {
+                console.log(data);
+                if (data.state == 1) {
+                    layer.msg(data.succ, {icon: 6, time: 5000});
+                    //location.href = "{:url('Course/index','',false,true)}"
+                } else {
+                    layer.msg(data.err, {icon: 5, time: 5000});
+                }
+            }, function (err) {
+                console.log(err)
+            });
+            return false;
+        }
+    });
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount: 6,
+        current: 1,
+        backFn: function (p) {
+            console.log(p);
+        }
+    });
+
+</script>
+<script type="text/javascript">
+    $(".fabu").click(function () {
+        $(this).addClass("hide");
+        $(".chexiao").removeClass("hide");
+    })
+    $(".chexiao").click(function () {
+        $(this).addClass("hide");
+        $(".fabu").removeClass("hide");
+    })
+
+
+    $('#attach').change(function () {
+        var this_ele = $(this);
+        this_ele.wrap("<form id='ajax_form' action='{:url(\'course/uploadPic\',array(\'pic_name\' => \'attach\'),false,true)}' method='post'enctype='multipart/form-data'></form>");
+        //防网速慢，弹出加载层
+        var loading = layer.load(3, {shade: [0.8, '#393D49']})
+        $('#ajax_form').ajaxSubmit({
+            data: {
+                type: $('select[name=attachment_type]').val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                console.log($('select[name=attachment_type]').val());
+                this_ele.unwrap();
+                layer.close(loading);
+                if (data.state == 1) {
+                    if ($('select[name=attachment_type]').val() == 1) {
+                        var inner_html = '<div style="float: left">\n' +
+                                '                    <input name="attaches[]" type="hidden" id="attach" style="display:none"  value="' + data.path + '"/>\n' +
+                                '                    <label>\n' +
+                                '                       <div style="width:250px;height:250px;line-height:250px;text-align: center;position: relative">' +
+                                '                            <i class="Hui-iconfont" style="font-size:50px;position:absolute;margin-left:105px;color:red" onclick="layer_open(\'播放视频\',\'{:url(\'course/play\',\'\',false,true)}\')">&#xe6e6;</i>' +
+                                '                            <img src="__STATIC__/uploads/' + data.cover_path + '"  style="width:250px;height:200px">\n' +
+                                '                       </div>' +
+                                '                    </label>\n' +
+                                '                </div>';
+                        $('#add').before(inner_html);
+                        $('#add').css({'display': 'none'});
+                    } else if($('select[name=attachment_type]').val() == 0){
+                        var count = $('#add').siblings('div').length;
+                        if (count >= 8) {
+                            $('#add').css({'display': 'none'});
+                        }
+                        var inner_html = '<div style="float: left;width:130px;margin:10px 0 0 10px">\n' +
+                                '                    <input name="attaches[]" type="hidden" value="' + data.path + '">' +
+                                '                    <input name="attach" type="file" id="attach' + count + '" style="display:none"  onchange="changePhoto(this)"/>\n' +
+                                '                    <label for="attach' + count + '">\n' +
+                                '                            <img src="__STATIC__/uploads/' + data.path + '" style="width:130px;height:130px;">\n' +
+                                '                    </label>\n' +
+                                '                </div>';
+                        $('#add').before(inner_html);
+                    }else{
+                        var count = $('#add').siblings('div').length;
+                        if (count >= 0) {
+                            $('#add').css({'display': 'none'});
+                        }
+                        inner_html = '<div style="float: left;width:130px;margin:10px 0 0 10px">\n' +
+                            '                    <input name="attaches[]" type="hidden" value="' + data.path + '">' +
+                            '                    <input name="attach" type="file" id="attach' + count + '" style="display:none"  onchange="changePhoto(this)"/>\n' +
+                            '                    <label for="attach' + count + '">\n' +
+                            '                            <i>上传成功</i>\n' +
+                            '                    </label>\n' +
+                            '                </div>';
+                    }
+                    $('#add').before(inner_html);
+                } else {
+
+                    layer.msg(data.reason, {icon: 5, time: 1000});
+                }
+            },
+            error: function (err) {
+                console.log(err.responseText)
+                this_ele.unwrap();
+                layer.close(loading);
+                layer.msg('网络错误，请重试！', {icon: 5, time: 1000});
+            }
+        });
+        this_ele.val(null);
+    });
+
+    $('select[name=attachment_type]').change(function () {
+        $('#add').siblings('div').remove();
+        $('#add').show();
+    });
+
+    function changePhoto(obj) {
+        $(obj).wrap("<form id='ajax_form' action='{:url(\'course/uploadPic\',array(\'pic_name\' => \'attach\'),false,true)}' method='post'enctype='multipart/form-data'></form>");
+        var loading = layer.load(3, {shade: [0.8, '#393D49']})
+        $('#ajax_form').ajaxSubmit({
+            data: {
+                type: 0
+            },
+            dataType: 'json',
+            success: function (data) {
+                $(obj).unwrap();
+                layer.close(loading);
+                if (data.state == 1) {
+                    $($(obj).parent().find('input')[0]).val(data.path);
+                    //  $(obj).before().val(data.path);
+                    $(obj).next().find('img').attr('src', '__STATIC__/uploads/' + data.path);
+                } else {
+                    layer.msg(data.reason, {icon: 5, time: 1000});
+                }
+            },
+            error: function (err) {
+                $(obj).unwrap();
+                layer.close(loading);
+                layer.msg('网络错误，请重试！', {icon: 5, time: 1000});
+            }
+        });
+    }
+
+</script>
+{/block}

@@ -1,0 +1,145 @@
+{extend name="template/base" /}
+{block name="content"}
+<style type="text/css">
+	.zhengshu_content{width: 100%;padding: 20px;}
+	.zhengshu{width: 480px;height: 672px;background: url(__STATIC__/cert.jpg)no-repeat;background-size:100% 100%;float: left;}
+	.zhengshu_top{width: 100%;text-align: center;padding-top: 120px;}
+	.zhengshu_ul{width: 100%;padding: 0 50px;}
+	.zhengshu_ul li{width: 100%;height: 50px;margin-top: 20px;}
+	.zhengshu_ul_l{width: 35%;text-align: right;float: left;}
+	.zhengshu_ul_r{width: 60%;text-align: center;float: right;line-height: 40px;}
+	.zhengshu_box{width: 550px;float: left;padding-left: 50px;padding-top: 50px;}
+	.zhengshu_boxinp{width: 90%;margin: 20px auto;}
+	.zhengshu_boxinp span{width: 80px;float: left;line-height: 40px;}
+	.zhengshu_boxinp input{width: 350px;height: 40px;line-height: 40px;padding-left: 20px; color: #333; border: 1px solid #ddd; border-radius: 5px;background: #f5f5f5;}
+	.zhengshu_boxinp .zhengshu_boxinp_btn{display: inline-block;width: 80px !important;height: 40px;line-height: 40px;background: none;
+		text-align: center;border-radius: 5px;padding: 0;
+	}
+	.qd{color: #149dd2 !important;border:1px solid #149dd2 !important;margin-right: 10px;cursor: pointer;}
+	.qx{color: #CF332A !important;border:1px solid #CF332A !important;}
+</style>
+	<!--container-->
+	<div class="container clear">
+		<div class="container_content">
+			<div class="container_content_tit">证书 </div>
+			<div class="zhengshu_content">
+				<div class="zhengshu clear">
+					<div class="zhengshu_top">
+						<h1 class="zhengshu_bt1">培训证书</h1>
+						<h1 class="zhengshu_bt2">Certification</h1>
+					</div>
+					<ul class="zhengshu_ul">
+						<li class="clear">
+							<div class="zhengshu_ul_l">
+								<h1>培训名称</h1>
+								<h1>Training Title</h1>
+							</div>
+							<div class="zhengshu_ul_r">X X X X X X X X X X X X X X X X</div>
+						</li>
+						<li class="clear">
+							<div class="zhengshu_ul_l">
+								<h1>用户姓名</h1>
+								<h1>Name</h1>
+							</div>
+							<div class="zhengshu_ul_r">X X X X</div>
+						</li>
+						<li class="clear">
+							<div class="zhengshu_ul_l">
+								<h1>课程时长</h1>
+								<h1>Course Duration</h1>
+							</div>
+							<div class="zhengshu_ul_r">X X小时X X分钟</div>
+						</li>
+						<li class="clear">
+							<div class="zhengshu_ul_l">
+								<h1>考试分数</h1>
+								<h1>Exam Score</h1>
+							</div>
+							<div class="zhengshu_ul_r"> X X</div>
+						</li>
+						<li class="clear">
+							<div class="zhengshu_ul_l">
+								<h1>证书签发日期</h1>
+								<h1>Issue Date</h1>
+							</div>
+							<div class="zhengshu_ul_r">XXXX-XX-XX</div>
+						</li>
+						<li class="clear">
+							<div class="zhengshu_ul_l">
+								<h1>证书到期日期 </h1>
+								<h1>Expiration Date</h1>
+							</div>
+							<div class="zhengshu_ul_r">XXXX-XX-XX</div>
+						</li>
+					</ul>
+				</div>
+				
+				<div class="zhengshu_box">
+					<form action="{:url('add')}" method="post" id ="form">
+					<div class="zhengshu_boxinp clear">
+						<span>证书ID</span>
+						<input type="text" name="number" value="" />
+					</div>
+					<div class="zhengshu_boxinp clear">
+						<span>中文标题</span>
+						<input type="text" id="biaoti1" name="chtitle"  value="培训证书" />
+					</div>
+					<div class="zhengshu_boxinp clear">
+						<span>英文标题</span>
+						<input type="text" id="biaoti2" name="entitle"  value="Certification" />
+					</div>
+					<div class="zhengshu_boxinp clear">
+						<span>证书到期日期</span>
+						<input type="text" name="endtime" class="inp_text" id="test2" value="">
+					</div>
+					<div class="zhengshu_boxinp" style="text-align: center;">
+						<input class="zhengshu_boxinp_btn qd" type="submit" value="确定"/>
+						<a class="zhengshu_boxinp_btn qx" href="javascript:;">取消</a>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script src="__STATIC__/laydate/laydate.js"></script> <!-- 改成你的路径 -->
+<script type="text/javascript">
+	$("#biaoti1").blur(function(){
+		var tex = $(this).val();
+		$(".zhengshu_bt1").text(tex);
+	})
+	$("#biaoti2").blur(function(){
+		var tex = $(this).val();
+		$(".zhengshu_bt2").text(tex);
+	})
+
+	laydate.render({
+		elem: '#test2'  //指定元素
+	});
+
+	$("#form").Validform({
+		tiptype: 3,
+		showAllError: true,
+		callback: function (ret) {
+			submit_form($("#form"),function(data){
+				//console.log(data)
+				if(data.state == 2){
+					layer.alert('添加失败1');
+				}else{
+					location.href = "{:url('certificate/index','',false,true)}";
+				}
+			},function (err) {
+				console.log(err);
+				layer.alert('添加失败');
+			});
+			return false;
+		}
+	});
+</script>
+{/block}

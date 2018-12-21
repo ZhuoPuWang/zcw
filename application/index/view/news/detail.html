@@ -1,0 +1,11 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<div class="new">
+    <div class="new_top">
+        <a href="{:url('News/index','',false,true)}">返回</a>
+    </div>
+    <div class="new_cont">{$news.content|htmlspecialchars_decode}</div>
+</div>
+
+{/block}

@@ -1,0 +1,83 @@
+{extend name="template/base1" /}
+{block name="content"}
+{include file="template/course_group"}
+<div class="container_content" style="width: 1200px;margin: 0 420px 0 0;">
+    <div class="container_content_tit">{$data.course_title}</div>
+    <div class="container_content_screen clear" style="height: 15px">
+        <div class="search clear">
+                <form action="{:url('coursereport')}" method="post">
+                    <input type="text" name="course_title" placeholder="评估标题"/>
+                    <button>搜索</button>
+                </form>
+
+        </div>
+        <div class="addcurr"><a href="javescript:;" onclick="chooseCourse()">关联课程</a></div>
+        <div class="table">
+            <table class="table_2">
+                <tr class="hd">
+
+                    <td>优先级</td>
+                    <td>必修</td>
+                    <td>课程编号</td>
+                    <td>课程名称</td>
+                    <td>课程类型</td>
+                    <td>关联考试</td>
+                    <td>操作</td>
+                </tr>
+                {volist name="course" id = "vo"}
+                <tr>
+
+                    <td>{$vo.first}</td>
+                    <td>{if $vo.must == 1}必修{else}不必修{/if}</td>
+                    <td>{$vo.course_number}</td>
+                    <td>{$vo.course_title}</td>
+                    {if $vo.course_type == 1}
+                    <td>课堂培训</td>
+                    {else}
+                    <td>在线课堂</td>
+                    {/if}
+                    <td>{$vo.name}</td>
+
+                    <td><a href="{:url('coursegroup/deletecourse',array('id'=>$vo.id))}">删除</a></td>
+                </tr>
+                {/volist}
+            </table>
+            <!--分页-->
+            {$page ?? ''}
+       </div>
+    </div>
+</div>
+
+{/block}
+
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+    $(".header_nav li").click(function () {
+        $(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+    })
+
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount: 6,
+        current: 1,
+        backFn: function (p) {
+            console.log(p);
+        }
+    });
+
+</script>
+<script type="text/javascript">
+
+    function chooseCourse() {
+        layer_open('关联课程', '{:url("coursegroup/chooseCourse",array('cpid'=>$ids),false,true)}');
+    }
+</script>
+{/block}

@@ -1,0 +1,24 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<div class="new">
+    <div class="new_txt">新闻</div>
+    <ul class="new_ul">
+        {foreach $news as $k=>$v}
+        <li class="clear">
+            <div class="new_ul_l"></div>
+            <div class="new_ul_r">
+                <h1><a href="{:url('News/detail',array('id'=>$v['id']),false,true)}">{$v.title}</a></h1>
+                <p>发布时间：<?php echo (date('Y-m-d h:i:s', $v['create_time'])) ?></p>
+            </div>
+        </li>
+    {/foreach}
+
+
+    </ul>
+    <div class="pager">{$page ?? ''}</div>
+</div>
+
+
+
+{/block}

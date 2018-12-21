@@ -1,0 +1,264 @@
+{extend name="template/basecourse" /}
+
+
+{block name="content"}
+		<div class="container_content">
+			<div class="container_content_tit">{$data.course_title}</div>
+			<div class="add">
+				<form id="form" action="{:url('Course/edit','',false,true)}" method="post">
+					<input type="hidden" name="id" value="{$data.id}">
+					<ul class="add_ul">
+						<li class="clear">
+							<h1>课程类型:	</h1>
+							<div class="add_ul_r">
+
+								<select name="course_type" id="">
+									{if $data.course_type == 0}
+									<option value="0">在线课程</option>
+									<option value="1">课堂培训</option>
+									{else}
+									<option value="1">课堂培训</option>
+									<option value="0">在线课程</option>
+									{/if}
+								</select>
+
+							</div>
+
+						</li>
+
+						<li class="clear">
+
+							<h1>课程编号（必填项）:	</h1>
+
+							<div class="add_ul_r clear">
+
+								<input type="text" class="inp_text" value="{$data.course_number}" placeholder="请填写课程编号" datatype="/^[0-9a-zA-Z_]{1,}$/i" name="course_number"  errormsg="仅允许英文字母、数字、下划线和中横杠" nullmsg="讲师ID不能为空"/>
+
+								<span class="Validform_checktip"></span>
+
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1>课程标题（必填项）:	</h1>
+
+							<div class="add_ul_r clear">
+
+								<input type="text" class="inp_text" placeholder="请填写课程标题"  value="{$data.course_title}" name="course_title"/>
+
+								<span class="Validform_checktip"></span>
+
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1>课程描述:  </h1>
+
+							<div class="add_ul_r clear">
+
+								<textarea placeholder="课程描述" datatype="*" value="" name="course_content"  errormsg="" nullmsg="课程描述">{$data.course_content}</textarea>
+
+								<span class="Validform_checktip"></span>
+
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1>学分:  </h1>
+
+							<div class="add_ul_r clear">
+
+								<input type="text" class="inp_text" placeholder="学分"  value="{$data.credit}" name="credit" />分
+
+								<span class="Validform_checktip"></span>
+
+							</div>
+
+						</li>
+						<li class="clear display">
+
+							<h1>课程时长:  </h1>
+
+							<div class="add_ul_r clear">
+
+								<input type="text" class="inp_text" placeholder="天"  value="{$data.course_time_d}" name="course_time_d"/>天
+								<span class="Validform_checktip"></span>
+
+							</div>
+
+						</li>
+						<li class="clear display">
+
+							<h1>过期天数:	 </h1>
+
+							<div class="add_ul_r clear">
+
+								<input type="text" class="inp_text" placeholder="过期天数" value="{$data.day}"  name="day"  errormsg="请填写过期天数" nullmsg="过期天数不能为空"/>天
+
+								<span class="Validform_checktip"></span>
+
+							</div>
+
+						</li>
+
+						<li class="clear">
+
+							<h1>用户对象:	 </h1>
+							<div class="add_ul_r clear">
+								<input type="text" class="inp_text" placeholder="用户对象"  value="{$data.user_objectname}"  name="user_object1"  readonly  onclick="chooseParentDepart()"/>
+								<input type="hidden"  id="pid"  value="{$data.user_object}"  name="user_object" />
+								<span class="Validform_checktip"></span>
+							</div>
+						</li>
+
+
+						<li class="clear">
+
+							<h1>目标用户:  </h1>
+
+							<div class="add_ul_r clear">
+
+								<textarea placeholder="课程描述" datatype="*" value="" name="target_user"  errormsg="" nullmsg="课程描述">{$data.target_user}</textarea>
+
+								<span class="Validform_checktip"></span>
+
+							</div>
+
+						</li>
+
+						<li class="clear">
+
+							<h1>创建时间:	</h1>
+
+							<div class="add_ul_r">
+								<span style="line-height: 40px">{:date('Y-m-d',$data.addtime)}</span>
+
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1>更新时间:	</h1>
+
+							<div class="add_ul_r">
+								<span style="line-height: 40px">{:date('Y-m-d',$data.updatetime)}</span>
+
+							</div>
+
+						</li>
+						<li class="clear">
+
+							<h1></h1>
+
+							<div class="add_ul_r clear">
+
+								<input type="submit" id="btn" style="opacity:0;">
+
+								<label for="btn"> <div class="add_btn kuang_lan">确定</div></label>
+
+								<a  href="{:url('Course/index','',false,true)}" class="add_btn kuang_hong">取消</a>
+
+							</div>
+
+						</li>
+
+					</ul>
+
+				</form>
+			</div>
+		</div>
+		
+	</div>
+	
+	{/block}
+
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+
+	$("#form").Validform({
+
+		tiptype: 3,
+
+		showAllError: true,
+
+		callback: function (ret) {
+			submit_form($("#form"),function(data){
+				console.log(data);
+				if(data.state == 1){
+					layer.msg(data.succ,{icon:6,time:5000});
+					//location.href = "{:url('Course/index','',false,true)}"
+				}else{
+					layer.msg(data.err,{icon:5,time:5000});
+				}
+			},function(err){
+				console.log(err)
+			});
+			return false;
+		}
+	});
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+	$('select[name=course_type]').change(function(){
+		var v = $(this).val();
+		if(v==1){
+			$('.display').css('display','none')
+		}else{
+			$('.display').css('display','block')
+		}
+
+
+	})
+	$(function(){
+		{if $data.course_type == 0}
+		$('.display').css('display','block')
+				{else}
+		$('.display').css('display','none')
+				{/if}
+	})
+</script>
+<script type="text/javascript">
+	$(".fabu").click(function(){
+		$(this).addClass("hide");
+		$(".chexiao").removeClass("hide");
+	})
+	$(".chexiao").click(function(){
+		$(this).addClass("hide");
+		$(".fabu").removeClass("hide");
+	})
+	function chooseParentDepart(){
+		layer_open('选择上级部门',"{:url('course/chooseParentDepart','',false,true)}");
+	}
+	function setChoose(pid,user_object){
+		$('input[name=user_object1]').val(user_object);
+		$('#pid').val(pid);
+	}
+
+	function chooseParent(){
+		layer_open('选择上级部门',"{:url('course/chooseParent','',false,true)}");
+	}
+	function setChooseqw(pid,user_object){
+		$('input[name=catalog1]').val(user_object);
+		$('#pid1').val(pid);
+	}
+</script>
+{/block}

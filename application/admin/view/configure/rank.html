@@ -1,0 +1,77 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<!--container-->
+<div class="container clear">
+
+    {include file="template/configure"}
+    <div class="container_content">
+        <div class="container_content_tit">排行榜管理</div>
+        <div class="add">
+            <form id="form" action="{:url('Configure/rank','',false,true)}" method="post">
+            <ul class="add_ul">
+                <li class="clear">
+                    <h1  class="li_img">设定排行榜规则 :	</h1>
+                    <div class="add_ul_r clear">
+                        {if $rank['rank'] == 1}
+                        <label for=""><input checked="checked" type="radio" name="rank" id="" value="1" class="inp_check">学习总时长 </label>
+                        <label for=""><input type="radio" name="rank" id="" value="2" class="inp_check">已完成课程数 </label>
+                        <label for=""><input type="radio" name="rank" id="" value="3" class="inp_check">已获得总学分 </label>
+                        {elseif $rank['rank'] == 2}
+                        <label for=""><input  type="radio" name="rank" id="" value="1" class="inp_check">学习总时长 </label>
+                        <label for=""><input checked="checked" type="radio" name="rank" id="" value="2" class="inp_check">已完成课程数 </label>
+                        <label for=""><input  type="radio" name="rank" id="" value="3" class="inp_check">已获得总学分 </label>
+                        {else}
+                        <label for=""><input  type="radio" name="rank" id="" value="1" class="inp_check">学习总时长 </label>
+                        <label for=""><input type="radio" name="rank" id="" value="2" class="inp_check">已完成课程数 </label>
+                        <label for=""><input checked="checked"  type="radio" name="rank" id="" value="3" class="inp_check">已获得总学分 </label>
+                        {/if}
+
+                    </div>
+                </li>
+                <li class="clear">
+                    <h1></h1>
+
+                    <div class="add_ul_r clear">
+                        <input id="btn" style="display: none" type="submit">
+                        <label for="btn"><div class="add_btn kuang_lan">确定</div></label>
+
+                    </div>
+                </li>
+            </ul>
+            </form>
+        </div>
+    </div>
+
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+    function chooseParentDepart(){
+        layer_open('选择上级部门',"{:url('Configure/chooseParentDepart','',false,true)}");
+    }
+
+    function setChoose(pid,pname){
+        $('input[name=pname]').val(pname);
+        $('input[name=did]').val(pid);
+    }
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                layer.alert('操作成功');
+            },function (err) {
+                console.log(err);
+                layer.alert('操作失败');
+            });
+            return false;
+        }
+    });
+
+</script>
+
+{/block}

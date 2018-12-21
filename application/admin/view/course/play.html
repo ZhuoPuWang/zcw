@@ -1,0 +1,7 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="container_content" >
+    <div class="container_content_tit">课件预览</div>
+    <video src="__STATIC__/uploads/{$preview_src}" controls autoplay></video>
+</div>
+{/block}

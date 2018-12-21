@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{$title}</title>
+
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/global-pc.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/index.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/page.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/validform.css" />
+
+    {block name="css"}{/block}
+    <script src="__STATIC__/js/jquery-1.8.2.min.js"></script>
+    <script src="__STATIC__/js/index.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/page.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+{if condition="!isset($haveHead)"}
+    {include file="template/header"}
+{/if}
+<!--container-->
+<div class="container clear">
+    {if condition="!isset($haveLeft)"}
+    <ul class="container_list">
+        <li>
+            <div class="li_tit li_tit_bg">
+                <img src="__STATIC__/images/icon1.png" alt="" />
+                学习管理
+            </div>
+            <dl>
+                <dd><a href="{:url('course/index','',false,true)}">课程管理</a></dd>
+                <!--<dd><a href="{:url('Coursegroup/index','',false,true)}">课程组合管理</a></dd>-->
+                <dd><a href="{:url('examination/index','',false,true)}">考试管理</a></dd>
+                <dd><a href="{:url('Question/index','',false,true)}">题库管理</a></dd>
+                <dd><a href="{:url('Assess/index','',false,true)}">评估管理</a></dd>
+                <dd><a href="{:url('Coursesurvey/index','',false,true)}">课前调研</a></dd>
+            </dl>
+        </li>
+        <li>
+            <div class="li_tit li_tit_bg">
+                <img src="__STATIC__/images/icon1.png" alt="" />
+                用户管理
+            </div>
+            <dl>
+                <dd><a href="{:url('member/index','',false,true)}">用户管理</a></dd>
+                <dd {if condition="$_SESSION['think']['role'] lt 2"}style="display:none;"{/if}><a href="{:url('depart/index','',false,true)}" >组织结构管理</a></dd>
+                <!--<dd><a href="{:url('Userimport/index','',false,true)}">用户导入</a></dd>-->
+                <dd {if condition="$_SESSION['think']['role'] lt 2"}style="display:none;"{/if}><a href="{:url('fl/index','',false,true)}" >用户属性分类</a></dd>
+                <!--<dd><a href="{:url('member/index','',false,true)}">用户属性管理</a></dd>-->
+            </dl>
+        </li>
+        <li>
+            <div class="li_tit li_tit_bg">
+                <img src="__STATIC__/images/icon1.png" alt="" />
+                系统管理
+            </div>
+            <dl>
+
+                <dd {if condition="$_SESSION['think']['role'] lt 2"}style="display:none;"{/if}><a href="{:url('Catalog/index','',false,true)}" >目录管理</a></dd>
+                <!--<dd><a href="{:url('Study/index','',false,true)}">学习路径管理</a></dd>-->
+                <dd {if condition="$_SESSION['think']['role'] lt 2"}style="display:none;"{/if}><a href="{:url('teacher/index','',false,true)}" >讲师库管理</a></dd>
+                <dd {if condition="$_SESSION['think']['role'] lt 2"}style="display:none;"{/if}><a href="{:url('news/index','',false,true)}" >新闻管理</a></dd>
+                <!--<dd><a href="{:url('Survey/index','',false,true)}">调研管理</a></dd>-->
+                <dd><a href="{:url('Vote/index','',false,true)}">投票管理</a></dd>
+                <!--<dd><a href="{:url('Wechat/index','',false,true)}">微信管理</a></dd>-->
+                <dd><a href="{:url('Business/index','',false,true)}">业务辅导管理</a></dd>
+                <dd><a href="{:url('Database/index','',false,true)}">资料管理</a></dd>
+                <!--<dd><a href="{:url('discuz/index','',false,true)}">讨论区管理</a></dd>-->
+                <dd><a href="{:url('Email/index','',false,true)}">邮件管理</a></dd>
+                <!--<dd><a href="{:url('Logs/index','',false,true)}">日志管理</a></dd>-->
+                <dd {if condition="$_SESSION['think']['role'] lt 2"}style="display:none;"{/if}><a href="{:url('Configure/index','',false,true)}"  >配置管理</a></dd>
+            </dl>
+        </li>
+    </ul>
+    {/if}
+
+
+
+    {block name="content"}{/block}
+</div>
+<div class="footer">
+    <p>© 2017-2018 Aliyun.com 版权所有 ICP证：陕B2-20080101</p>
+    <p>陕西蔚来信息科技有限公司</p>
+</div>
+</body>
+</html>
+{block name="script"}{/block}

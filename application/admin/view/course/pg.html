@@ -1,0 +1,73 @@
+{extend name="template/basecourse" /}
+{block name="content"}
+<!--container-->
+	<div class="container clear" >
+
+		<div class="container_content" >
+			<div class="container_content_tit">关联评估</div>
+			<div class="container_content_screen clear">
+				<div class="addcurr"><a href="javescript:;"  onclick="choosepg()">关联评估</a></div>
+				<div class="table">
+					<table class="table_2">
+						<tr class="hd">
+							<td>评估编号</td>
+							<td>评估标题</td>
+							<td>评估创建时间</td>
+						</tr>
+						<tr>
+							{if condition="$question.id != null"}
+							<td>{$question.id}</td>
+							<td>{$question.name}</td>
+							<td>{:date('Y-m-d H',$question.createtime)}</td>
+							{else}
+							<td></td>
+							<td></td>
+							<td></td>
+							{/if}
+						</tr>
+					</table>
+					<!--分页-->
+				</div>
+			</div>
+		</div>
+	</div>
+{/block}
+
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+</script>
+<script type="text/javascript">
+	$(".fabu").click(function(){
+		$(this).addClass("hide");
+		$(".chexiao").removeClass("hide");
+	})
+	$(".chexiao").click(function(){
+		$(this).addClass("hide");
+		$(".fabu").removeClass("hide");
+	})
+
+	function choosepg(){
+		layer_open('选择上级部门',"{:url('course/choosepg',array('id'=>$ids),false,true)}");
+	}
+</script>
+
+{/block}

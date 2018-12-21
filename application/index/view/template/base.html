@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{$title}</title>
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/global-pc.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/index.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/validform.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/page.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/swiper.css" />
+    {block name="style"}{/block}
+    <script src="__STATIC__/js/jquery-1.8.2.min.js"></script>
+    <script src="__STATIC__/js/jquery.cookie.js"></script>
+    <script src="__STATIC__/js/index.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/page.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/layer/2.4/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="header_top">
+            <div class="header_cont clear">
+                <div class="header_cont_l">服务热线：{$_SESSION['sh']['phone'];} </div>
+                <div class="header_cont_rr <?php if(!isset($_SESSION['userid'])){echo 'hide';}?>">
+                    <a href="{:url('User/regist','',false,true)}">注册</a>|
+                    <a href="{:url('User/login','',false,true)}">登录</a>
+                </div>
+                <div class="header_cont_r <?php if(isset($_SESSION['userid'])){echo 'hide';}?> clear">
+                    <div class="user">
+                        <div class="user_name" style="width: 175px"><img src="__STATIC__/images/tx.png"/>{$Request.session.username}{if condition="$_SESSION['think']['role'] eq 0"}(学员){elseif condition="$_SESSION['think']['role'] eq 1"}(教师){elseif condition="$_SESSION['think']['role'] eq 2"}(管理员){/if}</div>
+                        <dl class="hide">
+                            <dd {if condition ="$base eq 1"} class="header_nav_a" {/if}><a href="{:url('User/info','',false,true)}">我的信息</a></dd>
+                            <dd {if condition ="$base eq 1"} class="header_nav_a" {/if}><a href="{:url('User/help','',false,true)}">使用帮助</a></dd>
+                            <dd {if condition ="$base eq 1"} class="header_nav_a" {/if}><a href="{:url('User/logout','',false,true)}">注销</a></dd>
+                        </dl>
+                    </div>
+                    <span class="xinxi"><img src="__STATIC__/images/ld.png"/></span>
+                </div>
+            </div>
+        </div>
+        <!--导航栏-->
+        <div class="header_box clear">
+            <div class="header_logo">
+                <a href="{:url('index/index/index','',false,true)}">
+                    <img src="__STATIC__/images/logo.png"/>{$_SESSION['sh']['name'];}
+                </a>
+            </div>
+            <ul class="header_nav clear">
+                <li {if condition ="$base eq 1"} class="header_nav_a" {/if}><a href="{:url('Index/index','',false,true)}">首页</a></li>
+                <li {if condition ="$base eq 2"} class="header_nav_a" {/if}><a href="{:url('Train/index','',false,true)}">我的培训</a></li>
+                <li {if condition ="$base eq 3"} class="header_nav_a" {/if}><a href="{:url('Database/index','',false,true)}">资料库</a></li>
+                <li {if condition ="$base eq 4"} class="header_nav_a" {/if}><a href="{:url('Teacher/index','',false,true)}">讲师</a></li>
+                <li {if condition ="$base eq 5"} class="header_nav_a" {/if}><a href="{:url('Discuz/index','',false,true)}">讨论区</a></li>
+                {if isset($_SESSION['think'])}
+                <li {if condition ="$base eq 6"}  class="header_nav_a" {/if} {if condition="$_SESSION['think']['role'] lt 1"}style="display:none;"{/if}><a href="{:url('admin/report/index','',false,true)}">报表</a></li>
+                <li {if condition ="$base eq 7"}  class="header_nav_a" {/if} {if condition="$_SESSION['think']['role'] lt 2"}style="display:none;"{/if}><a href="{:url('admin/course/index','',false,true)}">管理</a></li>
+                {/if}
+            </ul>
+        </div>
+    </div>
+    {block name="content"}{/block}
+    <div class="footer">
+        <p>© 2017-2018 Aliyun.com 版权所有 ICP证：陕B2-20080101</p>
+        <p>陕西蔚来信息科技有限公司</p>
+    </div>
+</body>
+</html>
+{block name="script"}{/block}

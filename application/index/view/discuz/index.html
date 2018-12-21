@@ -1,0 +1,34 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<div class="container  clear">
+    {include file='template/left_nav' /}
+    <div class="container_content container_content_w80">
+        <div class="container_content_tit clear">讨论区
+            <a href="{:url('Discuz/add','',false,true)}" {if condition="$_SESSION['think']['role'] lt 1"}style="display:none;"{/if} class="xinjian tit_btn" style="background: #ff9600">添加新讨论</a>
+        </div>
+        <div class="container_content_screen clear">
+            <form method="" action="">
+                <input type="text" class="screen_inp" placeholder="请输入要搜索的关键字" name="no" value="">
+                <input type="submit" class="screen_btn" id="btn" value="搜索">
+
+            </form>
+        </div>
+        <ul class="lessons">
+            {foreach $list as $k => $v }
+            <li class="clear" >
+                <div class="lessons_a" style="width: 30%" ><a href="{:url('Discuz/detail',array('id'=>$v['id']),false,true)}">{$v.title}</a></div>
+                <div class="lessons_name">{$v.realname}</div>
+                <div class="lessons_time"><?php echo(date('Y-m-d H:i:s', $v['addtime'])) ?></div>
+                <div class="lessons_hf">浏览({$v.viewnum})</div>
+            </li>
+            {/foreach}
+        </ul>
+        <div class="pager">{$page ?? ''}</div>
+
+    </div>
+
+</div>
+
+</div>
+{/block}

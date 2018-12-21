@@ -1,0 +1,289 @@
+{extend name="template/base" /}
+<!--顶部-->
+{block name="content"}
+<div class="container container_w1200 clear">
+	<form action="{:url('user/profile','',false,true)}" method="post" id ="form">
+		<div class="add">
+			<ul class="add_ul">
+				<li class="clear">
+					<h1>头像: </h1>
+					<div class="add_ul_r">
+
+						<div class="shangchuan">
+							<input class="inp_file" type="hidden" name="head" id='head' value="" />
+
+							<input class="inp_file" type="file" name="hearimg" id="inp_file" value="" style="width: 10%"/>
+							<label for='inp_file'>
+								{if $member.head}
+								<img src="__STATIC__/uploads/{$member.head}" id='hearimg'/>
+								{else}
+								<img src="__STATIC__/images/a1.png" id='hearimg'/>
+
+								{/if}
+							</label>
+
+						</div>
+						<span class="Validform_checktip"></span>
+					</div>
+
+				</li>
+
+				<li class="clear">
+					<h1 class="li_img">用户名</h1>
+					<div class="add_ul_r clear">
+						<input type="text" disabled class="inp_text"  value="{$member.usernumber}"/>
+						<p></p>
+					</div>
+				</li>
+				<li class="clear">
+					<h1 class="li_img">姓名</h1>
+					<div class="add_ul_r clear">
+						<input type="text" name="realname" class="inp_text" placeholder="请填写姓名" value="{$member.realname}"/>
+						<p></p>
+					</div>
+				</li>
+				<li class="clear">
+					<h1 class="li_img">邮箱</h1>
+					<div class="add_ul_r clear">
+						<input type="text" name="email" class="inp_text" placeholder="请填写邮箱" value="{$member.email}"/>
+						<p></p>
+					</div>
+				</li>
+				<li class="clear">
+					<h1 class="li_img">新密码</h1>
+					<div class="add_ul_r clear">
+						<input type="password" name="password" class="inp_text" placeholder=""/>
+						<p></p>
+					</div>
+				</li>
+				<li class="clear">
+					<h1 class="li_img">确认新密码</h1>
+					<div class="add_ul_r clear">
+						<input type="text" name="npassword" class="inp_text" placeholder=""/>
+						<p></p>
+					</div>
+				</li>
+
+
+				<li class="clear">
+					<h1>组织</h1>
+					<div class="add_ul_r clear">
+						<input type="text" class="inp_text" placeholder="总部"   name="pname"  readonly  onclick="chooseParentDepart()"/>
+						<input type="hidden"  name="pid"  value="1"/>
+						<span class="Validform_checktip"></span>
+					</div>
+				</li>
+				<li class="clear">
+					<h1 class="li_img">联系电话:</h1>
+					<div class="add_ul_r clear">
+						<input type="text" class="inp_text" name="phone"  placeholder="请填写联系电话" value="{$member.phone}"/>
+						<p></p>
+					</div>
+				</li>
+				<li class="clear">
+					<h1 class="li_img">联系地址:</h1>
+					<div class="add_ul_r clear">
+						<input type="text" class="inp_text"  name="address"  placeholder="请填写联系地址" value="{$member.address}"/>
+						<p></p>
+					</div>
+				</li>
+				<li class="clear">
+					<h1>职务</h1>
+					<div class="add_ul_r clear">
+						<select  name="zw" >
+							<option value="0">请选择职务</option>
+							{volist name="fl" id="vo"}
+							{if $vo.fid == 17}
+							<option value="{$vo.id}">{$vo.name}</option>
+							{/if}
+							{/volist}
+						</select>
+					</div>
+				</li>
+				<li class="clear">
+					<h1>运营部</h1>
+					<div class="add_ul_r clear">
+						<select name="operate">
+							<option value="0">请选择运营部</option>
+							{volist name="fl" id="vo"}
+							{if $vo.fid == 18}
+							<option value="{$vo.id}">{$vo.name}</option>
+							{/if}
+							{/volist}
+						</select>
+					</div>
+				</li>
+				<li class="clear">
+					<h1>梯队人员</h1>
+					<div class="add_ul_r clear">
+						<select name="echelon">
+							<option value="0">请选择梯队人员</option>
+							{volist name="fl" id="vo"}
+							{if $vo.fid == 19}
+							<option value="{$vo.id}">{$vo.name}</option>
+							{/if}
+							{/volist}
+						</select>
+					</div>
+				</li>
+				<li class="clear">
+					<h1>部门</h1>
+					<div class="add_ul_r clear" >
+						<select name="depart">
+							<option value="0">请选择部门</option>
+							{volist name="fl" id="vo"}
+							{if $vo.fid == 20}
+							<option value="{$vo.id}">{$vo.name}</option>
+							{/if}
+							{/volist}
+						</select>
+					</div>
+				</li>
+				<li class="clear">
+					<h1>是否党员</h1>
+					<div class="add_ul_r clear">
+						<select  name="dangy">
+							<option value="0">请选择是否党员</option>
+							{volist name="fl" id="vo"}
+							{if $vo.fid == 21}
+							<option value="{$vo.id}">{$vo.name}</option>
+							{/if}
+							{/volist}
+						</select>
+					</div>
+				</li>
+				<li class="clear">
+					<h1 class="li_img">备注:</h1>
+					<div class="add_ul_r clear">
+						<input type="text" name="remarks" class="inp_text" placeholder="请填写备注"/>
+						<p></p>
+					</div>
+				</li>
+				<li class="clear">
+					<h1>语言</h1>
+					<div class="add_ul_r clear">
+						<select name="language">
+							{volist name="fl" id="vo"}
+							{if $vo.fid == 22}
+							<option value="{$vo.id}">{$vo.name}</option>
+							{/if}
+							{/volist}
+						</select>
+					</div>
+				</li>
+				<li class="clear">
+					<h1>性别</h1>
+					<div class="add_ul_r clear">
+						<select name="sex">
+							<option value="0">请选择性别</option>
+							{volist name="fl" id="vo"}
+							{if $vo.fid == 23}
+							<option value="{$vo.id}">{$vo.name}</option>
+							{/if}
+							{/volist}
+						</select>
+					</div>
+				</li>
+				<li class="clear">
+					<h1></h1>
+					<div class="add_ul_r clear">
+						<input type="submit" class="add_btn kuang_lan">
+					</div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+
+</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script src="__STATIC__/laydate/laydate.js"></script> <!-- 改成你的路径 -->
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+
+	$("#form").Validform({
+		tiptype: 3,
+		showAllError: true,
+		callback: function (ret) {
+			submit_form($("#form"),function(data){
+				console.log(data)
+				if(data.state == 2){
+					layer.alert('提交失败');
+				}else{
+					location.href = "{:url('user/info','',false,true)}";
+				}
+			},function (err) {
+				console.log(err);
+				layer.alert('网络错误');
+			});
+			return false;
+		}
+	});
+
+	$('#inp_file').change(function () {
+		var img = $(this);
+		//添加父级，以便提交
+		img.wrap("<form action='{:url(\'User/upload_hear\',\'\',false,true)}' method='post' id='file_upload' enctype='multipart/form-data'></form>");
+		//防止上传图片时，出现卡顿现象
+		var loading = layer.load(3, {shade: [0.8, '#393D49']});
+
+		$('#file_upload').ajaxSubmit({
+			dataType: 'json',
+			success: function (data) {
+				console.log(data.state)
+				//删除腹肌  防止二次提交
+				img.unwrap();
+				layer.close(loading);
+				if (data.state == 1) {
+					img.next().html("<img src='__STATIC__/uploads/" + data.path + "'  style='width:100px;height:100px'>");
+					$('#head').val(data.path);
+				} else {
+					layer.msg(data.err, {icon: 5, time: 5000});
+				}
+			},
+			error: function (err) {
+				console.log(err)
+				img.unwrap();
+				layer.close(loading);
+				layer.msg('网络错误，请重试！', {icon: 5, time: 5000});
+			}
+		});
+	});
+</script>
+<script>
+	$(".tcdPageCode").createPage({
+		pageCount:6,
+		current:1,
+		backFn:function(p){
+			console.log(p);
+		}
+	});
+
+	function chooseParentDepart(){
+		layer_open('选择上级部门',"{:url('user/chooseParentDepart','',false,true)}");
+	}
+
+	function setChoose(pid,pname){
+		$('input[name=pname]').val(pname);
+		$('input[name=pid]').val(pid);
+	}
+</script>
+<script>
+	lay('#version').html('-v'+ laydate.v);
+
+	//执行一个laydate实例
+	laydate.render({
+		elem: '#test1' //指定元素
+	});
+	laydate.render({
+		elem: '#test2'  //指定元素
+	});
+</script>
+{/block}

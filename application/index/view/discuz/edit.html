@@ -1,0 +1,114 @@
+{extend name="template/base" /}
+{block name="css"}
+<style>
+    .add .add_ul li h1{width: 10%;}
+    .add .add_ul li .add_ul_r input{width: 80%;}
+</style>
+{/block}
+
+{block name="content"}
+
+
+<div class="container container_w1200 clear">
+    {include file='template/left_nav' /}
+    <div class="container_content container_content_w80">
+
+    <div class="container_content_tit">修改新讨论</div>
+    <div class="add">
+        <form id="form" action="{:url('Discuz/edit','',false,true)}" method="post">
+            <input type="hidden" value="{$detail.id}" name="id" />
+            <ul class="add_ul">
+                <li class="clear">
+                    <h1>目录</h1>
+                    <div class="add_ul_r clear">
+                        <input type="text" class="inp_text" placeholder="总部"   name="pname"  readonly  onclick="chooseParentDepart()"/>
+                        <input type="hidden"  name="pid"  value="1"/>
+                        <span class="Validform_checktip"></span>
+                    </div>
+                </li>
+
+                <li class="clear">
+                    <h1>标题（必填项）</h1>
+                    <div class="add_ul_r clear">
+                        <input type="text" class="inp_text" placeholder="请输入标题" datatype="*"  name="title" value="{$detail.title}"  errormsg="请输入标题" nullmsg="标题不能为空"/>
+                        <span class="Validform_checktip"></span>
+                    </div>
+                </li>
+                <li class="clear">
+                    <h1>摘要（必填项）</h1>
+                    <div class="add_ul_r clear">
+                        <input type="text" class="inp_text" placeholder="请输入摘要" datatype="*"  name="summary" value="{$detail.summary}"  errormsg="请输入摘要" nullmsg="摘要不能为空"/>
+                        <span class="Validform_checktip"></span>
+                    </div>
+                </li>
+
+                <li class="clear">
+                    <h1>正文</h1>
+                    <div class="add_ul_r clear">
+                        <textarea  name="content" id="editor" type="text/plain" style="width: 676px;height:300px" datatype="*" nullmsg="请填写新闻内容" >{$detail.content}</textarea>
+                        <span class="Validform_checktip"></span>
+                    </div>
+                </li>
+                <li class="clear">
+                    <h1></h1>
+                    <div class="add_ul_r clear">
+                        <input id="btn" style="display: none" type="submit">
+                        <label for="btn"><div class="add_btn kuang_lan">确定</div></label>
+                        <a class="add_btn kuang_hong" href="{:url('Discuz/index','',false,true)}">取消</a>
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script>
+
+
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                location.href = "{:url('Discuz/index','',false,true)}";
+            },function (err) {
+                console.log(err);
+                layer.alert('修改失败');
+            });
+            return false;
+        }
+    });
+
+
+
+    var ue = UE.getEditor('editor',{
+        toolbars: [
+            ['fullscreen', 'undo', 'redo', 'bold','italic','fontfamily', 'fontsize','|',
+                'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify','|',
+                'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+                'simpleupload','insertvideo', 'music'
+            ]
+        ]
+    });
+
+
+    function chooseParentDepart(){
+        layer_open('选择上级部门',"{:url('Discuz/chooseParentDepart','',false,true)}");
+    }
+
+    function setChoose(pid,pname){
+        $('input[name=pname]').val(pname);
+        $('input[name=pid]').val(pid);
+    }
+</script>
+{/block}

@@ -1,0 +1,114 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<div class="new">
+    <div class="new_top">
+        <a href="{:url('Discuz/index','',false,true)}">返回</a>
+    </div>
+
+    <div class="discuss">
+        <div class="disciss_txt">{$detail.title}</div>
+        <div class="discuss_cont">
+            <h1>摘要</h1>
+            <p>{$detail.summary} </p>
+            <h1>正文</h1>
+            <p>{$detail.content|htmlspecialchars_decode} </p>
+            <div class="discuss_cont_bot">
+                <span>作者：{$detail.username}</span><span>时间：{:date('Y-m-d H:i:s',$detail.addtime)}</span><span>留言：{$detail.count}</span>
+
+            </div>
+            <div class="discuss_an clear">
+                <a class="discuss_btn blue_discuss_btn"
+                   href="{:url('Discuz/edit',array('id'=>$detail['id']),false,true)}">编辑</a>
+                <div class="discuss_btn red_discuss_btn">删除</div>
+            </div>
+        </div>
+
+        <div class="discuss_cont">
+
+            {volist name='$detail.res' id='vo'}
+            <div>评论： {$vo.content}<h1>{$vo.username}</h1><h1>时间：{:date('Y-m-d H:i:s',$vo.addtime)}</h1></div>
+
+               {if $vo.replycontent != ''}
+               <div class="comments_reply">
+
+                <div class="comments_reply_top clear">
+                    <h1><span> {$vo['username']} </span>回复：</h1>
+                    <h2><span>{:date('Y-m-d H:i:s',$vo.replytime)}</span></h2>
+                </div>
+                <div class="comments_reply_cont">
+                    {$vo.replycontent}
+                </div>
+            </div>
+            {/if}
+            {if $vo.replycontent == ''}
+            <div class="discuss_an clear">
+                <?php $url = url('Discuz/feedBack',array('id'=>$vo['id']),false,true); ?>
+                <div class="discuss_btn blue_discuss_btn" onclick="layer_open('回复评论','{$url}','300','500')"
+                     style="margin-left: 25px">回复
+                </div>
+                <div class="discuss_btn red_discuss_btn">删除</div>
+            </div>
+            {/if}
+            {/volist}
+        </div>
+
+        <div class="discuss_reply">评论</div>
+        <div class="discuss_reply_box">
+            <form id="form" type="get" action="{:url('discuz/reply')}" enctype="multipart/form-data">
+                <input type="hidden" name="did" value="{$detail['id']}">
+                <textarea name="content" id="editor" type="text/plain" style="width: 100%;height:200px"></textarea>
+                <input type="submit" value="提交">
+            </form>
+        </div>
+    </div>
+</div>
+
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script>
+
+    var ue = UE.getEditor('editor', {
+        toolbars: [
+            ['fullscreen', 'undo', 'redo', 'bold', 'italic', 'fontfamily', 'fontsize', '|',
+                'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
+                'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+                'simpleupload', 'insertvideo', 'music'
+            ]
+        ]
+    });
+    $("#form").Validform({
+
+        tiptype: 3,
+
+        showAllError: true,
+
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                console.log(data);
+                if(data.state == 1){
+                    layer.msg(data.succ,{icon:6,time:5000});
+                   window.location.reload();
+                }else if(data.state == 0){
+                    layer.msg(data.err,{icon:5,time:5000});
+                    window.location.reload();
+                }else if(data.state == 2){
+                    layer.msg(data.err,{icon:5,time:5000});
+                    window.location.reload();
+                }
+            },function(err){
+                console.log(err)
+            });
+            return false;
+        }
+    });
+</script>
+
+{/block}

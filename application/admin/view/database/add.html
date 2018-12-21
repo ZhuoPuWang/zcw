@@ -1,0 +1,113 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<div class="container_content">
+    <div class="container_content_tit">添加新资料</div>
+    <form method="post" id="form" enctype="multipart/form-data" class="form" action="{:url('Database/add','',false,true)}">
+
+        <div class="add">
+        <ul class="add_ul">
+            <li class="clear">
+                <h1>资料名（必填项）</h1>
+                <div class="add_ul_r clear">
+                    <input type="text" class="inp_text" placeholder="请填写资料名" name="title"/>
+                    <p></p>
+                </div>
+            </li>
+
+            <li class="clear">
+                <h1 >文件路径或网络链接（必填项）</h1>
+                <div class="add_ul_r clear">
+
+                        选择文件
+                        <input type="file" class="files" name="files">
+
+                    <input type="text" class="inp_text" placeholder="请填写网络链接" name="files"/>
+                </div>
+            </li>
+
+            <li class="clear" style="display: none;">
+                <h1 >用户对象（必填项）</h1>
+                <div class="add_ul_r clear">
+
+                <h1>上级部门</h1>
+                <div class="add_ul_r clear">
+                    <input type="text" class="inp_text" placeholder="上级部门"   name="pname"  readonly  onclick="chooseParentDepart()"/>
+                    <input type="hidden"  name="pid"  value="1"/>
+                    <span class="Validform_checktip"></span>
+                </div>
+
+                </div>
+            </li>
+            <li class="clear" style="display: none;">
+                <h1 >目录（必填项）</h1>
+               <div class="add_ul_r clear">
+
+                <h1>上级目录</h1>
+                <div class="add_ul_r clear">
+                    <input type="text" class="inp_text" placeholder="目录"   name="mname"  readonly  onclick="chooseParentCatalog()"/>
+                    <input type="hidden"  name="mid"  value="1"/>
+                    <span class="Validform_checktip"></span>
+                </div>
+
+     </div>
+            </li>
+
+            <li class="clear">
+                <h1></h1>
+                <div class="add_ul_r clear">
+                    <input id="btn" style="display: none" type="submit">
+                    <label for="btn"><div class="add_btn kuang_lan">确定</div></label>
+                    <a class="add_btn kuang_hong" href="{:url('Depart/index','',false,true)}">取消</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+        </form>
+</div>
+
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script>
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                location.href = "{:url('Database/index','',false,true)}";
+            },function (err) {
+                console.log(err);
+                layer.alert('用户名已存在');
+            });
+            return false;
+        }
+    });
+
+    function chooseParentDepart(){
+        layer_open('选择上级部门',"{:url('Database/chooseParentDepart','',false,true)}");
+    }
+
+    function setChoose(pid,pname,mid,mname){
+        $('input[name=pname]').val(pname);
+        $('input[name=pid]').val(pid);
+    }
+
+
+    function chooseParentCatalog(){
+        layer_open('选择上级目录',"{:url('Database/chooseParentCatalog','',false,true)}");
+    }
+
+    function setCatalog(mid,mname){
+        $('input[name=mname]').val(mname);
+        $('input[name=mid]').val(mid);
+    }
+</script>
+
+
+{/block}
+
+

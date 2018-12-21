@@ -1,0 +1,157 @@
+{extend name="template/base" /}
+{block name="content"}
+<!--banner-->
+<div class="banner">
+    <div class="banner_box">
+        <img src="__STATIC__/uploads/{$home.icn}" alt="" />
+        <a class="baoming" href="javascript:;"><img src="__STATIC__/images/bm.png" alt="" /></a>
+    </div>
+</div>
+
+<div class="content">
+    <ul class="content_img clear">
+        {foreach $homes as $k=>$v}
+        <li>
+            <a href="javascript:;">
+                <img src="__STATIC__/uploads/{$v.icn}" alt="" style="margin-top: 7px;"/>
+
+            </a>
+        </li>
+        {/foreach}
+
+    </ul>
+
+    <!--新闻，课程-->
+    <div class="content_box clear">
+        <div class="content_list">
+            <div class="list_title clear">
+                <span>最新课程</span>
+                <a href="{:url('train/index')}">更多&gt;&gt;</a>
+            </div>
+            <ul class="list_ul">
+                {foreach $course as $k=>$v}
+                <li class="clear">
+                    <h1 class="line"><a href="{:url('train/many',array('kc'=>$v['id']))}">{$v.course_title}</a></h1>
+                    <h2> <span class="mr_40">时间：<?php echo (date('Y-m-d h:i:s', $v['addtime'])) ?>	</span></h2>
+                </li>
+                {/foreach}
+
+            </ul>
+        </div>
+        <div class="content_list">
+            <div class="list_title">
+                <span>企业新闻</span>
+                <a href="{:url('News/index','',false,true)}">更多&gt;&gt;</a>
+            </div>
+            <ul class="list_ul">
+                {foreach $news as $k=>$v}
+
+                <li class="clear">
+                    <a href="{:url('News/detail',array('id'=>$v['id']),false,true)}">  <h1 class="line w_400">{$v.title}</h1>  </a>
+                        <h2 class="w_100"> <span><?php echo (date('Y-m-d h:i:s', $v['create_time'])) ?>	</span></h2>
+                </li>
+
+                {/foreach}
+
+            </ul>
+
+        </div>
+    </div>
+
+    <!--系统统计
+    <div class="system">
+        <div class="system_title">系统统计</div>
+        <ul class="system_ul clear">
+            <li class="clear">
+                <div class="system_ul_li_top">
+                    <img src="__STATIC__/images/a1.png"/>
+                    <p>学员信息</p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>305</h1>
+                    <p>学员人数 </p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>50</h1>
+                    <p>待审核学员 </p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>86</h1>
+                    <p>待考试 </p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>50</h1>
+                    <p>待审核学员 </p>
+                </div>
+            </li>
+            <li class="clear">
+                <div class="system_ul_li_top">
+                    <img src="__STATIC__/images/a2.png"/>
+                    <p>课程信息</p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>305</h1>
+                    <p>进行中的课程  </p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>100</h1>
+                    <p>已完成的课程 </p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>45</h1>
+                    <p>已过期的课程  </p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1 class="cl_org">20</h1>
+                    <p>待审批的课程 </p>
+                </div>
+            </li>
+            <li class="clear">
+                <div class="system_ul_li_top">
+                    <img src="__STATIC__/images/a3.png"/>
+                    <p>讲师信息</p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>305</h1>
+                    <p>讲师人数  </p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>50</h1>
+                    <p>待审核讲师 </p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>485</h1>
+                    <p>高级讲师  </p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>50</h1>
+                    <p>中级讲师 </p>
+                </div>
+            </li>
+            <li class="clear">
+                <div class="system_ul_li_top">
+                    <img src="__STATIC__/images/a4.png"/>
+                    <p>资料信息</p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>305</h1>
+                    <p>资料库 </p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>50</h1>
+                    <p>待审核资料 </p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>305</h1>
+                    <p>提库</p>
+                </div>
+                <div class="system_ul_li_xx">
+                    <h1>50</h1>
+                    <p>课程调研 </p>
+                </div>
+            </li>
+        </ul>-->
+       <!-- <a class="system_more" href="javascript:;">更&nbsp;&nbsp;&nbsp;多</a>-->
+    </div>
+</div>
+{/block}

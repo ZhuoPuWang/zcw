@@ -1,0 +1,265 @@
+{extend name="template/base" /}
+{block name='style'}
+<style>
+
+    .ylbtn {
+        padding: 5px 10px;
+        border: 1px solid #00B83F;
+        border-radius: 5px;
+        margin-right: 30px;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+        padding: 20px 50px;
+    }
+
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+
+    .swiper-slide img {
+        height: 500px;
+        width: auto;
+        max-width: 100%
+    }
+</style>
+{/block}
+{block name="content"}
+{include file='template/left_nav' /}
+<div class="container container_w1200 clear">
+    <div class="container_content container_content_w80">
+        <div class="container_content_tit">学习课程</div>
+        {if !$data}
+        <div style="margin-top: 50px;font-size: 38px;text-align: center">该课程暂无课件,</div>
+        <div style="margin-top: 50px;font-size: 38px;text-align: center">请联系讲师上传课件</div>
+        {else}
+        {if $data['ware_type'] == 1}
+        <div class="video" style="position: relative;">
+            <video id="myvideo" width="100%" height="100%" poster="__STATIC__/images/logo.png" controls="controls">
+                <source src="__STATIC__/uploads/{$data['arr'][0]}"></source>
+            </video>
+            <div style="width: 100%;height: 40px;position: absolute;left: 0;bottom: 0;"></div>
+        </div>
+        <input type="hidden" id="looktime" value="">
+        <div style="margin:30px auto;width: 100%;text-align: center;">
+            <span class="ylbtn bofang">播放</span>
+            <span class="ylbtn zanting">暂停</span>
+        </div>
+        {else}
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                {foreach $data['arr'] as $k=>$v}
+                <div class="swiper-slide">
+                    <img src='__STATIC__/uploads/{$v}' alt="">
+                </div>
+                {/foreach}
+            </div>
+        </div>
+        <div style="margin:10px auto;width: 100%;text-align: center;">
+            <a href="{:url('index/webtype')}"></a>
+            <span class="ylbtn btn_next">上一页</span>
+            <span class="ylbtn btn_prev">下一页</span>
+        </div>
+        {/if}
+        {/if}
+    </div>
+</div>
+{/block}
+{block name='script'}
+<script src="__STATIC__/js/swiper.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+
+    /*视频播放状态*/
+    $('#myvideo').bind('play', function () {
+        bf();
+    });
+
+    /*视频结束或错误*/
+    $('#myvideo').bind('error ended', function(){
+        state(2);
+    })
+
+    /*视频暂停*/
+    $('#myvideo').bind('pause', function () {
+        zt();
+    });
+
+
+    var timer = '';
+    var ids = {$ids};
+    var uid = {$uids};
+
+    $(".bofang").click(function () {
+        bf();
+
+    });
+    $(".zanting").click(function () {
+       zt();
+    })
+
+    function bf() {
+
+        var videotime = $('#myvideo').get(0).duration;
+        var a = $.cookie('video');
+
+        if (a) {
+            a = JSON.parse(a);
+            var ArrInfo = a['info'];
+            for (i = 0, ilen = ArrInfo.length; i < ilen; i++) {
+                if (ArrInfo[i]['uid'] == uid) {
+                    var Arrdata = ArrInfo[i]['data']
+                    for (j = 0, jlen = Arrdata.length; j < jlen; j++) {
+                        if (Arrdata[j]['kc_id'] == ids) {
+                            timer = Arrdata[j]['locktime'];
+                            if (timer == videotime) {
+                                timer = 0;
+
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+        } else {
+            timer = 0;
+        }
+        $("#myvideo").get(0).play();
+        myvideo.currentTime = timer;
+        time = setInterval(count1, 1000);
+        start();
+
+    }
+
+    function zt() {
+        $("#myvideo").get(0).pause();
+        timer = myvideo.currentTime;
+        clearInterval(time);
+    }
+    var swiper = new Swiper('.swiper-container', {
+        navigation: {
+            nextEl: '.btn_prev',
+            prevEl: '.btn_next',
+        },
+    });
+    function start() {
+        var videotime = $('#myvideo').get(0).duration;
+        $.ajax({
+            url: "{:url('train/strat','',false,true)}",
+            type: 'post',
+            data: {
+                id: {$data['course_id']},
+                video: videotime,
+                timer: timer
+            },
+            dataType: 'json',
+            success: function (data) {
+//                console.log(data);
+            },
+            error: function (err) {
+//                console.log(err);
+
+            }
+        })
+    }
+    function state(type) {
+        var state = {$course['state']};
+        if (state != 2) {
+            $.ajax({
+                url: '{:url("train/updatastate")}',
+                type: 'post',
+                data: {
+                    id: ids,
+                    state: type
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    console.log(type)
+                    if(type == 1){
+                        layer.msg('你已开始课程', {icon: 6, time: 2000})
+
+                    }else{
+                        layer.msg('你以学习完当前课程,可以考试', {icon: 6, time: 2000})
+
+                    }
+
+                },
+                error: function (err) {
+
+                }
+            })
+        }
+    }
+    function count1() {
+        var videotime = $('#myvideo').get(0).duration;
+        var looktime = myvideo.currentTime;
+
+        var info = $.cookie("video");
+        var jsonObj = null;
+        if (info) {
+            info = eval("(" + info + ")");
+            var arr = info.info;
+            //判断当前用户是否有信息
+            var userExt = -1;
+            for (var i = 0, ilen = arr.length; i < ilen; i++) {
+                if (arr[i].uid == uid) {
+                    userExt = i;
+                    break;
+                }
+            }
+//判断当前视频信息是否存在
+            if (userExt != -1) {           //存在
+                var currentUserInfo = arr[i];
+                var videArr = currentUserInfo.data;
+                var videoExt = -1;
+                for (var j = 0, jlen = videArr.length; j < jlen; j++) {
+//                    console.log(videArr[i])
+                    if (ids == videArr[i].kc_id) {
+                        videoExt = j;
+                        break;
+                    }
+                }
+
+                if (videoExt != -1) {
+                    videArr[j] = {"kc_id": ids, "locktime": looktime, "videotime": videotime};
+                } else {
+                    videArr.push({"kc_id": ids, "locktime": looktime, "videotime": videotime});
+                }
+                arr[i].data = videArr;
+            } else {    //不存在
+                arr.push({"uid": uid, "data": [{"kc_id": ids, "locktime": looktime, "videotime": videotime}]});
+            }
+            jsonObj = {"info": arr};
+        } else {     //cookie中不存在任何信息
+            jsonObj = {"info": [{"uid": uid, "data": [{"kc_id": ids, "locktime": looktime, "videotime": videotime}]}]};
+        }
+        jsonObj = JSON.stringify(jsonObj);
+        $.cookie('video', jsonObj, {expires: 7});
+    }
+
+
+</script>
+{/block}
+
+
+

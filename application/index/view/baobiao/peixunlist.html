@@ -1,0 +1,103 @@
+{extend name="template/base" /}
+
+
+{block name="content"}
+
+
+<div class="container_content">
+
+    <div class="container_content_tit">课程管理</div>
+
+    <div class="container_content_screen clear">
+
+        <div class="search clear" style="width: 650px">
+
+            <form method="get" action="{:\\think\\Url::build($Request.action)}">
+                <div>
+                 </div>
+                <select name="course_type" id="" style="float: left;height: 45px;margin-right: 5px;border-radius: 8px">
+                    <option value="">全部</option>
+                    <option value="0">在线课程</option>
+                    <option value="1">课堂培训</option>
+                </select>
+                <input type="text" placeholder="课程标题" name="course_title" value="{$Request.param.realname}">
+                <button>搜索</button>
+            </form>
+        </div>
+
+        <div class="addcurr"><a style="display: block;width: 100%;" href="{:url('Course/add','',false,true)}">新建课程</a>
+        </div>
+
+        <div class="daochu"><a style="display: block;width: 100%;" href="javascript:;">导入课程</a></div>
+
+    </div>
+
+    <div class="table">
+
+        <table class="table_2">
+
+            <tr class="hd">
+                <td>用户账号</td>
+                <td>用户姓名</td>
+                <td>用户邮箱</td>
+                <td>课程编号</td>
+                <td>课程标题</td>
+                <td>课程类型</td>
+                <td>课程时长</td>
+                <td>开始时间</td>
+            </tr>
+
+            {volist name="list" id="vo"}
+            <tr>
+                <td>{$vo.course_number}</td>
+                <td> {$vo.course_title}</td>
+                {if condition="$vo.course_type eq 1"}
+                <td> 课堂培训</td>
+                {else}
+                <td> 在线课程</td>
+                {/if}
+                <td> {$vo.username}</td>
+                <td>
+             <span style="    padding: 7px 13px;cursor: pointer;position: relative;border-radius: 5px;border: 2px solid #149dd2;color: #149dd2;text-align: center;">
+              <a href="{:url('Course/edit',array('id'=>$vo.id),false,true)}" style="color: #149dd2;">编辑</a>
+              </span>
+                </td>
+            </tr>
+            {/volist}
+        </table>
+    </div>
+    <div class="pager">{$page ?? ''}</div>
+
+</div>
+
+
+{/block}
+{block name="script"}
+
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+
+<script>
+
+    $("#form").Validform({
+
+        tiptype: 3,
+
+        showAllError: true,
+
+        callback: function (ret) {
+            del(this);
+//            forbid(this)
+            return false;
+        }
+    });
+
+
+</script>
+
+{/block}

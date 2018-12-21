@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{$title}</title>
+
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/global-pc.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/index.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/page.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/validform.css" />
+
+    {block name="css"}{/block}
+    <script src="__STATIC__/js/jquery-1.8.2.min.js"></script>
+    <script src="__STATIC__/js/index.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/page.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body>
+{if condition="!isset($haveHead)"}
+{include file="template/header"}
+{/if}
+<!--container-->
+<div class="container clear">
+    <ul class="bj_list">
+        <li class="li_bj">
+            <div class="li_tit">
+                <img src="__STATIC__/images/g4.png"  alt="" />
+                <a href="{:url('examination/edit',array('id'=>$ex_id),false,true)}">考试属性</a>
+            </div>
+        </li>
+        <li class="li_bj">
+            <div class="li_tit">
+                <img src="__STATIC__/images/g4.png"  alt="" />
+                <a href="{:url('examination/zujuan',array('id'=>$ex_id),false,true)}">组卷</a>
+            </div>
+        </li>
+        <li class="li_bj">
+            <div class="li_tit">
+                <img src="__STATIC__/images/g4.png"  alt="" />
+                <a href="{:url('examination/yulan',array('id'=>$ex_id),false,true)}">预览</a>
+            </div>
+        </li>
+        <!--<li class="li_bj">-->
+            <!--<div class="li_tit">-->
+                <!--<img src="__STATIC__/images/g4.png"  alt="" />-->
+                <!--<a href="{:url('examination/fenpei',array('id'=>$ex_id),false,true)}">课程分配</a>-->
+            <!--</div>-->
+        <!--</li>-->
+        <!--<li class="li_bj">-->
+            <!--<div class="li_tit">-->
+                <!--<img src="__STATIC__/images/g4.png"  alt="" />-->
+                <!--<a href="{:url('examination/dayin',array('id'=>$ex_id),false,true)}">打印试卷</a>-->
+            <!--</div>-->
+        <!--</li>-->
+        <li class="li_bj">
+            <div class="li_tit">
+                <img src="__STATIC__/images/g4.png"  alt="" />
+                <a href="{:url('examination/yue',array('id'=>$ex_id),false,true)}">阅卷</a>
+            </div>
+        </li>
+        <li class="li_bj">
+            <div class="li_tit">
+                <img src="__STATIC__/images/g4.png"  alt="" />
+                <a href="{:url('examination/delexamination',array('id'=>$ex_id),false,true)}">考试删除</a>
+            </div>
+        </li>
+
+    </ul>
+    {block name="content"}
+
+    {/block}
+</div>
+<div class="footer">
+    <p>© 2017-2018 Aliyun.com 版权所有 ICP证：陕B2-20080101</p>
+    <p>陕西蔚来信息科技有限公司</p>
+</div>
+</body>
+</html>
+{block name="script"}{/block}

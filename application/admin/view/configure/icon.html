@@ -1,0 +1,148 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<!--container-->
+<div class="container clear">
+
+    {include file="template/configure"}
+    <div class="container_content">
+        <div class="container_content_tit">图标管理</div>
+        <div class="add">
+            <ul class="add_ul">
+                <li class="clear">
+                    <h1>当前图标:	</h1>
+                    <div class="add_ul_r clear skm formControls col-xs-6 col-sm-6" >
+                                <input type="hidden" class="input-text"  name="logo" value="" id="log">
+                                <input type="file" id="logo" name="upload_path" style="display: none">
+                                <label for="logo">
+                                    {if $configure['logo']}
+                                    <img style="max-width: 300px;max-height: 100px;"  src="__STATIC__/uploads/{$configure['logo']}"/>
+                                    {else}
+                                    <img style="max-width: 300px;max-height: 100px;"  src="__STATIC__/images/logo.png"/>
+                                    {/if}
+                                </label>
+                        <p>请上传300×100像素的png文件作为系统LOGO，谢谢! </p>
+                    </div>
+                </li>
+                <li class="clear">
+                    <h1></h1>
+                    <div class="add_ul_r clear">
+                        <div class="add_btn kuang_lan" onclick="qd()">确定</div>
+                    </div>
+                </li>
+            </ul>
+
+
+            <ul class="add_ul">
+                <li class="clear">
+                    <h1>当前图标:	</h1>
+                    <div class="add_ul_r clear skm formControls col-xs-6 col-sm-6" >
+                        <input type="hidden" class="input-text"  name="ewm" value="" id="rwm">
+                        <input type="file" id="ewm" name="upload_paths" style="display: none">
+                        <label for="ewm">
+                            {if $configure['ewm']}
+                            <img style="max-width: 300px;max-height: 100px;"  src="__STATIC__/uploads/{$configure['ewm']}"/>
+                            {else}
+                            <img style="max-width: 300px;max-height: 100px;"  src="__STATIC__/images/ewm.png"/>
+                            {/if}
+
+                        </label>
+                        <p>请上传150×150像素的png文件作为分享二维码，谢谢! </p>
+                    </div>
+                </li>
+                <li class="clear">
+                    <h1></h1>
+                    <div class="add_ul_r clear">
+                        <div class="add_btn kuang_lan" onclick="qd()">确定</div>
+                    </div>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+</div>
+
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+
+function qd() {
+    $logo = $('#log').val();
+    $rwm =  $('#rwm').val();
+    $.ajax({
+        url:"{:url('Configure/icon')}",
+        dataType:'json',
+        type:'post',
+        data:{
+            'logo':$logo,
+            'ewm':$rwm,
+        },
+        success:function (data){
+            layer.msg('上传成功');
+        },
+        error:function (){
+        }
+    })
+
+}
+
+    $('#logo').change(function(){
+        this_ele = $(this);
+        this_ele.wrap("<form id='ajax_form' action='{:url(\'Configure/uploadPic\',array(\'pic_name\' => \'upload_path\'),false,true)}' method='post'enctype='multipart/form-data'></form>");
+        //防网速慢，弹出加载层
+        var loading = layer.load(3, {shade: [0.8, '#393D49']})
+        $('#ajax_form').ajaxSubmit({
+            dataType:'json',
+            success:function(data){
+                this_ele.unwrap();
+                layer.close(loading);
+                if(data.state == 1){
+                    this_ele.next().html("<img src='__STATIC__/uploads/"+data.path+"' style='width: 150px;height:150px'>");
+                    $('input[name=logo]').val(data.path);
+                }else{
+                    layer.msg(data.reason,{icon:5,time:1000});
+                }
+            },
+            error:function(err){
+                this_ele.unwrap();
+                layer.close(loading);
+                layer.msg('网络错误，请重试',{icon:5,time:1000});
+            }
+        });
+    });
+
+
+    $('#ewm').change(function(){
+        this_ele = $(this);
+        this_ele.wrap("<form id='ajax_form' action='{:url(\'Configure/uploadPic\',array(\'pic_name\' => \'upload_paths\'),false,true)}' method='post'enctype='multipart/form-data'></form>");
+        //防网速慢，弹出加载层
+        var loading = layer.load(3, {shade: [0.8, '#393D49']})
+        $('#ajax_form').ajaxSubmit({
+            dataType:'json',
+            success:function(data){
+                this_ele.unwrap();
+                layer.close(loading);
+                if(data.state == 1){
+                    this_ele.next().html("<img src='__STATIC__/uploads/"+data.path+"' style='width: 150px;height:150px'>");
+                    $('input[name=ewm]').val(data.path);
+                }else{
+                    layer.msg(data.reason,{icon:5,time:1000});
+                }
+            },
+            error:function(err){
+                this_ele.unwrap();
+                layer.close(loading);
+                layer.msg('网络错误，请重试',{icon:5,time:1000});
+            }
+        });
+    });
+
+
+</script>
+
+{/block}

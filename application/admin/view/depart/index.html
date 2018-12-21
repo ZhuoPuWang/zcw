@@ -1,0 +1,48 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="container_content">
+    <div class="container_content_tit">组织结构管理</div>
+    <div class="container_content_screen clear">
+        <form method="get" action="{:\\think\\Url::build($Request.action)}">
+            <input type="text" class="screen_inp" placeholder="部门名称" name="name" value="{$Request.param.name}">
+            <input type="text" class="screen_inp" placeholder="部门编号" name="no" value="{$Request.param.no}">
+            <input type="submit" class="screen_btn" id="btn" value="搜索">
+        </form>
+      
+        <div class="addcurr"><a style="display: block;width: 100%;" href="{:url('Depart/add','',false,true)}">添加部门</a></div>
+    </div>
+    <div class="table" style="text-align: center;">
+        <table class="table_2">
+            <tr class="hd">
+                <td>部门名称</td>
+                <td>部门编号</td>
+                <td>上级部门名称</td>
+                <td>上级部门编号</td>
+                <td>操作</td>
+            </tr>
+            {volist name="list" id="vo"}
+            <tr>
+                <td>{$vo.name}</td>
+                <td>{$vo.no}</td>
+                <td>{$vo.p_name ?? '无'}</td>
+                <td>{$vo.p_no ?? '无'}</td>
+                <td>
+                    {if condition="$vo.id != 1"}
+                        {:sedit($vo.id,$vo.status)}
+                    {else /}
+                    {:sedit($vo.id,$vo.status,array('edit'))}
+                    {/if}
+                </td>
+            </tr>
+            {/volist}
+        </table>
+        {$page ?? ''}
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+{/block}

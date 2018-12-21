@@ -1,0 +1,79 @@
+{extend name="template/base" /}
+{block name="content"}
+<style type="text/css">
+    .zhuce .zhuce_box .zhuce_ul li{position: relative;margin-bottom: 10px;}
+    .Validform_checktip{position: absolute;right: -160px;top: 40px;min-width: 150px}
+</style>
+<div class="zhuce">
+    <div class="zhuce_box">
+        <div class="zhuce_tit">注   册</div>
+        <form id="form" method="post" action="{:url('User/regist','',false,true)}">
+            <ul class="zhuce_ul">
+                <li>
+                    <h1>用户名（必填项）</h1>
+                    <input type="text" name="usernumber" placeholder="用户名(必须以字母开头，包含字母或数字，长度在6-11位之间)" datatype="/^[a-z][a-z0-9]{5,11}$/i" errormsg="请规范填写用户名" nullmsg="请填写用户名" />
+                    <span class="Validform_checktip"></span>
+                </li>
+                <li>
+                    <h1>密码（必填项）</h1>
+                    <input type="password" name="password" placeholder="密码6~20位数字或字母" datatype="/^[a-z0-9]{6,20}$/i" errormsg="密码6~20位" nullmsg="请填写密码"/>
+                    <span class="Validform_checktip"></span>
+                </li>
+                <li>
+                    <h1>确认密码（必填项）</h1>
+                    <input type="password" name="repwd" placeholder="请再次输入密码" datatype="/^[a-z0-9]{6,20}$/i" recheck="password" errormsg="两次输入不一致" nullmsg="请填写密码"/>
+                    <span class="Validform_checktip"></span>
+                </li>
+                <li>
+                    <h1>姓名（必填项）</h1>
+                    <input type="text" name="realname" placeholder="请规范填写姓名，这将会出现在培训证书上" datatype="/^[\u4E00-\u9FA5\uf900-\ufa2d]{2,4}$/" errormsg="请规范填写姓名" nullmsg="请填写姓名"/>
+                    <span class="Validform_checktip"></span>
+                </li>
+                <li>
+                    <h1>邮箱（必填项）</h1>
+                    <input type="text" name="email" placeholder="邮箱地址" datatype="e" errormsg="请规范填写邮箱地址" nullmsg="请填写邮箱地址"/>
+                    <span class="Validform_checktip"></span>
+                </li>
+                <li>
+                    <h1>联系电话</h1>
+                    <input type="text" name="phone" placeholder="联系电话" datatype="m" errormsg="请规范填写手机号码" nullmsg="请填写联系电话"/>
+                    <span class="Validform_checktip"></span>
+                </li>
+                <li>
+                    <h1>联系地址</h1>
+                    <input type="text" name="address" datatype="*"  nullmsg="请填写联系地址"/>
+                    <span class="Validform_checktip"></span>
+                </li>
+
+            </ul>
+            <input id="btn" type="submit" style="display: none">
+            <label for="btn">
+                <div class="zhuce_btn">注&nbsp;&nbsp;册</div>
+            </label>
+        </form>
+
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script>
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+               location.href = "{:url('User/login','',false,true)}";
+            },function (err) {
+                layer.alert('用户名已存在');
+            });
+            return false;
+        }
+    });
+
+
+</script>
+{/block}

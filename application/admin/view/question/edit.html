@@ -1,0 +1,88 @@
+{extend name="template/base1" /}
+
+{block name="content"}
+	<!--container-->
+	<div class="container clear">
+		{include file="template/question"}
+		<div class="container_content">
+			<div class="container_content_tit">题库编辑</div>
+			<div class="add">
+				<form id="form" action="edit" method="post">
+					<input type="hidden" name="id" value="{$list.id}">
+					<ul class="add_ul">
+						<li class="clear">
+							<h1>题库编号（必填项）:	</h1>
+							<div class="add_ul_r clear">
+								<input type="text" name="name" class="inp_text" value="{$list.name}" >
+								<span class="Validform_checktip"></span>
+							</div>
+						</li>
+						<!--<li class="clear">-->
+							<!--<h1>用户对象</h1>-->
+							<!--<div class="add_ul_r clear">-->
+								<!--<input type="text" class="inp_text" placeholder="总部"   name="pname"  readonly  onclick="chooseParentDepart()"/>-->
+								<!--<input type="hidden"  name="userobject"  value="{$list.userobject}"/>-->
+								<!--<span class="Validform_checktip"></span>-->
+							<!--</div>-->
+						<!--</li>-->
+						<li class="clear">
+							<h1></h1>
+							<div class="add_ul_r clear">
+								<input type="submit" class="add_btn kuang_lan">
+							</div>
+						</li>
+					</ul>
+
+				</form>
+			</div>
+		</div>
+		
+	</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+	$("#form").Validform({
+		tiptype: 3,
+		showAllError: true,
+		callback: function (ret) {
+			submit_form($("#form"),function(data){
+				console.log(data)
+				if(data.state == 2){
+					layer.alert('添加失败1');
+				}else{
+					layer.alert('修改成功');
+				}
+			},function (err) {
+				console.log(err);
+				layer.alert('添加失败');
+			});
+			return false;
+		}
+	});
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+
+	function chooseParentDepart(){
+		layer_open('选择上级部门',"{:url('question/chooseParentDepart','',false,true)}");
+	}
+
+	function setChoose(pid,pname){
+		$('input[name=pname]').val(pname);
+		$('input[name=userobject]').val(pid);
+	}
+</script>
+{/block}

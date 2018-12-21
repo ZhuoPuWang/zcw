@@ -1,0 +1,19 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="container container_w1200 clear">
+    {include file='template/left_nav' /}
+<div class="container_content container_content_w80">
+    <div class="container_content_tit clear">待审批的课程</div>
+    <div class="container_content_screen clear">
+        <form action="{:url('index3')}" method="post">
+            <div class="search clear">
+                <input type="text" name="name" placeholder="课程标题"/>
+                <button>搜索</button>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+</div>
+{/block}

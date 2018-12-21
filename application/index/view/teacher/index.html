@@ -1,0 +1,47 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="container  clear">
+    {include file='template/left_nav' /}
+    <div class="container_content container_content_w80">
+        <div class="container_content_tit clear">讲师
+            {if condition="$_SESSION['think']['role'] eq 2"}
+            <div class="xinjian tit_btn"><a style="display: block;width: 100%;" href="{:url('admin/Teacher/add','',false,true)}">新建讲师</a></div>
+            {/if}
+        </div>
+        <div class="container_content_screen clear">
+            <select class="select_1 ml_105">
+                <option value="选择目录">选择目录</option>
+                <option value="1">选择目录1</option>
+                <option value="2">选择目录2</option>
+                <option value="3">选择目录3</option>
+            </select>
+            <select class="select_1">
+                <option value="选择目录">选择类型</option>
+                <option value="1">选择类型1</option>
+                <option value="2">选择类型2</option>
+                <option value="3">选择类型3</option>
+            </select>
+            <div class="search clear">
+                <input type="text" placeholder="用户名／姓名／角色"/>
+                <button>搜索</button>
+            </div>
+        </div>
+        <ul class="teacher clear">
+            {foreach $list as $k=>$v}
+            <li>
+                <a href="{:url('Teacher/detail',array('id'=>$v['id']),false,true)}">
+                    <img src="__STATIC__/uploads/{$v.head}"/>
+                    <h1>姓名：{$v.realname}</h1>
+                    <p>资质：{$v.aptitude}</p>
+                    <p>{$v.honor}</p>
+                    <p>授课经验：{$v.experience}     <span class="col_blue">主要课程</span></p>
+                </a>
+            </li>
+            {/foreach}
+
+        </ul>
+        <!--分页-->
+        <div class="pager">{$page ?? ''}</div>
+    </div>
+</div>
+{/block}

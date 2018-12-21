@@ -1,0 +1,169 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<div class="container container_w1300 clear">
+    {include file='template/report_nav' /}
+    <div class="container_content container_content_w80" style="width:89%;">
+        <div class="container_content_tit">答题报表</div>
+        <div class="container_content_screen clear">
+            <div class="container_content_screen_l">
+                <select class="select_1">
+                    <option value="选择组织">选择组织</option>
+                    <option value="1">选择组织</option>
+                    <option value="2">选择组织</option>
+                    <option value="3">选择组织</option>
+                </select>
+                <div class="zc_time clear">注册时间：
+                    <input type="text" class="inp_time"/>~
+                    <input type="text" class="inp_time"/>
+                </div>
+                <select class="select_1">
+                    <option value="选择职务">选择职务</option>
+                    <option value="1">选择职务1</option>
+                    <option value="2">选择职务2</option>
+                    <option value="3">选择职务3</option>
+                </select>
+                <select class="select_1 select_130">
+                    <option value="选择运营部">选择运营部</option>
+                    <option value="1">选择运营部1</option>
+                    <option value="2">选择运营部2</option>
+                    <option value="3">选择运营部3</option>
+                </select>
+                <select class="select_1 select_130">
+                    <option value="选择梯队人员">选择梯队人员</option>
+                    <option value="1">选择梯队人员1</option>
+                    <option value="2">选择梯队人员2</option>
+                    <option value="3">选择梯队人员3</option>
+                </select>
+                <select class="select_1">
+                    <option value="选择部门">选择部门</option>
+                    <option value="1">选择部门</option>
+                    <option value="2">选择部门</option>
+                    <option value="3">选择部门</option>
+                </select>
+                <select class="select_1 select_130">
+                    <option value="选择是否是党员">选择是否是党员</option>
+                    <option value="1">是</option>
+                    <option value="2">否</option>
+                </select>
+                <div class="search clear">
+                    <input type="text" placeholder="用户名／姓名／角色"/>
+                    <button>搜索</button>
+                </div>
+                <div class="s_box clear">
+                    <div class="s_daochu s_btn">导出模板</div>
+                    <div class="s_daoru s_btn">选择文件<input type="file" /></div>
+                    <input class="select_130" type="text" placeholder=""/>
+                    <select class="select_1">
+                        <option value="组分配">组分配</option>
+                        <option value="1">组分配1</option>
+                        <option value="2">组分配2</option>
+                    </select>
+                    <div class="qd s_btn">确定</div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="table">
+
+            <table class="table_2">
+                <tr class="hd">
+                    <td>姓名	</td>
+                    <td>用户名</td>
+                    <td>邮箱</td>
+                    <td>考试标题</td>
+                    <td>目录</td>
+                    <td>考试状态</td>
+                    <td>开始时间</td>
+                    <td>考试时长</td>
+                    <td>考试分数</td>
+                    <td>题目ID</td>
+                    <td>类型</td>
+                    <td>题目</td>
+                    <td>题库</td>
+                    <td>正确答案</td>
+                    <td>用户回答</td>
+                    <td>是否正确</td>
+
+
+                    <td>选项1</td>
+                    <td>选项2</td>
+                    <td>选项3</td>
+                    <td>选项4</td>
+                    <td>选项5</td>
+
+                </tr>
+                <tr>
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <!--分页-->
+            <div class="tcdPageCode"></div>
+
+        </div>
+</div>
+</div>
+{/block}
+{block name="script"}
+
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.config.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.all.min.js"> </script>
+
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+
+<script>
+
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                location.href = "{:url('News/index','',false,true)}";
+            },function (err) {
+                layer.alert('报表设置失败');
+            });
+            return false;
+        }
+
+    });
+
+
+
+
+</script>
+
+{/block}

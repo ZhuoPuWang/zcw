@@ -1,0 +1,230 @@
+{extend name="template/base" /}
+
+{block name="content"}
+
+<div class="container_content">
+
+    <div class="container_content_tit">修改讲师</div>
+
+    <div class="add">
+
+        <form id="form" action="{:url('Teacher/edit','',false,true)}" method="post">
+            <input type="hidden" name="ids" value="{$teacher.id}">
+            <ul class="add_ul">
+
+                <li class="clear">
+
+                    <h1>头像: </h1>
+
+                    <div class="add_ul_r">
+
+                        <div class="shangchuan">
+                            <input class="inp_file" type="hidden" name="head" id='head' value="{$teacher.head}" datatype="*" nullmsg="请上传头像"/>
+
+                            <input class="inp_file" type="file" name="hearimg" id="inp_file" value="" style="width: 10%"/>
+                            <label for='inp_file'>
+                                {if $teacher.head}
+                                <img src="__STATIC__/uploads/{$teacher.head}" id='hearimg'/>
+                                {else}
+                                <img src="__STATIC__/images/a1.png" id='hearimg'/>
+
+                                {/if}
+                            </label>
+
+                        </div>
+                        <span class="Validform_checktip"></span>
+                    </div>
+
+                </li>
+
+                <li class="clear">
+
+                    <h1>选则用户: </h1>
+
+                    <div class="add_ul_r clear">
+
+
+                        <input type="text" class="inp_text" readonly value="{$teacher.realname ?? ''}"/>
+                        <input type="hidden" class="inp_text"  name="uid" value="{$teacher.uid ?? ''}"/>
+
+                        <span class="Validform_checktip"></span>
+
+                    </div>
+
+                </li>
+
+                <li class="clear">
+
+                    <h1>简介: </h1>
+                    <div class="add_ul_r clear">
+
+                        <input type="text" class="inp_text" placeholder="请填写教师简介" datatype="*" name="intro"
+                               nullmsg="讲师简介不能为空" value="{$teacher.intro ?? ''}"/>
+
+                        <span class="Validform_checktip"></span>
+
+                    </div>
+
+                </li>
+                <li class="clear">
+
+                    <h1>教师资质: </h1>
+                    <div class="add_ul_r clear">
+
+                        <input type="text" class="inp_text" placeholder="请填写教师资质" datatype="*" name="aptitude"
+                               nullmsg="教师资质不能为空"  value="{$teacher.aptitude ?? ''}"/>
+
+                        <span class="Validform_checktip"></span>
+                    </div>
+                </li>
+                <li class="clear">
+
+                    <h1>教师经验: </h1>
+                    <div class="add_ul_r clear">
+
+                        <input type="text" class="inp_text" placeholder="请填写教师经验" datatype="*" name="experience"
+                               nullmsg="教师经验不能为空"  value="{$teacher.experience ?? ''}"/>
+
+                        <span class="Validform_checktip"></span>
+
+                    </div>
+
+                </li>
+                <li class="clear">
+
+                    <h1>教师荣誉: </h1>
+                    <div class="add_ul_r clear">
+
+                        <input type="text" class="inp_text" placeholder="请填写教师荣誉" datatype="*" name="honor"
+                               nullmsg="教师荣誉不能为空"  value="{$teacher.honor ?? ''}"/>
+
+                        <span class="Validform_checktip"></span>
+
+                    </div>
+
+                </li>
+                <!--<li class="clear">-->
+
+                    <!--<h1>课程: </h1>-->
+                    <!--<div class="add_ul_r clear">-->
+                        <!--<input type="text" class="inp_text" placeholder="课程"  value="{$teacher.course_title ?? ''}" name="courseshow" readonly-->
+                               <!--onclick="chooseParentDepart()"/>-->
+                        <!--<input type="hidden" name="course" datatype="*"  value="{$teacher.course ?? ''}" nullmsg="请选择课程">-->
+                        <!--<span class="Validform_checktip"></span>-->
+                    <!--</div>-->
+                <!--</li>-->
+                <li class="clear">
+
+                    <h1>备注: </h1>
+
+                    <div class="add_ul_r clear">
+
+                        <input type="text" class="inp_text" name='shot_inintro' placeholder="请填写备注"  value="{$teacher.shot_inintro ?? ''}"/>
+
+                        <span class="Validform_checktip"></span>
+
+                    </div>
+
+                </li>
+
+                <li class="clear">
+
+                    <h1></h1>
+
+                    <div class="add_ul_r clear">
+
+                        <input type="submit" id="btn" style="opacity:0;">
+
+                        <label for="btn">
+                            <div class="add_btn kuang_lan">确定</div>
+                        </label>
+
+                        <a href="{:url('Teacher/index','',false,true)}" class="add_btn kuang_hong">取消</a>
+
+                    </div>
+
+                </li>
+
+            </ul>
+
+        </form>
+    </div>
+
+</div>
+
+
+{/block}
+
+
+{block name="script"}
+
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+
+<script>
+
+    $("#form").Validform({
+
+        tiptype: 3,
+
+        showAllError: true,
+
+        callback: function (ret) {
+            submit_form($("#form"), function (data) {
+                console.log(data);
+                if (data.state == 1) {
+                    layer.msg(data.succ, {icon: 6, time: 5000});
+                    location.href = "{:url('Teacher/index','',false,true)}"
+                } else {
+                    layer.msg(data.err, {icon: 5, time: 5000});
+                }
+            }, function (err) {
+                console.log(err)
+            });
+            return false;
+        }
+    });
+    $('#inp_file').change(function () {
+        var img = $(this);
+        //添加父级，以便提交
+        img.wrap("<form action='{:url(\'Teacher/upload_hear\',\'\',false,true)}' method='post' id='file_upload' enctype='multipart/form-data'></form>");
+        //防止上传图片时，出现卡顿现象
+        var loading = layer.load(3, {shade: [0.8, '#393D49']});
+
+        $('#file_upload').ajaxSubmit({
+            dataType: 'json',
+            success: function (data) {
+                console.log(data.state)
+                //删除腹肌  防止二次提交
+                img.unwrap();
+                layer.close(loading);
+                if (data.state == 1) {
+                    img.next().html("<img src='__STATIC__/uploads/" + data.path + "'  style='width:100px;height:100px'>");
+                    $('#head').val(data.path);
+                } else {
+                    layer.msg(data.err, {icon: 5, time: 5000});
+                }
+            },
+            error: function (err) {
+                console.log(err)
+                img.unwrap();
+                layer.close(loading);
+                layer.msg('网络错误，请重试！', {icon: 5, time: 5000});
+            }
+        });
+    });
+    function chooseParentDepart() {
+        layer_open('选择上级部门', "{:url('teacher/chooseCourse','',false,true)}");
+    }
+    function setChoose(pid, user_object) {
+        $('input[name=courseshow]').val(user_object);
+        $('input[name=course]').val(pid);
+    }
+</script>
+
+{/block}

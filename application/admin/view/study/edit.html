@@ -1,0 +1,170 @@
+{extend name="template/base1" /}
+{block name="content"}
+{include file="template/study"}
+
+<div class="container_content">
+
+    <div class="container_content_tit">修改职位</div>
+
+    <div class="add">
+
+        <form id="form" action="{:url('study/edit','',false,true)}" method="post">
+            <input type="hidden" name="id" value="{$data.id}">
+            <ul class="add_ul">
+                <li class="clear">
+
+                    <h1>职位ID（必填项）:	</h1>
+
+                    <div class="add_ul_r clear">
+
+                        <input type="text" class="inp_text" placeholder="职位ID" value="{$data.study_number ?? ''}" datatype="*" name="study_number" nullmsg="职位ID不能为空"/>
+
+                        <span class="Validform_checktip"></span>
+
+                    </div>
+
+                </li>
+                <li class="clear">
+
+                    <h1>职位标题（必填项）:	</h1>
+
+                    <div class="add_ul_r clear">
+
+                        <input type="text" class="inp_text" placeholder="职位标题" datatype="*"  value="{$data.study_title ??''}"  name="study_title" nullmsg="职位标题不能为空"/>
+
+                        <span class="Validform_checktip"></span>
+
+                    </div>
+
+                </li>
+                <li class="clear">
+
+                    <h1>职位描述:  </h1>
+
+                    <div class="add_ul_r clear">
+
+                        <textarea placeholder="职位描述" datatype="*" name="study_content"   errormsg="" nullmsg="职位描述不能为空">{$data.study_content ?? ''}</textarea>
+
+                        <span class="Validform_checktip"></span>
+
+                    </div>
+
+                </li>
+                <li class="clear display">
+
+                    <h1>是否自动分配:	</h1>
+
+                    <div class="add_ul_r">
+                        <select name="auto_distribution" id="">
+                           {if $data.auto_distribution==1}
+
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+
+                            {else}
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+
+                            {/if}
+                        </select>
+                    </div>
+
+                </li>
+                <li class="clear display">
+
+                    <h1>分配条件:	</h1>
+
+                    <div class="add_ul_r">
+                        <textarea placeholder="分配条件"  name="distribution_condition" datatype="*" nullmsg = '不能为空'>{$data.distribution_condition ?? ''}</textarea>
+
+                        <span class="Validform_checktip"></span>
+
+                    </div>
+
+                </li>
+                <li class="clear">
+
+                    <h1></h1>
+
+                    <div class="add_ul_r clear">
+
+                        <input type="submit" id="btn" style="opacity:0;">
+
+                        <label for="btn"> <div class="add_btn kuang_lan">确定</div></label>
+
+                        <a  href="{:url('study/index','',false,true)}" class="add_btn kuang_hong">取消</a>
+
+                    </div>
+
+                </li>
+
+            </ul>
+
+        </form>
+
+    </div>
+
+</div>
+{/block}
+{block name='script'}
+
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+
+<script>
+
+    $("#form").Validform({
+
+        tiptype: 3,
+
+        showAllError: true,
+
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                console.log(data);
+                if(data.state == 1){
+                    layer.msg(data.succ,{icon:6,time:5000});
+                    location.href = "{:url('study/index','',false,true)}"
+                }else{
+                    layer.msg(data.err,{icon:5,time:5000});
+                }
+            },function(err){
+                console.log(err)
+            });
+            return false;
+        }
+    });
+
+    $('select[name=course_type]').change(function(){
+        var v = $(this).val();
+        if(v==1){
+            $('.display').css('display','none')
+        }else{
+            $('.display').css('display','block')
+        }
+
+
+    })
+
+    function chooseParentDepart(){
+        layer_open('选择上级部门',"{:url('course/chooseParentDepart','',false,true)}");
+    }
+    function setChoose(pid,user_object){
+        $('input[name=user_object]').val(user_object);
+        $('#pid').val(pid);
+    }
+
+    function chooseParent(){
+        layer_open('选择上级部门',"{:url('course/chooseParent','',false,true)}");
+    }
+    function setChooseqw(pid,user_object){
+        $('input[name=catalog]').val(user_object);
+        $('#pid1').val(pid);
+    }
+</script>
+{/block}

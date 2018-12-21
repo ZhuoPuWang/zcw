@@ -1,0 +1,81 @@
+{extend name="template/base" /}
+{block name="css"}
+<style>
+    .add .add_ul li h1{width: 10%;}
+    .add .add_ul li .add_ul_r input{width: 80%;}
+</style>
+{/block}
+{block name="content"}
+<div class="container_content">
+    <div class="container_content_tit">修改目录信息</div>
+    <div class="add">
+        <form id="form" action="{:url('Catalog/edit','',false,true)}" method="post">
+            <input type="hidden" name="id"  value="{$vo.id}">
+            <ul class="add_ul">
+                <li class="clear">
+                    <h1>目录名称</h1>
+                    <div class="add_ul_r clear">
+                        <input type="text" class="inp_text" placeholder="请输入目录名称" value="{$vo.name}" datatype="*"  name="name"  errormsg="请输入目录名称" nullmsg="目录名称不能为空"/>
+                        <span class="Validform_checktip"></span>
+                    </div>
+                </li>
+                <li class="clear">
+                    <h1>目录编号</h1>
+                    <div class="add_ul_r clear">
+                        <input type="text" class="inp_text" placeholder="请输入目录编号" value="{$vo.no}" datatype="*"  name="no"  errormsg="请输入目录编号" nullmsg="请输入目录编号"/>
+                        <span class="Validform_checktip"></span>
+                    </div>
+                </li>
+                {if condition="$vo.id neq 1"}
+                <li class="clear">
+                    <h1>上级目录</h1>
+                    <div class="add_ul_r clear">
+                        <input type="text" class="inp_text" placeholder="总部"   name="pname"  readonly  onclick="chooseParentDepart()"/>
+                        <input type="hidden"  name="pid"  value="{$vo.pid}"/>
+                        <span class="Validform_checktip"></span>
+                    </div>
+                </li>
+                {/if}
+                <li class="clear">
+                    <h1></h1>
+                    <div class="add_ul_r clear">
+                        <input id="btn" style="display: none" type="submit">
+                        <label for="btn"><div class="add_btn kuang_lan">确定</div></label>
+                        <a class="add_btn kuang_hong" href="{:url('Catalog/index','',false,true)}">取消</a>
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script>
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                location.href = "{:url('Catalog/index','',false,true)}";
+            },function (err) {
+                console.log(err);
+                layer.alert('用户名已存在');
+            });
+            return false;
+        }
+    });
+
+    function chooseParentDepart(){
+        layer_open('选择上级目录',"{:url('Catalog/chooseParentDepart',array('id' => $vo.id),false,true)}");
+    }
+
+    function setChoose(pid,pname){
+        $('input[name=pname]').val(pname);
+        $('input[name=pid]').val(pid);
+    }
+</script>
+{/block}

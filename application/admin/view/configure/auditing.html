@@ -1,0 +1,109 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<!--container-->
+<div class="container clear">
+
+    {include file="template/configure"}
+    <div class="container_content">
+        <div class="container_content_tit">审核管理</div>
+        <div class="add">
+            <form id="form" action="{:url('Configure/auditing','',false,true)}" method="post">
+            <ul class="add_ul">
+                <li class="clear">
+                    <h1 class="li_img">是否允许用户注册 :	</h1>
+                    <div class="add_ul_r clear">
+                        {if $auditing['status'] == 1 }
+                        <label for=""><input type="radio" name="status" id="" value="0" class="inp_check">不允许注册 </label>
+                        <label for=""><input type="radio" name="status" id="" value="1" class="inp_check" checked />允许注册</label>
+
+                        {else}
+                        <label for=""><input type="radio" name="status" id="" value="0" class="inp_check" checked />不允许注册 </label>
+                        <label for=""><input type="radio" name="status" id="" value="1" class="inp_check" >允许注册</label>
+                        {/if}
+
+
+                    </div>
+                </li>
+                <li class="clear">
+                    <h1 class="li_img">默认部门 :	</h1>
+                    <div class="add_ul_r clear">
+                        <div class="add_btn kuang_lan inp_text"  name="pname"  readonly  onclick="chooseParentDepart()">
+                            选择组织
+
+                        <input type="hidden"  name="did"  value="1"/>
+                        <span class="Validform_checktip"></span>
+                        </div>
+                    </div>
+                </li>
+                <li class="clear">
+                    <h1 class="li_img">是否需要邮件验证 :	</h1>
+                    <div class="add_ul_r clear">
+                        {if $auditing['verification'] == 1}
+                        <label for=""><input type="radio" name="verification" id="" value="1" class="inp_check" checked>不需要验证  </label>
+                        <label for=""><input type="radio" name="verification" id="" value="0" class="inp_check">需要验证</label>
+                        {else}
+                        <label for=""><input type="radio" name="verification" id="" value="1" class="inp_check">不需要验证  </label>
+                        <label for=""><input type="radio" name="verification" id="" value="0" class="inp_check" checked>需要验证</label>
+                        {/if}
+                    </div>
+                </li>
+                <li class="clear">
+                    <h1 class="li_img">是否需要审核 :	</h1>
+                    <div class="add_ul_r clear">
+                        {if $auditing['auditing'] == 1}
+                        <label for=""><input type="radio" name="auditing" id="" value="1" class="inp_check" checked>不需要审核 </label>
+                        <label for=""><input type="radio" name="auditing" id="" value="0" class="inp_check">需要审核</label>
+                        {else}
+                        <label for=""><input type="radio" name="auditing" id="" value="1" class="inp_check">不需要审核 </label>
+                        <label for=""><input type="radio" name="auditing" id="" value="0" class="inp_check" checked>需要审核</label>
+                        {/if}
+                    </div>
+                </li>
+
+                <li class="clear">
+                    <h1></h1>
+
+                    <div class="add_ul_r clear">
+                        <input id="btn" style="display: none" type="submit">
+                        <label for="btn"><div class="add_btn kuang_lan">确定</div></label>
+
+                    </div>
+                </li>
+            </ul>
+            </form>
+        </div>
+    </div>
+
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+    function chooseParentDepart(){
+        layer_open('选择上级部门',"{:url('Configure/chooseParentDepart','',false,true)}");
+    }
+
+    function setChoose(pid,pname){
+        $('input[name=pname]').val(pname);
+        $('input[name=did]').val(pid);
+    }
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                layer.alert('操作成功');
+            },function (err) {
+                console.log(err);
+                layer.alert('操作失败');
+            });
+            return false;
+        }
+    });
+
+</script>
+
+{/block}

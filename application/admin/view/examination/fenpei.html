@@ -1,0 +1,92 @@
+{extend name="template/examination" /}
+{block name="content"}
+<!--container-->
+	<div class="container clear">
+
+		<div class="container_content" >
+			<div class="container_content_tit">关联课程</div>
+			<div class="container_content_screen clear">
+				<div class="addcurr"><a href="javescript:;" onclick="choosekc()">关联课程</a></div>
+				<div class="table">
+					<table class="table_2">
+						<tr class="hd">
+							<td>课程编号</td>
+							<td>课程标题</td>
+							<td>创建时间</td>
+							<td>操作</td>
+						</tr>
+						{volist name="course" id="vo"}
+						<tr>
+							<td>{$vo.course_number}</td>
+							<td>{$vo.course_title}</td>
+							<td>{:date('Y-m-d H:i:s',$vo.addtime)}</td>
+							<td><span class='zd'><a href="javascript:;" onclick="del(this)"; dd="{$vo.id}">删除</a></span></td>
+						</tr>
+						{/volist}
+					</table>
+					<!--分页-->
+				</div>
+			</div>
+			<div class="pager">{$page ?? ''}</div>
+		</div>
+	</div>
+{/block}
+
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+</script>
+<script type="text/javascript">
+	$(".fabu").click(function(){
+		$(this).addClass("hide");
+		$(".chexiao").removeClass("hide");
+	})
+	$(".chexiao").click(function(){
+		$(this).addClass("hide");
+		$(".fabu").removeClass("hide");
+	})
+
+	function choosekc(){
+		layer_open('关联课程',"{:url('examination/choosekc',array('id'=>$ex_id	),false,true)}");
+	}
+
+	function del(even){
+		$cour_id = $(even).attr('dd');
+
+		$.ajax({
+			url:"{:url('examination/delkc')}",
+			dataType:'json',
+			type:'post',
+			data:{
+				'cour_id':$cour_id,
+			},
+			success:function (data){
+				window.parent.location.reload(); //刷新父页面
+				var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+				parent.layer.close(index);
+			},
+			error:function (){
+			}
+		})
+	}
+</script>
+
+{/block}

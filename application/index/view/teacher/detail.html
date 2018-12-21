@@ -1,0 +1,58 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="container container_w1200 container_mb clear">
+    <div class="container_content container_content_w100">
+        <div class="container_content_tit clear">讲师
+        </div>
+        <div class="teacher_cont">
+            <div class="teacher_cont_top clear">
+                <div class="teacher_cont_top_l"><img src="__STATIC__/uploads/{$teacher.head}"/></div>
+                <div class="teacher_cont_top_r">
+                    <h1>姓名：{$teacher.realname}</h1>
+                    <h2>资质：{$teacher.aptitude}</h2>
+                    <p><span>个人介绍：</span>{$teacher.intro}</p>
+                    <h3 class="col_blue">授课经验：{$teacher.experience}  </h3>
+                </div>
+            </div>
+            <div class="teacher_box">
+                <h1>资质</h1>
+                <p>{$teacher.aptitude}</p>
+            </div>
+            <div class="teacher_box">
+                <h1>所获荣誉</h1>
+                <p><span>{$teacher.honor}</span></p>
+
+            </div>
+            <div class="teacher_box">
+                <h1>个人介绍</h1>
+                <p><span>授课经验：</span>{$teacher.experience} </p>
+                <p><span>个人介绍：</span>{$teacher.intro}</p>
+                <p><span>备注：</span>{$teacher.shot_inintro}</p>
+            </div>
+            <div class="teacher_box table">
+                <h1>主要课程</h1>
+                <table class="table_2">
+                    {if condition ="$course"}
+                    <tr class="hd">
+                        <td width="70">课程类型</td>
+                        <td width="70">课程编号</td>
+                        <td width="70">课程标题</td>
+                    </tr>
+                    <tr>
+                        {foreach $course as $k=>$v}
+                        <td width="70">{$v.course_type}</td>
+                        <td width="70">{$v.course_number}</td>
+                        <td width="70">{$v.course_title}</td>
+                        {/foreach}
+                    </tr>
+                    {else}
+                    <span>暂无课程</span>
+                    {/if}
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{/block}

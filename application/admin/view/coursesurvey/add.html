@@ -1,0 +1,84 @@
+{extend name="template/base1" /}
+
+{block name="content"}
+	<!--container-->
+		<div class="container_content">
+			<div class="container_content_tit">调研编辑</div>
+			<div class="add">
+				<form id="form" action="add" method="post">
+					<ul class="add_ul">
+						<li class="clear">
+							<h1>标题:	</h1>
+							<div class="add_ul_r clear">
+								<input type="text" name="name" class="inp_text" value="" >
+								<span class="Validform_checktip"></span>
+							</div>
+						</li>
+						<li class="clear">
+							<h1>是否公开:	</h1>
+							<div class="add_ul_r clear">
+								<input type="checkbox" name="open" class="inp_text" value="1" >
+								<span class="Validform_checktip"></span>
+							</div>
+						</li>
+						<li class="clear">
+							<h1>介绍</h1>
+							<div class="add_ul_r clear">
+								<textarea name="content" id="" cols="30" rows="10"></textarea>
+								<span class="Validform_checktip"></span>
+							</div>
+						</li>
+						<li class="clear">
+							<h1></h1>
+							<div class="add_ul_r clear">
+								<input type="submit" class="add_btn kuang_lan">
+							</div>
+						</li>
+					</ul>
+
+				</form>
+			</div>
+		</div>
+		
+	</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+	$("#form").Validform({
+		tiptype: 3,
+		showAllError: true,
+		callback: function (ret) {
+			submit_form($("#form"),function(data){
+				console.log(data)
+				if(data.state == 2){
+					layer.alert('添加失败1');
+				}else{
+					//layer.alert('添加成功');
+					location.href = "{:url('coursesurvey/index',false,true)}";
+				}
+			},function (err) {
+				console.log(err);
+				layer.alert('添加失败');
+			});
+			return false;
+		}
+	});
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+
+</script>
+{/block}

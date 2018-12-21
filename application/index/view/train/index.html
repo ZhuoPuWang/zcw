@@ -1,0 +1,63 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="container clear">
+    {include file='template/left_nav' /}
+<div class="container_content container_content_w80">
+    <div class="container_content_tit clear">进行中的课程</div>
+    <div class="container_content_screen clear">
+        <form action="{:url('index')}" method="post">
+        <div class="search clear">
+            <input type="text" name="name" placeholder="课程标题"/>
+            <button>搜索</button>
+        </div>
+        </form>
+    </div>
+
+    <ul class="curriculum">
+        {volist name="list" id="vo"}
+        <li class="clear">
+            <div class="li_l"><img src="__STATIC__/images/curr.png"/></div>
+            <div class="li_r">
+                <h1 class="line">{$vo.course_title}</h1>
+                <div class="li_r_box">
+                    <div class="li_r_box_l">
+                        <span class="state state_d">{if condition = "$vo.state eq 0"}尚未开始{elseif condition = "$vo.state eq 1"}等待考试{/if}</span>
+                        <span>开始时间：{if condition = "$vo.state eq 0"}尚未开始{else}{:date('Y-m-d',$vo.starttime)}{/if}</span>
+                        <span>过期时间：{:date('Y-m-d',$vo.endtime)}</span>
+                    </div>
+                    <div class="li_r_box_r">
+                        {if condition = "$vo.state eq 0"}
+                        <span class="star"><a href="{:url('train/courseplay',array('id'=>$vo.id,'course_id'=>$vo.course_id))}">开始学习</a></span>
+                        {else if condition ="$vo.state eq 1"}
+                        <span class="star"><a href="{:url('train/courseplay',array('id'=>$vo.id,'course_id'=>$vo.course_id))}">继续学习</a></span>
+                        {/if}
+                        <a class="main_l_a main_btn_medium"
+                           {if $vo['ks_id']}href="{:url('train/kaos',array('ks_id'=>$vo['ks_id']))}"
+                        style="border-radius: 8px;background-color: green;padding: 8px"
+                        {else}
+                        href="javascript:;"
+                        style="border-radius: 8px;background-color: #E1DEE1;padding: 8px"{/if}>开始考试</a>
+                        <a class="main_l_a main_btn_medium"{if $vo['dz_id']} href="{:url('discuz/detail',array('id'=>$vo['dz_id']))}"
+                        style="border-radius: 8px;background-color:green;padding: 8px"{else}
+                        href="javascript:;"
+                        style="border-radius: 8px;background-color: #E1DEE1;padding: 8px"
+                        {/if}>讨论区</a>
+                        <a class="main_l_a main_btn_medium"
+                           {if $vo['assess_id']}href="{:url('train/pinggu',array('id'=>$vo['assess_id']))}"
+                        style="border-radius: 8px;background-color: green;padding: 8px"{else}
+                        href="javascript:;"
+                        style="border-radius: 8px;background-color: #E1DEE1;padding: 8px"
+                        {/if}>评估</a>
+
+                    </div>
+                </div>
+            </div>
+        </li>
+        {/volist}
+    </ul>
+
+    <!--分页-->
+    <div class="tcdPageCode">{$page}</div>
+</div>
+</div>
+{/block}

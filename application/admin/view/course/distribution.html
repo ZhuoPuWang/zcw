@@ -1,0 +1,259 @@
+{extend name="template/basecourse" /}
+{block name="content"}
+<div class="container_content" style="width: 1200px;margin: 0 auto;float: none;">
+	<div class="container_content_tit">失业保险政策的宣传与解答</div>
+	<div class="container_content_screen clear" style="height: 150px">
+		<div class="container_content_screen_l">
+			<select class="select_1">
+				<option value="选择组织">选择组织</option>
+				<option value="1">选择组织</option>
+				<option value="2">选择组织</option>
+				<option value="3">选择组织</option>
+			</select>
+			<div class="zc_time clear">注册时间：
+				<input type="text" class="inp_time"/>~
+				<input type="text" class="inp_time"/>
+			</div>
+			<select class="select_1">
+				<option value="选择职务">选择职务</option>
+				<option value="1">选择职务1</option>
+				<option value="2">选择职务2</option>
+				<option value="3">选择职务3</option>
+			</select>
+			<select class="select_1 select_130">
+				<option value="选择运营部">选择运营部</option>
+				<option value="1">选择运营部1</option>
+				<option value="2">选择运营部2</option>
+				<option value="3">选择运营部3</option>
+			</select>
+			<select class="select_1 select_130">
+				<option value="选择梯队人员">选择梯队人员</option>
+				<option value="1">选择梯队人员1</option>
+				<option value="2">选择梯队人员2</option>
+				<option value="3">选择梯队人员3</option>
+			</select>
+			<select class="select_1">
+				<option value="选择部门">选择部门</option>
+				<option value="1">选择部门</option>
+				<option value="2">选择部门</option>
+				<option value="3">选择部门</option>
+			</select>
+			<select class="select_1 select_130">
+				<option value="选择是否是党员">选择是否是党员</option>
+				<option value="1">是</option>
+				<option value="2">否</option>
+			</select>
+			<div class="search clear">
+				<input type="text" placeholder="用户名／姓名／角色"/>
+				<button>搜索</button>
+			</div>
+			<div class="s_box clear">
+				<div class="s_daochu s_btn">导出模板</div>
+				<div class="s_daoru s_btn">选择文件<input type="file" /></div>
+				<input class="select_130" type="text" placeholder=""/>
+				<select class="select_1">
+					<option value="组分配">组分配</option>
+					<option value="1">组分配1</option>
+					<option value="2">组分配2</option>
+				</select>
+				<div class="qd s_btn">确定</div>
+				<div class="s_ewm s_btn">报名二维码</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+	<div class="table">
+		<p>未分配学员</p>
+		<table class="table_2">
+			<tr class="hd">
+				<td><input type="checkbox" class="ckeck" /></td>
+				<td>用户名</td>
+				<td>姓名</td>
+				<td>邮箱地址</td>
+				<td>组织</td>
+				<td>职务</td>
+				<td>营运部</td>
+				<td>梯队人员</td>
+				<td>部门</td>
+				<td>是否党员</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" class="ckeck" /></td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+			</tr>
+		</table>
+		<!--分页-->
+		<div class="tcdPageCode"></div>
+		<div class="tab_btn">确定</div>
+	</div>
+
+	<div class="table">
+		<p>已分配学员</p>
+		<table class="table_2">
+			<tr class="hd">
+				<td><input type="checkbox" class="ckeck" /></td>
+				<td>用户名</td>
+				<td>姓名</td>
+				<td>邮箱地址</td>
+				<td>组织</td>
+				<td>职务</td>
+				<td>营运部</td>
+				<td>梯队人员</td>
+				<td>部门</td>
+				<td>是否党员</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" class="ckeck" /></td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+			</tr>
+		</table>
+		<!--分页-->
+		<div class="tcdPageCode"></div>
+		<div class="tab_btn tab_btn_red">删除</div>
+	</div>
+
+	<div class="table">
+		<p>已过期学员</p>
+		<table class="table_2">
+			<tr class="hd">
+				<td><input type="checkbox" class="ckeck" /></td>
+				<td>用户名</td>
+				<td>姓名</td>
+				<td>邮箱地址</td>
+				<td>组织</td>
+				<td>职务</td>
+				<td>营运部</td>
+				<td>梯队人员</td>
+				<td>部门</td>
+				<td>是否党员</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+			</tr>
+		</table>
+		<!--分页-->
+		<div class="tcdPageCode"></div>
+		<div class="tab_btn">重新分配</div>
+	</div>
+
+
+
+</div>
+	
+	{/block}
+
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+
+	$("#form").Validform({
+
+		tiptype: 3,
+
+		showAllError: true,
+
+		callback: function (ret) {
+			submit_form($("#form"),function(data){
+				console.log(data);
+				if(data.state == 1){
+					layer.msg(data.succ,{icon:6,time:5000});
+					//location.href = "{:url('Course/index','',false,true)}"
+				}else{
+					layer.msg(data.err,{icon:5,time:5000});
+				}
+			},function(err){
+				console.log(err)
+			});
+			return false;
+		}
+	});
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+	$('select[name=course_type]').change(function(){
+		var v = $(this).val();
+		if(v==1){
+			$('.display').css('display','none')
+		}else{
+			$('.display').css('display','block')
+		}
+
+
+	})
+	$(function(){
+		{if $data.course_type == 0}
+		$('.display').css('display','block')
+				{else}
+		$('.display').css('display','none')
+				{/if}
+	})
+</script>
+<script type="text/javascript">
+	$(".fabu").click(function(){
+		$(this).addClass("hide");
+		$(".chexiao").removeClass("hide");
+	})
+	$(".chexiao").click(function(){
+		$(this).addClass("hide");
+		$(".fabu").removeClass("hide");
+	})
+	function chooseParentDepart(){
+		layer_open('选择上级部门',"{:url('course/chooseParentDepart','',false,true)}");
+	}
+	function setChoose(pid,user_object){
+		$('input[name=user_object]').val(user_object);
+		$('#pid').val(pid);
+	}
+
+	function chooseParent(){
+		layer_open('选择上级部门',"{:url('course/chooseParent','',false,true)}");
+	}
+	function setChooseqw(pid,user_object){
+		$('input[name=catalog]').val(user_object);
+		$('#pid1').val(pid);
+	}
+</script>
+{/block}

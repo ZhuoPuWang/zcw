@@ -1,0 +1,113 @@
+{extend name="template/base" /}
+{block name="content"}
+<style type="text/css">
+	.add_btn{width: 150px;
+		height: 45px;
+		line-height: 45px;
+		float: left;
+		font-size: 16px;
+		text-align: center;
+		margin-right: 10px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	.kuang_lan {
+		border: 1px solid #149dd2;
+		color: #149dd2;
+	}
+
+	.myteam{width: 100%;padding: 20px 40px;}
+	.myteam_tx{width: 60px;height: 60px;float: left;margin-right: 20px;}
+	.myteam_tx img{width: 100%;height: 100%;}
+	.myteam_xx{float: left;width: 800px;}
+	.myteam_xx h1{line-height: 30px;}
+	.myteam_xx h1 span{color: #149dd2;}
+	.myteam_xx p{line-height: 30px;color: #999;}
+	.myteam_btn a{width: 100px;display: inline-block;height: 40px;
+		line-height: 38px;font-size: 16px;color: #149dd2;
+		text-align: center;margin-right: 10px;
+		border-radius: 5px;cursor: pointer;
+		border: 1px solid #149dd2;}
+</style>
+<div class="container container_w1200 container_mb clear">
+
+	<div class="container_content container_content_w100">
+		<div class="container_content_tit clear">我的团队
+		</div>
+		<div class="container_content_screen clear">
+			<div class="add_btn kuang_lan">选择文件</div>
+			<select class="select_1">
+				<option value="请选择职务">请选择职务</option>
+				<option value="1">选择目录1</option>
+				<option value="2">选择目录2</option>
+				<option value="3">选择目录3</option>
+			</select>
+			<select class="select_1">
+				<option value="选择目录">选择目录</option>
+				<option value="1">选择目录1</option>
+				<option value="2">选择目录2</option>
+				<option value="3">选择目录3</option>
+			</select>
+			<select class="select_1">
+				<option value="选择目录">选择目录</option>
+				<option value="1">选择目录1</option>
+				<option value="2">选择目录2</option>
+				<option value="3">选择目录3</option>
+			</select>
+			<select class="select_1">
+				<option value="选择目录">选择目录</option>
+				<option value="1">选择目录1</option>
+				<option value="2">选择目录2</option>
+				<option value="3">选择目录3</option>
+			</select>
+			<select class="select_1">
+				<option value="选择目录">选择目录</option>
+				<option value="1">选择目录1</option>
+				<option value="2">选择目录2</option>
+				<option value="3">选择目录3</option>
+			</select>
+			<select class="select_1">
+				<option value="选择目录">选择目录</option>
+				<option value="1">选择目录1</option>
+				<option value="2">选择目录2</option>
+				<option value="3">选择目录3</option>
+			</select>
+			<div class="search clear" style="margin-top: 20px;">
+				<input type="text" placeholder="用户名／姓名／角色"/>
+				<button>搜索</button>
+			</div>
+		</div>
+		{foreach $team as $k=>$v}
+		<div class="myteam clear">
+			<div class="myteam_tx"><img src="__STATIC__/images/rw.png"/></div>
+			<div class="myteam_xx">
+				<h1>用户名: <span class="col_lan">{$v.usernumber} </span>  姓名: <span class="col_lan">{$v.realname} </span></h1>
+				<p> 创建时间: <?php echo (date('Y-m-d h:i:s', $v['starttime'])) ?></p>
+			</div>
+			<div class="myteam_btn">
+				<a href="{:url('User/info','',false,true)}">记录</a>
+				<a href="{:url('User/fd','',false,true)}">辅导</a>
+			</div>
+		</div>
+		{/foreach}
+	</div>
+
+</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/js/highcharts.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+    $(".header_nav li").click(function(){
+        $(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+    })
+</script>
+
+{/block}
+	

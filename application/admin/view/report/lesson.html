@@ -1,0 +1,116 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<div class="container container_w1300 clear">
+    {include file='template/report_nav' /}
+    <div class="container_content container_content_w80" style="width:89%;">
+        <div class="container_content_tit">培训信息</div>
+        <div class="container_content_screen clear">
+            <div class="container_content_screen_l">
+                <select class="select_1">
+                    <option value="选择组织">选择组织</option>
+                    <option value="1">选择组织</option>
+                    <option value="2">选择组织</option>
+                    <option value="3">选择组织</option>
+                </select>
+
+                <select class="select_1">
+                    <option value="全部类型">全部类型</option>
+                    <option value="1">类型1</option>
+                    <option value="2">类型2</option>
+                    <option value="3">类型3</option>
+                </select>
+
+                <div class="search clear">
+                    <input type="text" placeholder="用户名／姓名／角色"/>
+                    <button>搜索</button>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="table">
+
+            <table class="table_2">
+                <tr class="hd">
+                    <td>培训编号</td>
+                    <td>培训名称</td>
+                    <td>培训类型</td>
+                    <td>描述</td>
+                    <td>目录</td>
+                    <td>课程时长(分钟)</td>
+                    <td>学分</td>
+                    <td>目标用户</td>
+                    <td>创建时间</td>
+                    <td>更新时间</td>
+                    <td>创建者</td>
+
+                </tr>
+                {foreach $list as $k=>$v}
+                <tr>
+                    <td>{$v.course_number}</td>
+                    <td>{$v.course_title}</td>
+                    {if $v['course_type'] ==0}
+                    <td>在线课程</td>
+                    {else}
+                    <td>课堂培训</td>
+                    {/if}
+                    <td>{$v.course_content}</td>
+                    <td>{$v.catalog}</td>
+                    <td>{$v.course_time_d}</td>
+                    <td>{$v.credit}</td>
+                    <td>{$v.user_object}</td>
+                    <td><?php echo (date('Y-m-d h:i:s', $v['addtime'])) ?></td>
+                    <td><?php echo (date('Y-m-d h:i:s', $v['updatetime'])) ?></td>
+                    <td>{$v.realname}</td>
+                </tr>
+                {/foreach}
+            </table>
+            <!--分页-->
+            <div class="tcdPageCode"></div>
+
+        </div>
+</div>
+</div>
+{/block}
+{block name="script"}
+
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.config.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.all.min.js"> </script>
+
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+
+<script>
+
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                location.href = "{:url('News/index','',false,true)}";
+            },function (err) {
+                layer.alert('报表设置失败');
+            });
+            return false;
+        }
+
+    });
+
+
+
+
+</script>
+
+{/block}

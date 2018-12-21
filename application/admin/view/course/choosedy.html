@@ -1,0 +1,83 @@
+<link type="text/css" rel="stylesheet" href="__STATIC__/css/global-pc.css" />
+<link type="text/css" rel="stylesheet" href="__STATIC__/css/index.css" />
+<link type="text/css" rel="stylesheet" href="__STATIC__/css/page.css" />
+<link type="text/css" rel="stylesheet" href="__STATIC__/css/validform.css"/>
+<script src="__STATIC__/js/jquery-1.8.2.min.js"></script>
+<script src="__STATIC__/js/index.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/page.js" type="text/javascript" charset="utf-8"></script>
+<!--container-->
+	<div class="container clear" style="width: 100%;">
+
+		<div class="container_content" style="width: 1200px;margin: 0 auto;float: none;">
+			<div class="container_content_tit">关联调研</div>
+			<div class="container_content_screen clear">
+				<div class="table">
+					<table class="table_2">
+						<tr class="hd">
+							<td><input type="checkbox" class="ckeck" /></td>
+							<td>调研编号</td>
+							<td>调研标题</td>
+							<td>调研创建时间</td>
+							<td>是否关联</td>
+						</tr>
+						{volist name="ks" id="vo"}
+						<tr>
+							<td><input type="checkbox" class="ckeck" /></td>
+							<td>{$vo.id}</td>
+							<td>{$vo.name}</td>
+							<td>{:date('Y-m-d H',$vo.createtime)}</td>
+							<td><span class='zd'><a href="javascript:;" onclick="gl(this)"; dd="{$vo.id}" bb="{$id}">关联</a></span></td>
+						</tr>
+						{/volist}
+					</table>
+					<!--分页-->
+				</div>
+			</div>
+		</div>
+	</div>
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+
+	function gl(even){
+		$course_id =$(even).attr('bb');
+		$id = $(even).attr('dd');
+
+		$.ajax({
+			url:"{:url('course/dygl')}",
+			dataType:'json',
+			type:'post',
+			data:{
+				'course_id':$course_id,
+				'id':$id,
+			},
+			success:function (data){
+				window.parent.location.reload(); //刷新父页面
+				var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+				parent.layer.close(index);
+			},
+			error:function (){
+			}
+		})
+	}
+</script>
+<script type="text/javascript">
+
+</script>

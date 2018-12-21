@@ -1,0 +1,71 @@
+{extend name="template/base1" /}
+
+{block name="content"}
+	<!--container-->
+	<div class="container clear">
+		{include file="template/question"}
+		<div class="container_content">
+			<div class="container_content_tit">添加题目</div>
+			<div class="container_content_screen clear">
+
+				<div class="search clear">
+					<form action="{:url('index')}" method="post">
+					<input type="text" name="realname" placeholder="姓名"/>
+					<button>搜索</button>
+				</form>
+				</div>
+				<div class="addcurr"><a href="{:url('question/addti',array('questionid'=>$questionid),false,true)}">添加题目</a></div>
+			</div>
+			<div class="table">
+				<table class="table_2">
+					<tr class="hd">
+						<td>题目ID</td>
+						<td>类型</td>
+						<td>操作</td>
+					</tr>
+					{volist name="list" id="vo"}
+					<tr>
+						<td>{$vo.name}</td>
+						<td>{if condition="$vo.type eq 1"}单选题{elseif condition="$vo.type eq 2"}多选题{elseif condition="$vo.type eq 3"}是非题{elseif condition="$vo.type eq 4"}简答题{else}填空题{/if}</td>
+						<td>
+							<span class='zd'><a href="{:url('question/editti',array('id'=>$vo.id))}">修改</a></span>
+							<span class='sc'><a href='javascript:del($id)' id='del_$id' dataurl="{:url('question/deleteti',array('id'=>$vo.id))}">删除</a></span>
+						</td>
+					</tr>
+					{/volist}
+				</table>
+				<!--分页-->
+			</div>
+			<div class="pager">{$page ?? ''}</div>
+		</div>
+	</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+</script>
+<script>
+	$(".tcdPageCode").createPage({
+		pageCount:6,
+		current:1,
+		backFn:function(p){
+			console.log(p);
+		}
+	});
+
+	function chooseParentDepart(){
+		layer_open('选择上级部门',"{:url('member/chooseParentDepart','',false,true)}");
+	}
+
+	function setChoose(pid,pname){
+		$('input[name=pname]').val(pname);
+		$('input[name=pid]').val(pid);
+	}
+</script>
+{/block}

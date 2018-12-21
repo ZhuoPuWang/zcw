@@ -1,0 +1,265 @@
+{extend name="template/base" /}
+	<!--顶部-->
+{block name="content"}
+		<div class="container_content">
+			<form action="{:url('add')}" method="post" id ="form">
+			<div class="container_content_tit">添加考试</div>
+			<div class="add">
+				<ul class="add_ul">
+					<li class="clear">
+						<h1 class="li_img">考试编号（必填项）</h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="number" class="inp_text" value="{$number}"/>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">考试标题（必填项）</h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="name" class="inp_text" placeholder="请填写考试标题" datatype="*" nullmsg="请填写考试标题"/>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">考试描述</h1>
+						<div class="add_ul_r clear">
+							<textarea name="describe" id="" cols="30" rows="10" datatype="*" nullmsg="请填写考试描述"></textarea>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">学分</h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="credit" class="inp_text" placeholder="请填写学分" datatype="*" nullmsg="请填写学分"/>分
+							<p></p>
+						</div>
+					</li>
+					<!--<li class="clear">-->
+						<!--<h1 class="li_img">限定开始时间</h1>-->
+						<!--<div class="add_ul_r clear">-->
+							<!--<input type="text" name="limitstart" class="inp_text" placeholder="请选择开始时间,默认为当前时间" id="test1">~天-->
+							<!--<input type="text" name="limitend" class="inp_text" placeholder="请选择结束时间，默认为10天后结束" id="test2">-->
+							<!--<p></p>-->
+						<!--</div>-->
+					<!--</li>-->
+					<li class="clear">
+						<h1 class="li_img">限定时长</h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="limittime" class="inp_text" placeholder="请填写限定时长" datatype="*" nullmsg="请填写限定时长"/>分
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">限定次数</h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="limitcount" class="inp_text" placeholder="请填写限定次数" datatype="*" nullmsg="请填写限定次数"/>次
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">过期天数 </h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="outtime" class="inp_text" placeholder="请填写过期天数" value="10" datatype="*" nullmsg="请填写过期天数"/>天
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">通过分数 </h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="adopt" class="inp_text" placeholder="请填写通过分数" datatype="*" nullmsg="请填写通过分数"/>分
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>用户对象</h1>
+						<div class="add_ul_r clear">
+							<input type="text" class="inp_text" placeholder="总部"   name="pname1"  readonly  onclick="chooseParentDepart1()"/>
+							<input type="hidden"  name="userobject"  value="1"/>
+							<span class="Validform_checktip"></span>
+						</div>
+					</li>
+					<li class="clear" style="display:none">
+						<h1>目录（必填项）</h1>
+						<div class="add_ul_r clear">
+							<input type="text" class="inp_text" placeholder="总部"   name="pname2"  readonly  onclick="chooseParentDepart2()"/>
+							<input type="hidden"  name="catalog"  value="1"/>
+							<span class="Validform_checktip"></span>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>问题显示方式 </h1>
+						<div class="add_ul_r clear">
+							<select  name="mode" >
+								<option value="0">一页多个问题</option>
+								<option value="1">一页一个问题</option>
+							</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>是否允许参与者审阅 </h1>
+						<div class="add_ul_r clear">
+							<select  name="review" >
+								<option value="0">从不允许</option>
+								<option value="1">一直允许</option>
+								<option value="2">只允许一次</option>
+							</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>问题反馈显示方式 </h1>
+						<div class="add_ul_r clear">
+							<select  name="problem" >
+								<option value="0">从不允许</option>
+								<option value="1">一直允许</option>
+								<option value="2">只允许一次</option>
+							</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">是否发送邮件提醒 </h1>
+						<div class="add_ul_r clear">
+							<input type="checkbox" name="email" class="inp_text" />
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">是否发送微信消息 </h1>
+						<div class="add_ul_r clear">
+							<input type="checkbox" name="wx" class="inp_text" />
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">是否允许学员自助报名 </h1>
+						<div class="add_ul_r clear">
+							<input type="checkbox" name="independently" class="inp_text" />
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">是否需要审核 </h1>
+						<div class="add_ul_r clear">
+							<input type="checkbox" name="examine" class="inp_text" />
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">是否拥有证书 </h1>
+						<div class="add_ul_r clear">
+							<input type="checkbox" name="certificate" class="inp_text"  />
+							<p></p>
+						</div>
+					</li>
+					<li class="clear zs" style="display: none">
+						<h1>选择证书 </h1>
+						<div class="add_ul_r clear">
+							<select  name="certificatetype" >
+								{volist name="cer" id="vo"}
+								<option value="{$vo.id}">{$vo.chtitle}</option>
+								{/volist}
+							</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">是否强制题目顺序 </h1>
+						<div class="add_ul_r clear">
+							<input type="checkbox" name="sequence" class="inp_text" />
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">是否强制答案顺序 </h1>
+						<div class="add_ul_r clear">
+							<input type="checkbox" name="answers" class="inp_text" />
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1></h1>
+						<div class="add_ul_r clear">
+							<input type="submit" class="add_btn kuang_lan">
+						</div>
+					</li>
+				</ul>
+			</div>
+			</form>
+		</div>
+
+	</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script src="__STATIC__/laydate/laydate.js"></script> <!-- 改成你的路径 -->
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+	$("#form").Validform({
+		tiptype: 3,
+		showAllError: true,
+		callback: function (ret) {
+			submit_form($("#form"),function(data){
+				//console.log(data)
+					if(data.state == 2){
+						layer.alert('添加失败1');
+					}else{
+						location.href = "{:url('examination/index','',false,true)}";
+					}
+			},function (err) {
+				console.log(err);
+				layer.alert('添加失败');
+			});
+			return false;
+		}
+	});
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+
+	function chooseParentDepart1(){
+		layer_open('选择上级部门',"{:url('examination/chooseParentDepart','',false,true)}");
+	}
+	function chooseParentDepart2(){
+		layer_open('选择上级部门',"{:url('examination/chooseParentDepary','',false,true)}");
+	}
+
+	function setChoose(pid,pname){
+		$('input[name=pname1]').val(pname);
+		$('input[name=userobject]').val(pid);
+	}
+	function setChoose2(pid,pname){
+		$('input[name=pname2]').val(pname);
+		$('input[name=catalog]').val(pid);
+	}
+</script>
+<script>
+	lay('#version').html('-v'+ laydate.v);
+
+	//执行一个laydate实例
+	laydate.render({
+		elem: '#test1' //指定元素
+	});
+	laydate.render({
+		elem: '#test2'  //指定元素
+	});
+
+	$('input[name=certificate]').change(function(){
+		var check = $('input:checkbox:checked').val();
+		if(check == 'on'){
+			$('.zs').css('display','block');
+		}else{
+			$('.zs').css('display','none');
+		}
+	});
+
+</script>
+{/block}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{$title}</title>
+
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/global-pc.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/index.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/page.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/validform.css" />
+
+    {block name="css"}{/block}
+    <script src="__STATIC__/js/jquery-1.8.2.min.js"></script>
+    <script src="__STATIC__/js/index.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/page.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+{if condition="!isset($haveHead)"}
+<div class="header">
+    <div class="header_top">
+        <div class="header_cont clear">
+            <div class="header_cont_l">服务热线：029-62339111 </div>
+            <div class="header_cont_r clear">
+                <div class="user">
+                    <div class="user_name"><img src="__STATIC__/images/tx.png"/>管理员</div>
+                    <dl class="hide">
+                        <dd><a href="javascript:;">我的信息</a></dd>
+                        <dd><a href="javascript:;">我的团队</a></dd>
+                        <dd><a href="javascript:;">我的审核</a></dd>
+                        <dd><a href="javascript:;">使用帮助</a></dd>
+                        <dd><a href="javascript:;">注销</a></dd>
+                    </dl>
+                </div>
+                <span class="xinxi"><img src="__STATIC__/images/ld.png"/><i>3</i></span>
+            </div>
+        </div>
+    </div>
+    <!--导航栏-->
+    <div class="header_box clear">
+        <div class="header_logo">
+            <a href="index.html">
+                <img src="__STATIC__/images/logo.png"/>课程中心
+            </a>
+        </div>
+        <ul class="header_nav clear">
+            <li><a href="{:url('index/index/index','',false,true)}">首页</a></li>
+            <li><a href="peixun.html">我的培训</a></li>
+            <li><a href="ziliao.html">资料库</a></li>
+            <li><a href="{:url('index/teacher/index','',false,true)}">讲师</a></li>
+            <li><a href="{:url('index/discuz/index','',false,true)}">讨论区</a></li>
+            <li><a href="baobiao.html">报表</a></li>
+            <li class="header_nav_a"><a href="{:url('news/index','',false,true)}">管理</a></li>
+        </ul>
+    </div>
+</div>
+{/if}
+<!--container-->
+<div class="container clear">
+    {if condition="!isset($haveLeft)"}
+    <ul class="container_list">
+        <li>
+            <div class="li_tit li_tit_bg">
+                <img src="__STATIC__/images/icon1.png" alt="" />
+                学习管理
+            </div>
+            <dl>
+                <dd><a class="dd_a" href="{:url('course/index','',false,true)}">课程管理</a></dd>
+                <dd><a href="{:url('examination/index','',false,true)}">考试管理</a></dd>
+                <dd><a href="javascript:;">题库管理</a></dd>
+                <dd><a href="javascript:;">评估管理</a></dd>
+                <dd><a href="javascript:;">课前调研</a></dd>
+            </dl>
+        </li>
+        <li>
+            <div class="li_tit li_tit_bg">
+                <img src="__STATIC__/images/icon1.png" alt="" />
+                用户管理
+            </div>
+            <dl>
+                <dd><a href="{:url('member/index','',false,true)}">用户管理</a></dd>
+                <dd><a href="{:url('depart/index','',false,true)}">组织结构管理</a></dd>
+                <dd><a href="javascript:;">用户导入</a></dd>
+                <dd><a href="javascript:;">组织结构导入</a></dd>
+                <dd><a href="{:url('fl/index','',false,true)}">用户属性分类</a></dd>
+                <dd><a href="{:url('member/index','',false,true)}">用户属性管理</a></dd>
+            </dl>
+        </li>
+        <li>
+            <div class="li_tit li_tit_bg">
+                <img src="__STATIC__/images/icon1.png" alt="" />
+                系统管理
+            </div>
+            <dl>
+                <dd><a href="javascript:;">系统管理</a></dd>
+                <dd><a href="javascript:;">目录管理</a></dd>
+                <dd><a href="javascript:;">学习路径管理</a></dd>
+                <dd><a href="{:url('teacher/index','',false,true)}">讲师库管理</a></dd>
+                <dd><a href="{:url('news/index','',false,true)}">新闻管理</a></dd>
+                <dd><a href="javascript:;">调研管理</a></dd>
+                <dd><a href="javascript:;">投票管理</a></dd>
+                <dd><a href="javascript:;">微信管理</a></dd>
+                <dd><a href="javascript:;">业务辅导表管理</a></dd>
+                <dd><a href="javascript:;">资料库管理</a></dd>
+                <dd><a href="{:url('discuz/index','',false,true)}">讨论区管理</a></dd>
+                <dd><a href="javascript:;">邮件管理</a></dd>
+                <dd><a href="javascript:;">日志管理</a></dd>
+                <dd><a href="javascript:;">配置管理</a></dd>
+            </dl>
+        </li>
+    </ul>
+    {/if}
+    {block name="content"}{/block}
+</div>
+<div class="footer">
+    <p>© 2017-2018 Aliyun.com 版权所有 ICP证：陕B2-20080101</p>
+    <p>陕西蔚来信息科技有限公司</p>
+</div>
+</body>
+</html>
+{block name="script"}{/block}

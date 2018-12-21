@@ -1,0 +1,140 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="container clear">
+	<div class="wdxinxi clear">
+		<div class="wdxinxi_l">
+			{if $member['head'] == ''}
+			<img src="__STATIC__/images/a1.png"/>
+			{else}
+			<img src="__STATIC__/uploads/{$member.head}"/>
+			{/if}
+			<h1><a href="{:url('user/profile',array('id'=>$member['id']),false,true)}">编辑</a></h1>
+		</div>
+		<ul class="wdxinxi_nav clear">
+			<li>
+				<a href="javascript:;">
+					<img src="__STATIC__/images/qqq4.png"/>
+					<span>{$wc}</span>
+					完成
+				</a>
+			</li>
+			<!--<li>
+				<a href="javascript:;">
+					<img src="__STATIC__/images/qqq3.png"/>
+					<span>28</span>
+					小时
+				</a>
+			</li>-->
+			<li>
+				<a href="javascript:;">
+					<img src="__STATIC__/images/qqq2.png"/>
+					<span>{$juan['fen']}</span>
+					学分
+				</a>
+			</li>
+			<li>
+				<a href="javascript:;">
+					<img src="__STATIC__/images/qqq1.png"/>
+					<span>1</span>
+					证书
+				</a>
+			</li>
+		</ul>
+	</div>
+
+
+	<div class="panel clear">
+		<div class="panel_box">
+			<div id="panel1" style="min-width:400px;height:400px"></div>
+		</div>
+		<div class="panel_box">
+			<div id="panel2" style="min-width:400px;height:400px"></div>
+		</div>
+	</div>
+
+</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/js/highcharts.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#panel1').highcharts({
+			chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false
+			},
+			title: {
+				text: '课程'
+			},
+			tooltip: {
+				headerFormat: '{series.name}<br>',
+				pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: false
+					},
+					showInLegend: true
+				}
+			},
+			exporting: { enabled: false },//隐藏导出图片
+			credits: { enabled: false },//隐藏highcharts的站点标志
+			series: [{
+				type: 'pie',
+				name: '内容占比',
+				data: [
+					['进行中',{$gq}],
+					['已完成',{$jx}],
+					['已过期',{$ywc}],
+					['待审批',{$dsp}],
+				]
+			}]
+		});
+
+		$('#panel2').highcharts({
+			chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false
+			},
+			title: {
+				text: '考试'
+			},
+			tooltip: {
+				headerFormat: '{series.name}<br>',
+				pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: false
+					},
+					showInLegend: true
+				}
+			},
+			exporting: { enabled: false },//隐藏导出图片
+			credits: { enabled: false },//隐藏highcharts的站点标志
+			series: [{
+				type: 'pie',
+				name: '内容占比',
+				data: [
+					['未通过',{$wtg}],
+					['已通过',{$ytg}],
+                    ['准备考试',{$zbks}],
+					['已过期',{$ygq}],
+
+				]
+			}]
+		});
+
+	})
+</script>
+
+{/block}
+	

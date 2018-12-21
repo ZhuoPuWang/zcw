@@ -1,0 +1,93 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<div class="container container_w1300 clear">
+    {include file='template/report_nav' /}
+    <div class="container_content container_content_w80" style="width: 89%;">
+        <div class="container_content_tit">培训记录</div>
+        <div class="container_content_screen clear">
+            <div class="container_content_screen_l">
+                <form action="{:url('report/train')}">
+                <div class="search clear">
+                    <input type="text" name="uname" placeholder="用户名／姓名／角色"/>
+                    <button>搜索</button>
+                </div>
+                </form>
+            </div>
+
+        </div>
+
+
+        <div class="table">
+
+            <table class="table_2">
+                <tr class="hd">
+                    <td>用户账号</td>
+                    <td>用户姓名</td>
+                    <td>用户邮箱</td>
+                    <td>课程编号</td>
+                    <td>课程标题</td>
+                    <td>课程类型</td>
+                </tr>
+                {foreach $list as $k=>$v}
+                <tr>
+
+
+                    <td>{$v.usernumber}</td>
+                    <td>{$v.realname}</td>
+                    <td>{$v.email}</td>
+                    <td>{$v.course_number}</td>
+                    <td>{$v.course_title}</td>
+                    {if $v['course_type'] ==0}
+                    <td>在线课程</td>
+                    {else}
+                    <td>课堂培训</td>
+                    {/if}
+                </tr>
+                {/foreach}
+            </table>
+            <!--分页-->
+            <div class="tcdPageCode">{$page}</div>
+
+        </div>
+</div>
+</div>
+{/block}
+{block name="script"}
+
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.config.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/ueditor.all.min.js"> </script>
+
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+
+<script>
+
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                location.href = "{:url('News/index','',false,true)}";
+            },function (err) {
+                layer.alert('报表设置失败');
+            });
+            return false;
+        }
+
+    });
+
+
+
+
+</script>
+
+{/block}

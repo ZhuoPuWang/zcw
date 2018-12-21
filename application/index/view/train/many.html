@@ -1,0 +1,87 @@
+{extend name="template/base" /}
+{block name="content"}
+    <style type="text/css">
+    	.main{width: 100%;padding:20px 10px;}
+    	.main_l{float: left;}
+    	.main_r{float: right;}
+    	.main_l_a{padding: 5px 15px;border: 1px solid;border-radius: 5px;}
+		.main_btn_medium{border-color: #149dd2;color: #149dd2;}
+		.main_btn_gray{border-color: #ccc;color: #ccc;}
+		.main_ul{width: 100%;padding: 10px;}
+		.main_ul li{width: 100%;margin-bottom: 10px;}
+		.main_ul li span{float: left;margin-right: 20px;width: 70px;}
+		.main_ul li h1{float: left;}
+    </style>
+
+	<!--container-->
+	<div class="container clear">
+		<div class="container_content">
+			<div class="container_content_tit">{$ks.course_title}</div>
+				<div class="main clear">
+					<div class="main_l">
+						{if $ks['ks_id']}
+						<a class="main_l_a main_btn_medium" href="{:url('train/kaos',array('ks_id'=>$ks['ks_id']))}">开始考试</a>
+						{/if}
+						{if $ks['dz_id']}
+						<a class="main_l_a main_btn_medium" href="{:url('train/zhengshu',array('id'=>$ks['ks_id']))}">证书</a>
+						{/if}
+						{if $ks['dz_id']}
+						<a class="main_l_a main_btn_medium" href="{:url('discuz/detail',array('id'=>$ks['dz_id']))}">讨论区</a>
+						{/if}
+						{if $ks['assess_id']}
+						<a class="main_l_a main_btn_medium" href="{:url('train/pinggu',array('id'=>$ks['assess_id']))}">评估</a>
+						{/if}
+						{if $ks['sur_id']}
+						<a class="main_l_a main_btn_medium" href="{:url('train/diaoyan',array('id'=>$ks['sur_id']))}">调研</a>
+						{/if}
+					</div>
+					<div class="main_r">
+						<a class="main_l_a main_btn_medium" href="javascript:history.back(-1);">返回</a>
+					</div>
+				</div>
+				
+				<ul class="main_ul">
+					<li class="clear">
+						<span>课程编号：</span>
+						<h1>{$ks.course_number}</h1>
+					</li>
+					<li class="clear">
+						<span>课程内容：</span>
+						<h1>{$ks.course_content}</h1>
+					</li>
+					<li class="clear">
+						<span>课程时长：</span>
+						<h1>{$ks.course_time_d}天</h1>
+					</li>
+					<li class="clear">
+						<span>过期天数：</span>
+						<h1>{if condition = "$ks.endday eq 0"}课程未过期{else}{$ks.endday}天{/if}</h1>
+					</li>
+					<li class="clear">
+						<span>语言： </span>
+						<h1>{if condition = "$ks.language eq 0"}中文 {elseif condition = "$ks.language eq 1"}英文{else}繁体{/if}</h1>
+					</li>
+				</ul>
+				
+			</div>
+		</div>
+		
+	</div>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+</script>
+{/block}

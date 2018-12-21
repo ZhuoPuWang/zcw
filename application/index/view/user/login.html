@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$title}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/global-pc.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/index.css" />
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/validform.css" />
+    <script src="__STATIC__/js/jquery-1.8.2.min.js"></script>
+    <script src="__STATIC__/js/index.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="dl_bg">
+<div class="dl_top">
+    <a href="{:url('User/regist','',false,true)}"><img src="__STATIC__/images/zc.png"/>注册</a>
+    <a href="{:url('User/login','',false,true)}"><img src="__STATIC__/images/dl.png"/>登录</a>
+</div>
+
+<div class="denglu clear">
+    <div class="denglu_l"><img src="__STATIC__/images/lg_bg.png" class="denglu_bg"/></div>
+    <form id="form" action="{:url('User/login','',false,true)}" method="post">
+         <ul class="denglu_box">
+            <li>
+                <input type="text" placeholder="请输入用户名" name="username" datatype="/^[a-z][a-z0-9]{5,11}$/i" errormsg="必须以字母开头，包含字母或数字，长度在6-11位之间" nullmsg="请填写用户名"/>
+                <span class="Validform_checktip"></span>
+            </li>
+            <li>
+                <input type="password" placeholder="请输入密码" name="pwd" datatype="/^[a-z0-9]{6,20}$/i" errormsg="密码6~20位" nullmsg="请填写密码"/>
+                <span class="Validform_checktip"></span>
+            </li>
+            <li>
+                <input type="text" placeholder="请输入验证码" name="verifyCode" datatype="/^[0-9]{5}$/i" errormsg="验证码错误" nullmsg="请填写验证码"/>
+                {:captcha_img()}
+                <p></p>
+            </li>
+            <li class="clear" style="margin-top: 10px;">
+                <span class="jizhu jizhu_bg">记住密码</span>
+                <input name="is_checked" type="hidden" value="1">
+                <a href="javascript:;">忘记密码?</a>
+            </li>
+             <input id="btn" style="display: none" type="submit">
+             <label for="btn">
+                <div class="denglu_btn">立即登录</div>
+             </label>
+        </ul>
+    </form>
+</div>
+
+<div class="footer" style="position: fixed;left: 0;bottom: 0;background: rgba(0,0,0,0.8);">
+    <p>© 2017-2018 Aliyun.com 版权所有 ICP证：陕B2-20080101</p>
+    <p>陕西蔚来信息科技有限公司</p>
+</div>
+
+</body>
+</html>
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script>
+    var he = $(".denglu_l").height();
+    $(".denglu_box").css("height",he);
+    $(".header_nav li").click(function(){
+        $(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+    })
+    $(".jizhu").click(function(){
+        var val = $('input[name=is_checked]').val();
+        val = val == 1 ? 0: 1;
+        $('input[name=is_checked]').val(val);
+        $(this).toggleClass("jizhu_bg");
+    })
+
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                if(data.state == 1){
+                    location.href = "{:url('Index/index','',false,true)}";
+                }else {
+                    layer.alert(data.msg);
+                }
+            },function (err) {
+                layer.alert('用户名已存在');
+            });
+            return false;
+        }
+    });
+</script>
+{/block}

@@ -1,0 +1,84 @@
+{extend name="template/base" /}
+{block name="content"}
+
+<!--container-->
+<div class="container clear">
+
+    {include file="template/configure"}
+    <div class="container_content">
+        <div class="container_content_tit">系统信息</div>
+        <div class="add">
+            <form id="form" action="{:url('configure/index','',false,true)}" method="post">
+            <ul class="add_ul">
+                <li class="clear">
+                    <h1>组织名称:	</h1>
+                    <div class="add_ul_r clear">
+                        <input type="text" value="{$configure.name ?? ''}" class="inp_text" name="name" placeholder="请填写组织名称 "/>
+                        <p></p>
+                    </div>
+                </li>
+                <li class="clear">
+                    <h1>组织电话:	</h1>
+                    <div class="add_ul_r clear">
+                        <input type="text" value="{$configure.phone ?? ''}" class="inp_text" name="phone" placeholder="请填写组织电话"/>
+                        <p></p>
+                    </div>
+                </li>
+                <!--<li class="clear">-->
+                    <!--<h1>组织邮箱:	</h1>-->
+                    <!--<div class="add_ul_r clear">-->
+                        <!--<input type="text" value="{$configure.email ?? ''}" name="email" class="inp_text" placeholder="请填写组织邮箱"/>-->
+                        <!--<p></p>-->
+                    <!--</div>-->
+                <!--</li>-->
+
+
+                <li class="clear">
+                    <h1></h1>
+                    <div class="add_ul_r clear">
+                        <input id="btn" style="display: none" type="submit">
+                        <label for="btn"><div class="add_btn kuang_lan">确定</div></label>
+                    </div>
+
+                </li>
+            </ul>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script type="text/javascript">
+
+    $("#form").Validform({
+        tiptype: 3,
+        showAllError: true,
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                if(data.status == 1){
+                    layer.msg(data.data,{icon:6,time:5000})
+                    location.href = "{:url('configure/index','',false,true)}";
+                }else{
+                    layer.msg(data.data,{icon:5,time:5000})
+                    location.href = "{:url('configure/index','',false,true)}";
+                }
+
+            },function (err) {
+                console.log(err);
+                layer.alert('添加失败');
+            });
+            return false;
+        }
+    });
+
+
+
+</script>
+
+{/block}

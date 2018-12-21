@@ -1,0 +1,121 @@
+{extend name="template/base" /}
+
+{block name="content"}
+
+<div class="container_content">
+
+    <div class="container_content_tit">新增职位</div>
+
+    <div class="add">
+
+        <form id="form" action="{:url('study/abilityadd','',false,true)}" method="post">
+            <input type="hidden" name="study_id" value="{$study_id ?? ''}">
+            <input type="hidden" name="ability_id" value="{$data['id'] ?? ''}">
+            <ul class="add_ul">
+                <li class="clear">
+
+                    <h1>能力ID（必填项）:	</h1>
+
+                    <div class="add_ul_r clear">
+
+                        <input type="text" class="inp_text" placeholder="能力ID" datatype="*" value="{$data.ability_number ?? ''}" name="ability_number" nullmsg="能力ID不能为空"/>
+
+                        <span class="Validform_checktip"></span>
+
+                    </div>
+
+                </li>
+                <li class="clear">
+
+                    <h1>能力标题（必填项）:	</h1>
+
+                    <div class="add_ul_r clear">
+
+                        <input type="text" class="inp_text" placeholder="能力标题" datatype="*" value="{$data.ability_title ?? ''}" name="ability_title" nullmsg="能力标题不能为空"/>
+
+                        <span class="Validform_checktip"></span>
+
+                    </div>
+
+                </li>
+                <li class="clear">
+
+                    <h1>能力描述:  </h1>
+
+                    <div class="add_ul_r clear">
+
+                        <textarea placeholder="能力描述" datatype="*" name="ability_content" value="{$data.ability_content ?? ''}" errormsg="" nullmsg="能力描述不能为空"></textarea>
+
+                        <span class="Validform_checktip"></span>
+
+                    </div>
+
+                </li>
+
+                 <li class="clear">
+
+                    <h1></h1>
+
+                    <div class="add_ul_r clear">
+
+                        <input type="submit" id="btn" style="opacity:0;">
+
+                        <label for="btn"> <div class="add_btn kuang_lan">确定</div></label>
+
+                        <a  href="{:url('Course/index','',false,true)}" class="add_btn kuang_hong">取消</a>
+
+                    </div>
+
+                </li>
+
+            </ul>
+
+        </form>
+
+    </div>
+
+</div>
+{/block}
+{block name="script"}
+
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+
+<script src="__STATIC__/js/jquery.form.js"></script>
+
+<script src="__STATIC__/js/AjaxAction.js"></script>
+
+<script>
+
+    $("#form").Validform({
+
+        tiptype: 3,
+
+        showAllError: true,
+
+        callback: function (ret) {
+            submit_form($("#form"),function(data){
+                console.log(data);
+                if(data.status == 1){
+                    layer.msg(data.data,{icon:6,time:5000});
+                    window.parent.location.reload(); //刷新父页面
+
+                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    parent.layer.close(index);
+                }else{
+                    layer.msg(data.err,{icon:5,time:5000});
+                    window.parent.location.reload(); //刷新父页面
+
+                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    parent.layer.close(index);
+                }
+            },function(err){
+                console.log(err)
+            });
+            return false;
+        }
+    });
+</script>
+
+{/block}

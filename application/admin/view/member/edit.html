@@ -1,0 +1,238 @@
+{extend name="template/base" /}
+	<!--顶部-->
+{block name="content"}
+		<div class="container_content">
+			<form action="{:url('edit')}" method="post" id ="form">
+			<div class="container_content_tit">修改用户</div>
+			<div class="add">
+				<input type="hidden" name="id" value="{$news.id}">
+				<ul class="add_ul">
+					<li class="clear">
+						<h1 class="li_img">用户名</h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="usernumber" class="inp_text" placeholder="请填写用户名" value="{$news.usernumber}"/>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">邮箱</h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="email" class="inp_text" placeholder="请填写邮箱" value="{$news.email}"/>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">新密码</h1>
+						<div class="add_ul_r clear">
+							<input type="password" name="password" class="inp_text" placeholder=""/>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">确认新密码</h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="npassword" class="inp_text" placeholder=""/>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">姓名</h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="realname" class="inp_text" placeholder="请填写姓名" value="{$news.realname}"/>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>角色</h1>
+						<div class="add_ul_r clear">
+							<select name="role">
+								<option value="0" <?php if($news['role'] == '0'){echo 'selected';}?>>学员</option>
+								<option value="1" <?php if($news['role'] == '1'){echo 'selected';}?>>教师</option>
+							</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">审批人</h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="approval" class="inp_text" placeholder="请填写审批人" value="{$news.approval}"/>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>组织</h1>
+						<div class="add_ul_r clear">
+							<input type="text" class="inp_text"   name="pname" value="{$news.pname}"  readonly  onclick="chooseParentDepart()"/>
+							<input type="hidden"  name="pid"  value="{$news.organization}"/>
+							<span class="Validform_checktip"></span>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">联系电话:</h1>
+						<div class="add_ul_r clear">
+							<input type="text" class="inp_text" name="phone" value="{$news.phone}"  placeholder="请填写联系电话"/>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">联系地址:</h1>
+						<div class="add_ul_r clear">
+							<input type="text" class="inp_text"  name="address" value="{$news.address}"   placeholder="请填写联系地址"/>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>职务</h1>
+						<div class="add_ul_r clear">
+							<select  name="zw" >
+								<option value="0" <?php if($news['zw'] == 0){echo 'selected';} ?>>请选择职务</option>
+								{volist name="fl" id="vo"}
+								{if $vo.fid == 17}
+								<option value="{$vo.id}" <?php if($news['zw'] == $vo['id']){echo 'selected';} ?> >{$vo.name}</option>
+								{/if}
+								{/volist}
+							</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>运营部</h1>
+						<div class="add_ul_r clear">
+							<select name="operate">
+								<option value="0" <?php if($news['operate'] == 0){echo 'selected';} ?>>请选择运营部</option>
+								{volist name="fl" id="vo"}
+								{if $vo.fid == 18}
+								<option value="{$vo.id}" <?php if($news['operate'] == $vo['id']){echo 'selected';} ?> >{$vo.name}</option>
+								{/if}
+								{/volist}</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>梯队人员</h1>
+						<div class="add_ul_r clear">
+							<select name="echelon">
+								<option value="0" <?php if($news['echelon'] == 0){echo 'selected';} ?>>请选择梯队人员</option>
+								{volist name="fl" id="vo"}
+								{if $vo.fid == 19}
+								<option value="{$vo.id}" <?php if($news['echelon'] == $vo['id']){echo 'selected';} ?> >{$vo.name}</option>
+								{/if}
+								{/volist}
+							</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>部门</h1>
+						<div class="add_ul_r clear" >
+							<select name="depart">
+								<option value="0" <?php if($news['depart'] == 0){echo 'selected';} ?>>请选择部门</option>
+								{volist name="fl" id="vo"}
+								{if $vo.fid == 20}
+								<option value="{$vo.id}" <?php if($news['depart'] == $vo['id']){echo 'selected';} ?> >{$vo.name}</option>
+								{/if}
+								{/volist}
+							</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>是否党员</h1>
+						<div class="add_ul_r clear">
+							<select  name="dangy">
+								<option value="0" <?php if($news['dangy'] == 0){echo 'selected';} ?>>请选择是否党员</option>
+								{volist name="fl" id="vo"}
+								{if $vo.fid == 21}
+								<option value="{$vo.id}" <?php if($news['dangy'] == $vo['id']){echo 'selected';} ?> >{$vo.name}</option>
+								{/if}
+								{/volist}
+							</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1 class="li_img">备注:</h1>
+						<div class="add_ul_r clear">
+							<input type="text" name="remarks" class="inp_text" placeholder="请填写备注" value="{$news.remarks}"/>
+							<p></p>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>语言</h1>
+						<div class="add_ul_r clear">
+							<select name="language">
+								{volist name="fl" id="vo"}
+								{if $vo.fid == 22}
+								<option value="{$vo.id}" <?php if($news['language'] == $vo['id']){echo 'selected';} ?> >{$vo.name}</option>
+								{/if}
+								{/volist}
+							</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1>性别</h1>
+						<div class="add_ul_r clear">
+							<select name="sex">
+								<option value="0" <?php if($news['sex'] == 0){echo 'selected';} ?>>请选择性别</option>{volist name="fl" id="vo"}
+								{if $vo.fid == 23}
+								<option value="{$vo.id}" <?php if($news['sex'] == $vo['id']){echo 'selected';} ?> >{$vo.name}</option>
+								{/if}
+								{/volist}</select>
+						</div>
+					</li>
+					<li class="clear">
+						<h1></h1>
+						<div class="add_ul_r clear">
+							<input type="submit" class="add_btn kuang_lan" >
+						</div>
+					</li>
+				</ul>
+			</div>
+			</form>
+		</div>
+
+	</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__STATIC__/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+<script src="__STATIC__/js/AjaxAction.js"></script>
+<script src="__STATIC__/laydate/laydate.js"></script> <!-- 改成你的路径 -->
+<script type="text/javascript">
+	$(".header_nav li").click(function(){
+		$(this).addClass("header_nav_a").siblings("li").removeClass("header_nav_a");
+	})
+
+	$("#form").Validform({
+		tiptype: 3,
+		showAllError: true,
+		callback: function (ret) {
+			submit_form($("#form"),function(data){
+				console.log(data)
+					if(data.state == 2){
+						layer.alert('修改失败');
+					}else{
+						location.href = "{:url('member/index','',false,true)}";
+					}
+			},function (err) {
+				console.log(err);
+				layer.alert('修改失败');
+			});
+			return false;
+		}
+	});
+</script>
+<script>
+    $(".tcdPageCode").createPage({
+        pageCount:6,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
+    });
+
+	function chooseParentDepart(){
+		layer_open('选择上级部门',"{:url('member/chooseParentDepart','',false,true)}");
+	}
+
+	function setChoose(pid,pname){
+		$('input[name=pname]').val(pname);
+		$('input[name=pid]').val(pid);
+	}
+</script>
+{/block}
